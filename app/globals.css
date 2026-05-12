@@ -1,26 +1,114 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+:root,
+[data-theme="dark"] {
+  --bg:             #080808;
+  --bg-card:        rgba(255, 255, 255, 0.03);
+  --bg-hover:       rgba(255, 255, 255, 0.05);
+  --border:         rgba(255, 255, 255, 0.06);
+  --border-hover:   rgba(255, 255, 255, 0.12);
+  
+  /* REFINED TEXT COLORS (DARK) */
+  --text-primary:   #f9fafb; /* Slightly off-white to reduce eye strain */
+  --text-secondary: #d1d5db; /* Gray 300 - much clearer than 400 on deep black */
+  --text-muted:     #808080; /* Perfect for labels/captions */
+  
+  --navbar-bg:      rgba(8, 8, 8, 0.8);
+  --grid-line:      rgba(255, 255, 255, 0.025);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+[data-theme="light"] {
+  --bg:             #f8f8f8;
+  --bg-card:        rgba(0, 0, 0, 0.03);
+  --bg-hover:       rgba(0, 0, 0, 0.05);
+  --border:         rgba(0, 0, 0, 0.08);
+  --border-hover:   rgba(0, 0, 0, 0.15);
+  
+  /* REFINED TEXT COLORS (LIGHT) */
+  --text-primary:   #111827; /* Gray 900 - much more solid than pure black */
+  --text-secondary: #374151; /* Gray 700 - punchier and easier to read than 600 */
+  --text-muted:     #6b7280; /* Gray 500 - standard for placeholder/muted text */
+  
+  --navbar-bg:      rgba(248, 248, 248, 0.8);
+  --grid-line:      rgba(0, 0, 0, 0.04);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+
+
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  background-color: var(--bg) !important;
+  color: var(--text-primary);
+  font-family: var(--font-geist), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.4);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.7);
+}
+
+::selection {
+  background: rgba(99, 102, 241, 0.3);
+  color: white;
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.gradient-text {
+  background: linear-gradient(135deg, #6366f1 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glow-indigo    { box-shadow: 0 0 40px rgba(99, 102, 241, 0.15); }
+.glow-indigo-sm { box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);  }
+
+.glass {
+  background:      var(--bg-card) !important;
+  border:          1px solid var(--border) !important;
+  backdrop-filter: blur(12px);
+  transition:      background 0.3s ease, border 0.3s ease;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+.animate-fade-up { animation: fade-up 0.6s ease forwards; }
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.8; }
+}
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration:  0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
