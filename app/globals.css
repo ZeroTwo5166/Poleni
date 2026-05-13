@@ -20,21 +20,37 @@
 }
 
 [data-theme="light"] {
-  /* Warm parchment base — not plain white */
-  --bg:             #f4f3ff;
-  --bg-card:        rgba(255, 255, 255, 0.72);
-  --bg-hover:       rgba(99, 102, 241, 0.06);
+  /* A soft, warm lavender-tinted white - feels alive, not clinical */
+  --bg:             #f8f9ff; 
+  
+  /* Glass cards have a slight blue-ish tint to distinguish from the warm bg */
+  --bg-card:        rgba(255, 255, 255, 0.65);
+  --bg-hover:       rgba(255, 255, 255, 0.9);
+  
+  /* Border colors now use a faint Indigo/Violet tint */
   --border:         rgba(99, 102, 241, 0.12);
-  --border-hover:   rgba(99, 102, 241, 0.24);
+  --border-hover:   rgba(99, 102, 241, 0.3);
  
-  --text-primary:   #111827;
-  --text-secondary: #374151;
-  --text-muted:     #6b7280;
+  /* Text: Deep Navy instead of Black for a premium "ink" look */
+  --text-primary:   #0f172a; 
+  --text-secondary: #334155; 
+  --text-muted:     #64748b;
  
-  --navbar-bg:      rgba(244, 243, 255, 0.85);
-  --grid-line:      rgba(99, 102, 241, 0.05);
+  /* Navbar with a more saturated blur effect */
+  --navbar-bg:      rgba(248, 249, 255, 0.8);
+  --grid-line:      rgba(99, 102, 241, 0.07);
+  
+  /* Colorful shadows! This adds a subtle indigo glow to cards */
+  --shadow-color:   rgba(99, 102, 241, 0.08);
 }
 
+/* Force cursor effect element above everything */
+[data-cursor-fx],
+.cursor-effects-canvas,
+canvas[style*="cursor"] {
+  z-index: 99999 !important;
+  pointer-events: none !important;
+}
 
 
 

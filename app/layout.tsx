@@ -7,6 +7,7 @@ import ThemeProvider from "@/components/shared/themeProvider"
 import Preloader from "@/components/shared/preloader"
 import StarField from "@/components/shared/starField"
 import ClockCursor from "@/components/shared/clockcursor"
+import MeshBackground from "@/components/shared/meshBackground"
 
 const geist = Geist({
   subsets: ["latin"],
@@ -42,6 +43,8 @@ export default function RootLayout({
           <StarField />
 
           <ClockCursor />
+         <MeshBackground />
+
 
           {/* Ambient glow top */}
           <div

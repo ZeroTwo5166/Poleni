@@ -5,6 +5,18 @@ import { useTheme } from "@/components/shared/themeProvider"
 import Link from "next/link"
 import { fadeUp, scaleFade, staggerContainer, viewport } from "@/lib/animationVariants"
 
+
+
+const clients = [
+  { name: "Nautk",          url: "https://nautk.pt",             initials: "NK" },
+  { name: "Argo Vilamoura", url: "https://argovilamoura.pt",     initials: "AV" },
+  { name: "Junto WD",       url: "https://juntowd.com",          initials: "JW" },
+  { name: "The Hideout",    url: "https://thehideoutbrunch.com", initials: "TH" },
+  { name: "Maiya",          url: "https://maiya.dk",             initials: "MA" },
+  { name: "MightyLoyalty",  url: "https://mightyloyalty.dk",     initials: "ML" },
+]
+
+
 export default function Guarantee() {
   const { theme } = useTheme()
   const isDark    = theme === "dark"
@@ -102,6 +114,53 @@ export default function Guarantee() {
               No budget? See partnership →
             </Link>
           </div>
+
+
+
+        </motion.div>
+        
+        {/* Client logos */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={viewport}
+          className="text-center mb-16"
+        >
+          <p className="text-sm mt-10 uppercase tracking-widest mb-10" style={{ color: "var(--text-muted)" }}>
+            Trusted by
+          </p>
+          <motion.div
+            className="flex flex-wrap items-center justify-center gap-4"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={viewport}
+          >
+            {clients.map((client) => (
+              <motion.a
+                key={client.name}
+                href={client.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                variants={fadeUp}
+                whileHover={{ scale: 1.05, y: -2 }}
+                className={`flex items-center gap-3 px-5 py-3 rounded-xl glass
+                  transition-colors duration-200 group
+                  ${isDark ? "hover:border-white/10" : "hover:border-black/10"}`}
+              >
+                <div className="w-7 h-7 rounded-lg bg-indigo-500/20 border border-indigo-500/20
+                                flex items-center justify-center shrink-0">
+                  <span className="text-indigo-400 text-[9px] font-bold">{client.initials}</span>
+                </div>
+                <span className="text-sm font-medium transition-colors duration-200" style={{ color: "var(--text-secondary)" }}>
+                  {client.name}
+                </span>
+              </motion.a>
+            ))}
+          </motion.div>
         </motion.div>
       </div>
     </section>
