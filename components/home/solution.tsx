@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { useTheme } from "@/components/shared/themeProvider"
+import { fadeUp, staggerContainer, viewport } from "@/lib/animationVariants"
 
 const services = [
   {
@@ -39,24 +40,21 @@ const services = [
 
 export default function Solution() {
   const { theme } = useTheme()
-  const isDark    = theme === "dark"
 
   return (
     <section className="relative py-32 px-6 overflow-hidden">
-
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.05) 0%, transparent 60%)" }}
       />
 
       <div className="relative z-10 max-w-6xl mx-auto">
-
-        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={viewport}
           className="text-center mb-16"
         >
           <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
@@ -65,79 +63,52 @@ export default function Solution() {
             <span className="w-1 h-1 rounded-full bg-indigo-400" />
             What we do
           </span>
-          <h2
-            className="text-4xl md:text-5xl font-bold mb-4"
-            style={{ color: "var(--text-primary)" }}
-          >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
             Everything you need to grow online.
           </h2>
-          <p
-            className="text-lg max-w-xl mx-auto"
-            style={{ color: "var(--text-secondary)" }}
-          >
+          <p className="text-lg max-w-xl mx-auto" style={{ color: "var(--text-secondary)" }}>
             Three services. Fixed prices. No lock-in. Pick what you need.
           </p>
         </motion.div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {services.map((s, i) => (
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={viewport}
+        >
+          {services.map((s) => (
             <motion.div
               key={s.title}
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+              variants={fadeUp}
               whileHover={{ scale: 1.03, y: -6 }}
-              className={`
-                relative p-8 rounded-2xl border ${s.color}
-                group cursor-default overflow-hidden flex flex-col gap-4
-              `}
+              className={`relative p-8 rounded-2xl border ${s.color}
+                group cursor-default overflow-hidden flex flex-col gap-4`}
             >
-              {/* Hover glow */}
               <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100
                            transition-opacity duration-500 pointer-events-none"
                 style={{ background: `radial-gradient(circle at 50% 50%, ${s.glow} 0%, transparent 70%)` }}
               />
-
               <span className="text-4xl">{s.icon}</span>
-
               <div>
-                <h3
-                  className="text-xl font-bold mb-2"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  {s.title}
-                </h3>
-                <p
-                  className="text-sm font-medium mb-3"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  {s.desc}
-                </p>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  {s.detail}
-                </p>
+                <h3 className="text-xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>{s.title}</h3>
+                <p className="text-sm font-medium mb-3" style={{ color: "var(--text-secondary)" }}>{s.desc}</p>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>{s.detail}</p>
               </div>
-
               <Link
                 href={s.href}
-                className={`
-                  mt-auto inline-flex items-center gap-1.5 text-xs font-medium
+                className={`mt-auto inline-flex items-center gap-1.5 text-xs font-medium
                   px-3 py-1.5 rounded-full border w-fit transition-all duration-200
-                  ${s.tag} hover:opacity-80
-                `}
+                  ${s.tag} hover:opacity-80`}
               >
                 Learn more →
               </Link>
             </motion.div>
           ))}
-        </div>
-
+        </motion.div>
       </div>
     </section>
   )

@@ -13,6 +13,14 @@ const stats = [
   { value: "24h",  label: "Response time"        },
 ]
 
+const carouselColors = [
+  "text-emerald-500",
+  "text-amber-500",
+  "text-blue-600",
+  "text-indigo-500",
+  "text-rose-500",
+]
+
 export default function Hero() {
   const containerRef  = useRef<HTMLDivElement>(null)
   const { theme }     = useTheme()
@@ -45,21 +53,6 @@ export default function Hero() {
         className="absolute -right-40 bottom-1/4 w-[400px] h-[400px] rounded-full pointer-events-none animate-pulse-glow"
         style={{ background: "radial-gradient(circle, rgba(167,139,250,0.06) 0%, transparent 70%)" }}
       />
-
-      {isDark && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(4)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.03 }}
-              transition={{ delay: i * 0.2, duration: 1 }}
-              className="absolute left-0 right-0 border-t border-white"
-              style={{ top: `${20 + i * 20}%` }}
-            />
-          ))}
-        </div>
-      )}
 
       <motion.div
         style={{ opacity, scale }}
@@ -116,8 +109,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.25 }}
-            className="text-base font-medium"
-            style={{ color: "var(--text-muted)" }}
+            className={`text-base font-semibold ${carouselColors[carouselIdx]}`}
           >
             {carousel[carouselIdx]}
           </motion.span>
@@ -166,7 +158,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.55 + i * 0.08 }}
-              className="flex flex-col items-center gap-1 p-4 rounded-xl glass"
+              className="flex flex-col items-center gap-1 p-4 rounded-xl glass bg-white/[0.10]"
             >
               <span className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>
                 {stat.value}

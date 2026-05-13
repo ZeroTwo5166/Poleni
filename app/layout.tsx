@@ -5,6 +5,8 @@ import Navbar from "@/components/shared/navbar"
 import Footer from "@/components/shared/footer"
 import ThemeProvider from "@/components/shared/themeProvider"
 import Preloader from "@/components/shared/preloader"
+import StarField from "@/components/shared/starField"
+import ClockCursor from "@/components/shared/clockcursor"
 
 const geist = Geist({
   subsets: ["latin"],
@@ -36,19 +38,10 @@ export default function RootLayout({
       <body className={`${geist.variable} font-sans antialiased`}>
         <ThemeProvider>
           <Preloader />
-          {/* Grid background — uses CSS variable so it's theme-aware */}
-          <div className="fixed inset-0 z-0 pointer-events-none">
-            <div
-              className="w-full h-full"
-              style={{
-                backgroundImage: `
-                  linear-gradient(var(--grid-line) 1px, transparent 1px),
-                  linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)
-                `,
-                backgroundSize: "60px 60px",
-              }}
-            />
-          </div>
+          {/* Stars — dark mode only, sits behind everything */}
+          <StarField />
+
+          <ClockCursor />
 
           {/* Ambient glow top */}
           <div
