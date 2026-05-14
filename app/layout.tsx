@@ -39,29 +39,21 @@ export default function RootLayout({
       <body className={`${geist.variable} font-sans antialiased`}>
         <ThemeProvider>
           <Preloader />
-          {/* Stars — dark mode only, sits behind everything */}
-          <StarField />
-
+          
+          {/* Background effects - lowest layer */}
+          <div style={{ position: "fixed", inset: 0, zIndex: 0 }}>
+            <StarField />
+            <MeshBackground />
+          </div>
+          
           <ClockCursor />
-         <MeshBackground />
 
-
-          {/* Ambient glow top */}
-          <div
-            className="fixed top-0 left-1/2 -translate-x-1/2 w-[600px]
-                       h-[300px] z-0 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse at top, rgba(99,102,241,0.12) 0%, transparent 70%)",
-            }}
-          />
-
-          <div className="relative z-10 flex flex-col min-h-screen">
+          {/* Content wrapper */}
+          <div style={{ position: "relative", zIndex: 5 }}>
             <Navbar />
-            <main className="flex-1">{children}</main>
+            <main>{children}</main>
             <Footer />
           </div>
-
         </ThemeProvider>
       </body>
     </html>

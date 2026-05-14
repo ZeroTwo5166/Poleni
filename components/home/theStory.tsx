@@ -57,8 +57,8 @@ export default function TheStory() {
           <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-bold mb-6
             ${isDark
               ? "border-rose-500/20 bg-rose-500/5 text-rose-400"
-              : "border-rose-300 bg-rose-100 text-rose-600 shadow-sm"}`}>
-            <span className={`w-1 h-1 rounded-full ${isDark ? "bg-rose-400" : "bg-rose-500"}`} />
+              : "border-rose-300 bg-rose-200 text-rose-600 shadow-sm"}`}>
+            <span className={`w-1 h-1 rounded-full ${isDark ? "bg-rose-400" : "bg-rose-400"}`} />
             What separates Poleni
           </span>
 

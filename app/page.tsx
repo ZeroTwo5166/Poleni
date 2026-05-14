@@ -11,14 +11,22 @@ import Guarantee from "@/components/home/guarantee"
 export default function HomePage() {
   return (
     <>
+      {/* Hero is fixed - stays in place */}
       <Hero />
-      <Problem />
-      <Solution />
-      <WhyPoleni />
-      <TheStory />
-      <Calculator />
-      <Guarantee />
-      <TrustSignals />
+      
+      {/* Spacer - creates scroll distance (100vh = full viewport height) */}
+      <div style={{ height: "100vh" }} />
+      
+      {/* All other components - scroll over the hero */}
+      <div style={{ position: "relative", zIndex: 20 }}>
+        <Problem />
+        <Solution />
+        <WhyPoleni />
+        <TheStory />
+        <Calculator />
+        <Guarantee />
+        <TrustSignals />
+      </div>
     </>
   )
 }

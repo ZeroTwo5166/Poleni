@@ -1,50 +1,105 @@
 "use client"
 
-import { useEffect, useRef } from "react"
-import { useTheme } from "@/components/shared/themeProvider"
-import { usePathname } from "next/navigation"
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+} from "framer-motion"
 
-export default function ClockCursor() {
-  const { theme }      = useTheme()
-  const pathname       = usePathname()
-  const isFirstMount   = useRef(true)
+import { useEffect, useState } from "react"
+import { useTheme } from "@/components/shared/themeProvider"
+
+export default function Cursor() {
+  const { theme } = useTheme()
+
+  const [hovering, setHovering] = useState(false)
+
+  const mouseX = useMotionValue(-100)
+  const mouseY = useMotionValue(-100)
+
+  const x = useSpring(mouseX, {
+    stiffness: 600,
+    damping: 35,
+  })
+
+  const y = useSpring(mouseY, {
+    stiffness: 600,
+    damping: 35,
+  })
 
   useEffect(() => {
     if (theme !== "light") return
 
-    let effect: any
+    let raf = 0
 
-    // Only delay on first mount on homepage (preloader is showing)
-    // Theme switches and other pages get the cursor immediately
-    const delay = isFirstMount.current && pathname === "/" ? 1400 : 0
-    isFirstMount.current = false
+    const move = (e: MouseEvent) => {
+      cancelAnimationFrame(raf)
 
-    const timer = setTimeout(() => {
-      import("cursor-effects").then(({ clockCursor }) => {
-        effect = new (clockCursor as any)({
-          date: () =>
-            new Date(
-              new Date().toLocaleString("en-US", {
-                timeZone: "Europe/Copenhagen",
-              })
-            ),
-        })
-
-        setTimeout(() => {
-          document.querySelectorAll("canvas").forEach((el) => {
-            el.style.zIndex        = "99999"
-            el.style.pointerEvents = "none"
-            el.style.position      = "fixed"
-          })
-        }, 100)
+      raf = requestAnimationFrame(() => {
+        mouseX.set(e.clientX)
+        mouseY.set(e.clientY)
       })
-    }, delay)
+    }
+
+    const addHoverEvents = () => {
+      const targets = document.querySelectorAll(
+        "a, button, [data-cursor]"
+      )
+
+      targets.forEach((el) => {
+        el.addEventListener("mouseenter", handleEnter)
+        el.addEventListener("mouseleave", handleLeave)
+      })
+
+      return () => {
+        targets.forEach((el) => {
+          el.removeEventListener("mouseenter", handleEnter)
+          el.removeEventListener("mouseleave", handleLeave)
+        })
+      }
+    }
+
+    const handleEnter = () => setHovering(true)
+    const handleLeave = () => setHovering(false)
+
+    window.addEventListener("mousemove", move, {
+      passive: true,
+    })
+
+    const cleanupHover = addHoverEvents()
 
     return () => {
-      clearTimeout(timer)
-      effect?.destroy?.()
+      cancelAnimationFrame(raf)
+
+      window.removeEventListener("mousemove", move)
+
+      cleanupHover()
     }
   }, [theme])
 
-  return null
+  if (theme !== "light") return null
+
+  return (
+    <motion.div
+      className="fixed top-0 left-0 z-[99999] pointer-events-none mix-blend-difference"
+      style={{
+        x,
+        y,
+        translateX: "-50%",
+        translateY: "-50%",
+        willChange: "transform",
+      }}
+      animate={{
+        width:  100,
+        height:  100,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 25,
+      }}
+    >
+      <div className="w-full h-full rounded-full bg-white" />
+    </motion.div>
+  )
 }

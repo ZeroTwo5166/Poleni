@@ -69,6 +69,13 @@ html, body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+body.cursor-light,
+body.cursor-light * {
+  cursor: none !important;
+}
+
+
+
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb {
@@ -128,3 +135,15 @@ html, body {
     transition-duration: 0.01ms !important;
   }
 }
+/* Add to the end of globals.css */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+.animate-bounce {
+  animation: bounce 1.5s infinite;
+}
+
+
+
