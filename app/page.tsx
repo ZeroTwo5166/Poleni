@@ -1,27 +1,30 @@
+// app/page.tsx
+
 import Hero from "@/components/home/hero"
 import Calculator from "@/components/home/calculator"
-import HowWeHelp from "@/components/home/howWeHelp"
 import WhyPoleni from "@/components/home/whyPoleni"
 import TrustSignals from "@/components/home/trustSignals"
 import Problem from "@/components/home/problem"
-import Solution from "@/components/home/solution"
 import TheStory from "@/components/home/theStory"
 import Guarantee from "@/components/home/guarantee"
+import SolutionWhyPoleniWrapper from "@/components/home/solutionWhyPoleniWrapper"
 
 export default function HomePage() {
   return (
     <>
-      {/* Hero is fixed - stays in place */}
+      {/* HERO STACK */}
       <Hero />
-      
-      {/* Spacer - creates scroll distance (100vh = full viewport height) */}
+
+      {/* Hero scroll distance */}
       <div style={{ height: "100vh" }} />
-      
-      {/* All other components - scroll over the hero */}
+
       <div style={{ position: "relative", zIndex: 20 }}>
+        {/* NORMAL STACK OVER HERO */}
         <Problem />
-        <Solution />
-        <WhyPoleni />
+
+        {/* SOLUTION → WHY POLENI scroll-lock slide */}
+       <SolutionWhyPoleniWrapper/>
+
         <TheStory />
         <Calculator />
         <Guarantee />

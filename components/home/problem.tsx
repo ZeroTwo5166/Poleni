@@ -27,8 +27,7 @@ export default function Problem() {
   const isDark = theme === "dark"
 
   return (
-    <section className="relative py-32 px-6 overflow-hidden">
-
+<section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
       {/* Dark mode glow */}
       {isDark && (
         <>

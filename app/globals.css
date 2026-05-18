@@ -57,7 +57,9 @@ canvas[style*="cursor"] {
 
 html {
   scroll-behavior: smooth;
+
 }
+
 
 html, body {
   background-color: var(--bg) !important;

@@ -1,3 +1,4 @@
+// layout.tsx - remove the HorizontalScrollHandler import and usage
 import type { Metadata } from "next"
 import { Geist } from "next/font/google"
 import "./globals.css"
@@ -8,6 +9,7 @@ import Preloader from "@/components/shared/preloader"
 import StarField from "@/components/shared/starField"
 import ClockCursor from "@/components/shared/clockcursor"
 import MeshBackground from "@/components/shared/meshBackground"
+// REMOVE: import HorizontalScrollHandler from "@/components/shared/HorizontalScrollHandler"
 
 const geist = Geist({
   subsets: ["latin"],
@@ -18,15 +20,6 @@ export const metadata: Metadata = {
   title: "Poleni – Transparent pricing. No contracts. More customers.",
   description:
     "We help Danish businesses grow through websites and marketing. Fixed prices, no hidden fees, no lock-in contracts.",
-  keywords: ["webbureau", "hjemmeside", "Google Ads", "Meta Ads", "SEO", "København", "Danmark"],
-  openGraph: {
-    title: "Poleni – Transparent pricing. No contracts.",
-    description: "Clear plan. Fixed price. Real results.",
-    url: "https://poleni.dk",
-    siteName: "Poleni",
-    locale: "da_DK",
-    type: "website",
-  },
 }
 
 export default function RootLayout({

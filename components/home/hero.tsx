@@ -207,7 +207,7 @@ return (
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8
-                     border border-indigo-400/30 shadow-sm bg-white/70 backdrop-blur-sm"
+                     border border-indigo-400/30 shadow-sm bg-purple-500/50 backdrop-blur-sm"
         >
           <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
           <span className="text-indigo-600 text-sm font-semibold">

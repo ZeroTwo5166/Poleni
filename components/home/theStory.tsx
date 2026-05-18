@@ -11,7 +11,7 @@ export default function TheStory() {
 
   return (
     <section
-      className="relative py-32 px-6 overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
       style={!isDark ? { backgroundColor: "#fff1f2" } : undefined}
     >
       {/* Top glow — dark mode only */}
