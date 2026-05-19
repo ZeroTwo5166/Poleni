@@ -130,7 +130,7 @@ export default function Solution() {
 
   return (
     <section
-      className="relative py-32 px-6 overflow-hidden"
+      className="relative  min-h-screen py-32 px-6 overflow-hidden"
       style={!isDark ? { backgroundColor: "#f5f0ff" } : undefined}
     >
       {/* Top glow — dark mode only */}

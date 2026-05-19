@@ -9,6 +9,7 @@ import Preloader from "@/components/shared/preloader"
 import StarField from "@/components/shared/starField"
 import ClockCursor from "@/components/shared/clockcursor"
 import MeshBackground from "@/components/shared/meshBackground"
+import ScrollToTop from "@/components/shared/scrollToTop"
 // REMOVE: import HorizontalScrollHandler from "@/components/shared/HorizontalScrollHandler"
 
 const geist = Geist({
@@ -44,7 +45,10 @@ export default function RootLayout({
           {/* Content wrapper */}
           <div style={{ position: "relative", zIndex: 5 }}>
             <Navbar />
-            <main>{children}</main>
+            <main>
+              <ScrollToTop/>
+              {children}
+              </main>
             <Footer />
           </div>
         </ThemeProvider>

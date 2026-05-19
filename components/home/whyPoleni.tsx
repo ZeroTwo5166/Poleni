@@ -109,7 +109,7 @@ export default function WhyPoleni() {
 
   return (
     <section
-      className="relative py-32 px-6 overflow-hidden"
+      className="relative  min-h-screen py-32 px-6 overflow-hidden"
       style={!isDark ? { backgroundColor: "#eff6ff" } : undefined}
     >
       {/* Top glow — dark mode only */}
