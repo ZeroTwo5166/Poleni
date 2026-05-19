@@ -14,8 +14,8 @@ export default function SolutionWhyPoleniWrapper() {
 
     const onScroll = () => {
       const vh = window.innerHeight
-      const outerTop = outer.getBoundingClientRect().top
-      const p = Math.max(0, Math.min(1, -outerTop / vh))
+      const top = outer.getBoundingClientRect().top
+      const p = Math.max(0, Math.min(1, -top / vh))
       setProgress(p)
     }
 
@@ -28,12 +28,10 @@ export default function SolutionWhyPoleniWrapper() {
   const whyX = `${(1 - progress) * -100}vw`
 
   return (
-    // overflowX:clip on a separate wrapper — never interferes with sticky inside
-    <div style={{ overflowX: "clip" }}>
-      {/* outerRef: no overflow set, just height for scroll distance */}
+    <div style={{ height: "200vh" }}>
       <div ref={outerRef} style={{ position: "relative", height: "200vh" }}>
-        
-        {/* Sticky pin: holds for outerHeight - stickyHeight = 200vh - 100vh = 100vh */}
+
+        {/* STICKY STAGE */}
         <div
           style={{
             position: "sticky",
@@ -42,37 +40,46 @@ export default function SolutionWhyPoleniWrapper() {
             overflow: "hidden",
           }}
         >
-          {/* Solution */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100vw",
-              height: "100vh",
-              overflow: "hidden",
-              zIndex: 1,
-            }}
-          >
-            <Solution />
-          </div>
 
-          {/* WhyPoleni — slides in from left */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100vw",
-              height: "100vh",
-              overflow: "hidden",
-              transform: `translateX(${whyX})`,
-              zIndex: 2,
-              willChange: "transform",
-            }}
-          >
-            <WhyPoleni />
-          </div>
+          {/* Solution fades out */}
+       {/* Solution — fades out */}
+<div
+  style={{
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    overflow: "hidden",
+    zIndex: 1,
+
+    opacity: 1 - progress,
+    transition: "opacity 0.05s linear",
+  }}
+>
+  <Solution />
+</div>
+
+{/* WhyPoleni — slides in + fades in */}
+<div
+  style={{
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    overflow: "hidden",
+    transform: `translateX(${whyX})`,
+    zIndex: 2,
+    willChange: "transform",
+
+    opacity: progress,
+    transition: "opacity 0.05s linear",
+  }}
+>
+  <WhyPoleni />
+</div>
+
         </div>
       </div>
     </div>

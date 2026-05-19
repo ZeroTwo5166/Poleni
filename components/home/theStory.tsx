@@ -96,7 +96,7 @@ export default function TheStory() {
           viewport={viewport}
           className={`relative p-8 md:p-12 rounded-2xl border-2 mb-8 overflow-hidden
             ${isDark
-              ? "border-white/[0.06] bg-white/[0.02]"
+              ? "border-white/[0.06] bg-black"
               : "border-rose-200 bg-white/80 shadow-xl shadow-rose-100/60"}`}
           style={!isDark ? { backdropFilter: "blur(12px)" } : undefined}
         >
@@ -106,7 +106,7 @@ export default function TheStory() {
           </span>
 
           <p className="text-lg md:text-xl italic leading-relaxed mb-6 relative z-10 font-medium"
-            style={{ color: isDark ? "var(--text-secondary)" : "#1e293b" }}>
+            style={{ color: isDark ? "#ffffff" : "#1e293b" }}>
             "Big agencies have 100+ clients. You are just another line in their spreadsheet.
             They lose sleep over nothing. We lose sleep over you."
           </p>
@@ -119,7 +119,7 @@ export default function TheStory() {
               style={{ color: isDark ? "var(--text-secondary)" : "#334155" }}>
               We don't have 100 clients. We have a small group of businesses we truly care about.
               Every single client is critical to us.{" "}
-              <span className="font-bold" style={{ color: isDark ? "var(--text-primary)" : "#f43f5e" }}>
+              <span className="font-bold" style={{ color: isDark ? "#f43f5e" : "#f43f5e" }}>
                 If you don't grow, we don't grow.
               </span>{" "}
               Our reputation depends on you.

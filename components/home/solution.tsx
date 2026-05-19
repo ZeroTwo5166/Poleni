@@ -19,7 +19,7 @@ const services: Service[] = [
     title:      "Websites",
     desc:       "Responsive, mobile-friendly, ready in 3–14 days.",
     detail:     "Fixed one-time price. You own it forever. No monthly fee just to keep your site alive.",
-    darkColor:  "border-violet-500/20 bg-violet-500/5",
+    darkColor:  "border-violet-500/20 bg-violet-500/10",
     lightColor: "border-violet-400/30 bg-violet-50/80",
     darkTag:    "text-violet-400 border-violet-500/20 bg-violet-500/10",
     lightTag:   "text-violet-700 border-violet-400/30 bg-violet-50",
@@ -32,7 +32,7 @@ const services: Service[] = [
     title:      "Google Ads",
     desc:       "Daily monitoring. You pay only for real clicks.",
     detail:     "We set up, manage, and improve your campaigns every single day. No wasted spend.",
-    darkColor:  "border-cyan-500/20 bg-cyan-500/5",
+    darkColor:  "border-cyan-500/20 bg-cyan-500/10",
     lightColor: "border-cyan-400/30 bg-cyan-50/80",
     darkTag:    "text-cyan-400 border-cyan-500/20 bg-cyan-500/10",
     lightTag:   "text-cyan-700 border-cyan-400/30 bg-cyan-50",
@@ -45,7 +45,7 @@ const services: Service[] = [
     title:      "Meta Ads",
     desc:       "Facebook & Instagram ads. Cancel anytime.",
     detail:     "Targeting, testing, and daily optimisation. Reach your exact customer. No lock-in.",
-    darkColor:  "border-rose-500/20 bg-rose-500/5",
+    darkColor:  "border-rose-500/20 bg-rose-500/10",
     lightColor: "border-rose-400/30 bg-rose-50/80",
     darkTag:    "text-rose-400 border-rose-500/20 bg-rose-500/10",
     lightTag:   "text-rose-700 border-rose-400/30 bg-rose-50",
@@ -164,7 +164,7 @@ export default function Solution() {
             viewport={{ once: false }}
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
                        border border-violet-500/20 bg-violet-500/20
-                       text-violet-600 text-xs font-medium mb-4"
+                       text-violet-400 text-xs font-medium mb-4"
           >
             <span className="w-1 h-1 rounded-full bg-violet-600" />
             What we offer

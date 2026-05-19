@@ -9,6 +9,7 @@ import TheStory from "@/components/home/theStory"
 import Guarantee from "@/components/home/guarantee"
 import SolutionWhyPoleniWrapper from "@/components/home/solutionWhyPoleniWrapper"
 import Solution from "@/components/home/solution"
+import ScrollFade from "@/components/shared/scrolleFade"
 
 export default function HomePage() {
   return (
@@ -25,13 +26,10 @@ export default function HomePage() {
 
         {/* SOLUTION → WHY POLENI scroll-lock slide */}
        <SolutionWhyPoleniWrapper/>
-       {/* <Solution/>
-       <WhyPoleni/> */}
 
         <TheStory />
         <Calculator />
-        <Guarantee />
-        <TrustSignals />
+        <ScrollFade/>
       </div>
     </>
   )

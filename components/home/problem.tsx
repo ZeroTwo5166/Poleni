@@ -19,7 +19,7 @@ const painPoints = [
     emoji: "📉",
     title: "Monthly retainers, zero results",
     text: "The agency is getting paid. Your business isn't growing. Something is wrong.",
-  },
+  }, 
 ]
 
 export default function Problem() {
@@ -149,7 +149,8 @@ export default function Problem() {
                 isDark
                   ? {
                       border: "1px solid rgba(239,68,68,0.10)",
-                      background: "rgba(239,68,68,0.03)",
+                      background: "linear-gradient(135deg,rgba(239,68,68,0.08),rgba(249,115,22,0.04))",
+backdropFilter: "blur(14px)",
                     }
                   : {
                       border: "1px solid rgba(239,68,68,0.10)",
