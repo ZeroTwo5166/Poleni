@@ -22,14 +22,14 @@ export default function Calculator() {
   const isDark = theme === "dark"
 
   const selectedSite = WEBSITE_TYPES.find((t) => t.id === websiteType)!
-  
-  const monthlyTotal = useMemo(() => 
+
+  const monthlyTotal = useMemo(() =>
     ADDONS
       .filter((a) => activeAddons.has(a.id))
       .reduce((sum, a) => sum + a.price, 0),
     [activeAddons]
   )
-  
+
   const growthCount = activeAddons.size
   const growthPct = Math.round((growthCount / 3) * 100)
   const growthMessage = GROWTH_MESSAGES[growthCount]
@@ -50,7 +50,7 @@ export default function Calculator() {
         style={{ background: "radial-gradient(ellipse, rgba(99,102,241,0.06) 0%, transparent 70%)" }}
       />
 
-{isDark && (
+      {isDark && (
         <>
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px pointer-events-none"
             style={{ background: "linear-gradient(90deg, transparent, rgba(16,185,129,0.4), transparent)" }} />
@@ -58,7 +58,7 @@ export default function Calculator() {
             style={{ background: "radial-gradient(ellipse at top, rgba(16,185,129,0.12) 0%, transparent 70%)" }} />
         </>
       )}
-  
+
       <div className="relative z-10 max-w-6xl mx-auto">
         <motion.div
           variants={fadeUp}
@@ -77,9 +77,7 @@ export default function Calculator() {
           </span>
           <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
             What does it cost to{" "}
-            <span className="text-emerald-500 dark:text-emerald-500">
-              grow?
-            </span>
+            <span className="text-emerald-500">grow?</span>
           </h2>
           <p className="text-lg max-w-xl mx-auto" style={{ color: "var(--text-secondary)" }}>
             Build your package and see the price instantly. No hidden fees. No surprises.
@@ -101,7 +99,7 @@ export default function Calculator() {
 
               {/* Website type */}
               <div className="glass rounded-2xl p-6">
-                <p className="text-sm font-medium mb-4" style={{ color: "var(--text-primary)" }}>
+                <p className="text-sm font-semibold mb-4" style={{ color: "var(--text-primary)" }}>
                   1. Choose your website type
                 </p>
                 <div className="grid grid-cols-2 gap-3">
@@ -111,23 +109,23 @@ export default function Calculator() {
                       <button
                         key={type.id}
                         onClick={() => setWebsiteType(type.id)}
-                        className={`relative p-4 rounded-xl border transition-all duration-150 text-left
-                          ${isActive
-                            ? "border-indigo-500/50 bg-indigo-500/10"
-                            : isDark
-                              ? "border-white/[0.06] bg-white/[0.02] hover:border-white/10"
-                              : "border-black/[0.06] bg-black/[0.02] hover:border-black/10"}
-                          transform-gpu will-change-transform`}
+                        className="relative p-4 rounded-xl border transition-all duration-150 text-left transform-gpu"
+                        style={isActive ? {
+                          borderColor: "rgba(99,102,241,0.6)",
+                          backgroundColor: "rgba(99,102,241,0.12)",
+                          boxShadow: "0 0 0 1px rgba(99,102,241,0.2)",
+                        } : isDark ? {
+                          borderColor: "rgba(255,255,255,0.15)",
+                          backgroundColor: "rgba(255,255,255,0.08)",
+                        } : {
+                          borderColor: "rgba(0,0,0,0.15)",
+                          backgroundColor: "rgba(0,0,0,0.04)",
+                        }}
                       >
-                        {isActive && (
-                          <div className="absolute inset-0 rounded-xl bg-indigo-500/5" />
-                        )}
-                        <span className="relative z-10 flex flex-col gap-1">
+                        <span className="flex flex-col gap-1">
                           <span className="text-lg">{type.icon}</span>
-                          <span
-                            className={`text-sm font-medium ${isActive ? "text-indigo-400" : ""}`}
-                            style={!isActive ? { color: "var(--text-secondary)" } : {}}
-                          >
+                          <span className="text-sm font-semibold"
+                            style={{ color: isActive ? "#6366f1" : "var(--text-primary)" }}>
                             {type.label}
                           </span>
                           <span className="text-xs" style={{ color: "var(--text-muted)" }}>{type.desc}</span>
@@ -140,7 +138,7 @@ export default function Calculator() {
 
               {/* Addons */}
               <div className="glass rounded-2xl p-6">
-                <p className="text-sm font-medium mb-4" style={{ color: "var(--text-primary)" }}>
+                <p className="text-sm font-semibold mb-4" style={{ color: "var(--text-primary)" }}>
                   2. Add marketing services
                 </p>
                 <div className="flex flex-col gap-3">
@@ -152,30 +150,41 @@ export default function Calculator() {
                         onClick={() => toggleAddon(addon.id)}
                         className={`flex items-center justify-between p-4 rounded-xl border
                           transition-all duration-150 text-left transform-gpu
-                          ${isActive
-                            ? addon.active
-                            : isDark
-                              ? "border-white/[0.06] hover:border-white/10"
-                              : "border-black/[0.06] hover:border-black/10"}`}
+                          ${isActive ? addon.active : ""}`}
+                        style={!isActive ? isDark ? {
+                          borderColor: "rgba(255,255,255,0.15)",
+                          backgroundColor: "rgba(255,255,255,0.08)",
+                        } : {
+                          borderColor: "rgba(0,0,0,0.15)",
+                          backgroundColor: "rgba(0,0,0,0.04)",
+                        } : undefined}
                       >
                         <div className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-full border-2 flex items-center
-                            justify-center transition-all duration-150 shrink-0
-                            ${isActive ? "border-current bg-current" : "border-gray-600"}`}>
+                          <div
+                            className="w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-150 shrink-0"
+                            style={isActive ? {
+                              borderColor: "currentColor",
+                              backgroundColor: "currentColor",
+                            } : isDark ? {
+                              borderColor: "rgba(255,255,255,0.4)",
+                            } : {
+                              borderColor: "rgba(0,0,0,0.3)",
+                            }}
+                          >
                             {isActive && (
-                              <svg width="10" height="10" viewBox="0 0 10 10" className="transform-gpu">
+                              <svg width="10" height="10" viewBox="0 0 10 10">
                                 <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                               </svg>
                             )}
                           </div>
                           <div>
-                            <p className="text-sm font-medium" style={{ color: isActive ? "var(--text-primary)" : "var(--text-secondary)" }}>
+                            <p className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
                               {addon.label}
                             </p>
                             <p className="text-xs" style={{ color: "var(--text-muted)" }}>{addon.desc}</p>
                           </div>
                         </div>
-                        <span className="text-sm font-semibold shrink-0 ml-4" style={{ color: isActive ? "var(--text-primary)" : "var(--text-secondary)" }}>
+                        <span className="text-sm font-semibold shrink-0 ml-4" style={{ color: "var(--text-secondary)" }}>
                           {addon.price.toLocaleString("da-DK")} kr/md
                         </span>
                       </button>
@@ -188,7 +197,7 @@ export default function Calculator() {
             </div>
           </motion.div>
 
-          {/* Right column — sticky is on a plain div INSIDE the motion.div */}
+          {/* Right column */}
           <motion.div
             variants={fadeRight}
             initial="hidden"
@@ -198,8 +207,6 @@ export default function Calculator() {
             style={{ willChange: "transform" }}
           >
             <div className="flex flex-col gap-6 lg:sticky lg:top-28">
-
-              {/* Price summary */}
               <div className="glass rounded-2xl p-6">
                 <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "var(--text-muted)" }}>
                   Your estimate
@@ -207,7 +214,7 @@ export default function Calculator() {
 
                 <div className="flex items-start justify-between mb-4 pb-4" style={{ borderBottom: "1px solid var(--border)" }}>
                   <div>
-                    <p className="text-sm" style={{ color: "var(--text-secondary)" }}>One-time website</p>
+                    <p className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>One-time website</p>
                     <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{selectedSite.label}</p>
                   </div>
                   <AnimatePresence mode="wait">
@@ -227,7 +234,7 @@ export default function Calculator() {
 
                 <div className="flex items-start justify-between mb-6">
                   <div>
-                    <p className="text-sm" style={{ color: "var(--text-secondary)" }}>Monthly marketing</p>
+                    <p className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>Monthly marketing</p>
                     <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
                       {activeAddons.size === 0 ? "No services selected" : [...activeAddons].join(" + ")}
                     </p>
@@ -250,8 +257,7 @@ export default function Calculator() {
                 <Link
                   href="/contact"
                   className="block w-full py-3.5 text-center bg-indigo-500 hover:bg-indigo-400
-                             text-white font-semibold rounded-xl transition-colors duration-150
-                             transform-gpu will-change-transform"
+                             text-white font-semibold rounded-xl transition-colors duration-150"
                 >
                   Get exact quote →
                 </Link>

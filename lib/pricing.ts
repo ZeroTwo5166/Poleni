@@ -1,4 +1,3 @@
-// lib/pricing.ts
 export const WEBSITE_TYPES = [
   {
     id:       "static",
@@ -12,7 +11,7 @@ export const WEBSITE_TYPES = [
     label:    "Dynamic / CMS",
     desc:     "5–10 pages, blog, editable",
     price:    10000,
-    icon:     "📄",
+    icon:     "⚙️",
   },
   {
     id:       "ecommerce",

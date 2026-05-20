@@ -128,7 +128,7 @@ export default function AboutPage() {
                   P
                 </div>
                 <h3 className="font-bold text-xl mb-1" style={{ color: "var(--text-primary)" }}>Poleni Founder</h3>
-                <p className="text-sm mb-8 opacity-60" style={{ color: "var(--text-muted)" }}>CEO & Lead Developer</p>
+                <p className="text-sm mb-8 opacity-60" style={{ color: "var(--text-muted)" }}>Founder & CEO</p>
 
                 <div className="space-y-3">
                   {[
