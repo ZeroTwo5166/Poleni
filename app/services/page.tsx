@@ -7,57 +7,57 @@ import { useTheme } from "@/components/shared/themeProvider"
 
 const websites = [
   {
-    name:     "Static website",
-    desc:     "Perfect for small businesses that need a clean, fast online presence.",
+    name:     "Statisk hjemmeside",
+    desc:     "Perfekt til mindre virksomheder der har brug for en hurtig og professionel online tilstedeværelse.",
     price:    "4.000 kr",
-    type:     "one-time",
-    delivery: "3–5 days",
+    type:     "engangsbetaling",
+    delivery: "3–5 dage",
     color:    "border-indigo-500/20 bg-indigo-500/5",
     dot:      "bg-indigo-400",
     tag:      "text-indigo-400 border-indigo-500/20 bg-indigo-500/5",
     includes: [
-      "3–5 pages",
-      "Contact form",
-      "Basic SEO",
-      "Mobile responsive",
-      "Fast loading",
+      "3–5 sider",
+      "Kontaktformular",
+      "Grundlæggende SEO",
+      "Mobilvenlig",
+      "Hurtig indlæsning",
     ],
   },
   {
-    name:     "Dynamic / CMS website",
-    desc:     "For businesses that need to update content themselves — blog, news, products.",
+    name:     "Dynamisk / CMS hjemmeside",
+    desc:     "Til virksomheder der selv vil opdatere indhold — blog, nyheder, produkter.",
     price:    "10.000 kr",
-    type:     "one-time",
-    delivery: "10–14 days",
+    type:     "engangsbetaling",
+    delivery: "10–14 dage",
     color:    "border-purple-500/20 bg-purple-500/5",
     dot:      "bg-purple-400",
     tag:      "text-purple-400 border-purple-500/20 bg-purple-500/5",
     popular:  true,
     includes: [
-      "5–10 pages",
-      "Blog / news section",
-      "Editable CMS",
-      "Contact forms",
-      "SEO optimised",
-      "Mobile responsive",
+      "5–10 sider",
+      "Blog / nyhedssektion",
+      "Redigerbart CMS",
+      "Kontaktformularer",
+      "SEO-optimeret",
+      "Mobilvenlig",
     ],
   },
   {
-    name:     "E-commerce website",
-    desc:     "Full online shop with product catalog, cart, checkout and payment integration.",
+    name:     "Webshop",
+    desc:     "Komplet webshop med produktkatalog, indkøbskurv, checkout og betalingsintegration.",
     price:    "18.000 kr",
-    type:     "one-time",
-    delivery: "14–21 days",
+    type:     "engangsbetaling",
+    delivery: "14–21 dage",
     color:    "border-pink-500/20 bg-pink-500/5",
     dot:      "bg-pink-400",
     tag:      "text-pink-400 border-pink-500/20 bg-pink-500/5",
     includes: [
-      "Product catalog",
-      "Shopping cart",
-      "Checkout flow",
-      "Payment integration",
-      "Order management",
-      "Mobile responsive",
+      "Produktkatalog",
+      "Indkøbskurv",
+      "Checkout-flow",
+      "Betalingsintegration",
+      "Ordrehåndtering",
+      "Mobilvenlig",
     ],
   },
 ]
@@ -65,53 +65,53 @@ const websites = [
 const marketing = [
   {
     name:     "Google Ads",
-    desc:     "Get in front of people actively searching for your product or service.",
+    desc:     "Bliv synlig for folk der aktivt søger efter dit produkt eller din ydelse.",
     price:    "2.500 kr",
-    type:     "per month",
-    delivery: "Ongoing",
+    type:     "pr. måned",
+    delivery: "Løbende",
     color:    "border-blue-500/20 bg-blue-500/5",
     dot:      "bg-blue-400",
     tag:      "text-blue-400 border-blue-500/20 bg-blue-500/5",
     includes: [
-      "Campaign setup",
-      "Daily management",
-      "A/B ad testing",
-      "Monthly report",
-      "No lock-in contract",
+      "Kampagneopsætning",
+      "Daglig styring",
+      "A/B-test af annoncer",
+      "Månedlig rapport",
+      "Ingen bindingsperiode",
     ],
   },
   {
     name:     "Meta Ads",
-    desc:     "Reach your ideal customers on Facebook and Instagram with targeted ads.",
+    desc:     "Nå dine ideelle kunder på Facebook og Instagram med målrettede annoncer.",
     price:    "2.000 kr",
-    type:     "per month",
-    delivery: "Ongoing",
+    type:     "pr. måned",
+    delivery: "Løbende",
     color:    "border-pink-500/20 bg-pink-500/5",
     dot:      "bg-pink-400",
     tag:      "text-pink-400 border-pink-500/20 bg-pink-500/5",
     includes: [
-      "Ad creatives",
-      "Audience targeting",
-      "Retargeting setup",
-      "Monthly report",
-      "No lock-in contract",
+      "Annoncekreativer",
+      "Målgruppeopsætning",
+      "Retargeting-opsætning",
+      "Månedlig rapport",
+      "Ingen bindingsperiode",
     ],
   },
   {
     name:     "SEO",
-    desc:     "Rank higher on Google and get more organic traffic every month.",
+    desc:     "Rangér højere på Google og få mere organisk trafik hver måned.",
     price:    "3.500 kr",
-    type:     "per month",
-    delivery: "Ongoing",
+    type:     "pr. måned",
+    delivery: "Løbende",
     color:    "border-green-500/20 bg-green-500/5",
     dot:      "bg-green-400",
     tag:      "text-green-400 border-green-500/20 bg-green-500/5",
     includes: [
-      "Keyword research",
+      "Søgeordsanalyse",
       "On-page SEO",
-      "Technical SEO audit",
-      "Monthly report",
-      "No lock-in contract",
+      "Teknisk SEO-gennemgang",
+      "Månedlig rapport",
+      "Ingen bindingsperiode",
     ],
   },
 ]
@@ -138,22 +138,22 @@ export default function ServicesPage() {
                            border border-indigo-500/20 bg-indigo-500/5
                            text-indigo-400 text-xs font-medium mb-6">
             <span className="w-1 h-1 rounded-full bg-indigo-400" />
-            What we offer
+            Hvad vi tilbyder
           </span>
           <h1
             className="text-5xl md:text-6xl font-bold mb-6 leading-tight"
             style={{ color: "var(--text-primary)" }}
           >
-            Services &
+            Services og
             <br />
-            <span className="gradient-text">transparent pricing</span>
+            <span className="gradient-text">gennemsigtige priser</span>
           </h1>
           <p
             className="text-lg max-w-2xl mx-auto leading-relaxed"
             style={{ color: "var(--text-secondary)" }}
           >
-            Fixed prices. No hidden fees. No surprises.
-            You know exactly what you're getting before you pay.
+            Faste priser. Ingen skjulte gebyrer. Ingen overraskelser.
+            Du ved præcist hvad du får, inden du betaler.
           </p>
         </motion.div>
 
@@ -176,7 +176,7 @@ export default function ServicesPage() {
                 `}
                 style={tab !== t ? { color: "var(--text-secondary)" } : {}}
               >
-                {t === "websites" ? "Websites" : "Marketing"}
+                {t === "websites" ? "Hjemmesider" : "Markedsføring"}
               </button>
             ))}
           </div>
@@ -207,7 +207,7 @@ export default function ServicesPage() {
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                     <span className="px-3 py-1 rounded-full bg-purple-500
                                      text-white text-xs font-semibold">
-                      Most popular
+                      Mest populær
                     </span>
                   </div>
                 )}
@@ -276,7 +276,7 @@ export default function ServicesPage() {
                         : "bg-black/[0.06] hover:bg-black/10 text-gray-900"}
                     `}
                   >
-                    Get started →
+                    Kom i gang →
                   </Link>
                 </div>
               </motion.div>
@@ -290,7 +290,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
           >
             {marketing.map((service, i) => (
               <motion.div
@@ -309,7 +309,7 @@ export default function ServicesPage() {
                   border text-xs font-medium w-fit mb-4 ${service.tag}
                 `}>
                   <span className={`w-1 h-1 rounded-full ${service.dot}`} />
-                  No lock-in
+                  Ingen binding
                 </span>
 
                 <h3
@@ -368,11 +368,37 @@ export default function ServicesPage() {
                         : "bg-black/[0.06] hover:bg-black/10 text-gray-900"}
                     `}
                   >
-                    Get started →
+                    Kom i gang →
                   </Link>
                 </div>
               </motion.div>
             ))}
+          </motion.div>
+        )}
+
+        {/* Global Weekly Update Banner */}
+        {tab === "marketing" && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mb-16 p-5 rounded-2xl border border-dashed text-sm leading-relaxed"
+            style={{ 
+              borderColor: "var(--border)", 
+              backgroundColor: isDark ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.01)" 
+            }}
+          >
+            <div className="flex items-start gap-3">
+              <span className="text-xl mt-0.5 shrink-0">✨</span>
+              <div>
+                <h4 className="font-semibold mb-1" style={{ color: "var(--text-primary)" }}>
+                  Ugentlig statusopdatering
+                </h4>
+                <p style={{ color: "var(--text-secondary)" }}>
+                  Du hører fra os hver uge. Vi sender en kort statusopdatering om hvad der er blevet arbejdet på, og hvad vi har opnået. Ingen lange rapporter – bare et klart og handlingsorienteret overblik.
+                </p>
+              </div>
+            </div>
           </motion.div>
         )}
 
@@ -392,13 +418,13 @@ export default function ServicesPage() {
               className="text-xl font-semibold"
               style={{ color: "var(--text-primary)" }}
             >
-              Full price overview
+              Komplet prisoversigt
             </h2>
             <p
               className="text-sm mt-1"
               style={{ color: "var(--text-muted)" }}
             >
-              All prices in DKK. Ads budget not included.
+              Alle priser i DKK. Annoncebudget ikke inkluderet.
             </p>
           </div>
 
@@ -406,7 +432,7 @@ export default function ServicesPage() {
             <table className="w-full">
               <thead>
                 <tr style={{ borderBottom: "1px solid var(--border)" }}>
-                  {["Service", "What's included", "Price", "Delivery"].map((h) => (
+                  {["Ydelse", "Hvad er inkluderet", "Pris", "Levering"].map((h) => (
                     <th
                       key={h}
                       className="text-left px-6 py-4 text-xs uppercase
@@ -499,14 +525,14 @@ export default function ServicesPage() {
             className="text-3xl font-bold mb-4"
             style={{ color: "var(--text-primary)" }}
           >
-            Not sure what you need?
+            Ikke sikker på hvad du har brug for?
           </h2>
           <p
             className="mb-8 max-w-md mx-auto"
             style={{ color: "var(--text-secondary)" }}
           >
-            Book a free 30-minute consultation. We'll tell you exactly
-            what your business needs — no pressure, no upselling.
+            Book en gratis 30-minutters konsultation. Vi fortæller dig præcist
+            hvad din virksomhed har brug for — ingen pres, ingen mersalg.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -515,7 +541,7 @@ export default function ServicesPage() {
                          font-semibold rounded-xl transition-colors duration-200
                          text-center"
             >
-              Book free consultation →
+              Book gratis konsultation →
             </Link>
             <Link
               href="/calculator"
@@ -527,7 +553,7 @@ export default function ServicesPage() {
                   : "border-black/10 hover:border-black/20 text-gray-600 hover:text-gray-900 bg-black/[0.02] hover:bg-black/[0.05]"}
               `}
             >
-              Try the calculator
+              Prøv beregneren
             </Link>
           </div>
         </motion.div>

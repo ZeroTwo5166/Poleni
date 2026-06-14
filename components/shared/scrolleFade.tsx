@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from "react"
 import TheStory from "../home/theStory"
 import Calculator from "../home/calculator"
 import TrustSignals from "../home/trustSignals"
-import Guarantee from "../home/guarantee"
+import OurWork from "../home/ourWork"
 
 export default function ScrollFade() {
   const outerRef = useRef<HTMLDivElement>(null)
@@ -36,11 +36,11 @@ export default function ScrollFade() {
           style={{
             position: "sticky",
             top: 0,
-            minHeight: "100vh", // 🔥 important: allow growth
+            minHeight: "100vh",
           }}
         >
 
-          {/* STORY */}
+          {/* OUR WORK */}
           <div
             style={{
               position: "absolute",
@@ -52,11 +52,10 @@ export default function ScrollFade() {
             }}
           >
             <div style={{ minHeight: "100vh" }}>
-              <Guarantee />
+              <OurWork />
             </div>
           </div>
 
-          {/* CALCULATOR */}
           <div
             style={{
               position: "absolute",

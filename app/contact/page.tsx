@@ -10,7 +10,7 @@ type FormState = "idle" | "loading" | "success" | "error"
 const contactInfo = [
   {
     icon:   "✉",
-    label:  "Email",
+    label:  "E-mail",
     value:  "kontakt@poleni.dk",
     href:   "mailto:kontakt@poleni.dk",
     color:  "text-indigo-400",
@@ -19,7 +19,7 @@ const contactInfo = [
   },
   {
     icon:   "✆",
-    label:  "Phone",
+    label:  "Telefon",
     value:  "+45 42 33 39 95",
     href:   "tel:+4542333995",
     color:  "text-purple-400",
@@ -28,8 +28,8 @@ const contactInfo = [
   },
   {
     icon:   "◎",
-    label:  "Location",
-    value:  "Copenhagen, Denmark",
+    label:  "Lokation",
+    value:  "København, Danmark",
     href:   "#",
     color:  "text-pink-400",
     border: "border-pink-500/20",
@@ -37,8 +37,8 @@ const contactInfo = [
   },
   {
     icon:   "◷",
-    label:  "Response time",
-    value:  "Within 24 hours",
+    label:  "Svartid",
+    value:  "Inden for 24 timer",
     href:   "#",
     color:  "text-green-400",
     border: "border-green-500/20",
@@ -111,22 +111,22 @@ export default function ContactPage() {
                            border border-indigo-500/20 bg-indigo-500/5
                            text-indigo-400 text-xs font-medium mb-6">
             <span className="w-1 h-1 rounded-full bg-indigo-400 animate-pulse" />
-            Free consultation
+            Gratis konsultation
           </span>
           <h1
             className="text-5xl md:text-6xl font-bold mb-6 leading-tight"
             style={{ color: "var(--text-primary)" }}
           >
-            Let's talk about
+            Lad os tale om
             <br />
-            <span className="gradient-text">your business</span>
+            <span className="gradient-text">din virksomhed</span>
           </h1>
           <p
             className="text-lg max-w-2xl mx-auto leading-relaxed"
             style={{ color: "var(--text-secondary)" }}
           >
-            No pressure. No pitch. Just an honest conversation about
-            what your business needs and what it costs.
+            Intet pres. Intet salgstrick. Bare en ærlig samtale om
+            hvad din virksomhed har brug for, og hvad det koster.
           </p>
         </motion.div>
 
@@ -143,7 +143,7 @@ export default function ContactPage() {
                 className="text-xl font-semibold mb-6"
                 style={{ color: "var(--text-primary)" }}
               >
-                Send us a message
+                Send os en besked
               </h2>
 
               <AnimatePresence mode="wait">
@@ -166,13 +166,13 @@ export default function ContactPage() {
                       className="font-semibold text-lg mb-2"
                       style={{ color: "var(--text-primary)" }}
                     >
-                      Message sent!
+                      Besked sendt!
                     </h3>
                     <p
                       className="text-sm max-w-xs"
                       style={{ color: "var(--text-secondary)" }}
                     >
-                      We'll get back to you within 24 hours.
+                      Vi vender tilbage inden for 24 timer.
                     </p>
                     <button
                       onClick={() => setFormState("idle")}
@@ -184,7 +184,7 @@ export default function ContactPage() {
                           : "border-black/10 text-gray-500 hover:text-gray-900"}
                       `}
                     >
-                      Send another message
+                      Send en ny besked
                     </button>
                   </motion.div>
                 )}
@@ -204,7 +204,7 @@ export default function ContactPage() {
                         className={labelClass}
                         style={{ color: "var(--text-secondary)" }}
                       >
-                        Name *
+                        Navn *
                       </label>
                       <input
                         type="text"
@@ -212,7 +212,7 @@ export default function ContactPage() {
                         value={form.name}
                         onChange={handleChange}
                         required
-                        placeholder="Your full name"
+                        placeholder="Dit fulde navn"
                         className={inputClass}
                       />
                     </div>
@@ -223,7 +223,7 @@ export default function ContactPage() {
                         className={labelClass}
                         style={{ color: "var(--text-secondary)" }}
                       >
-                        Email *
+                        E-mail *
                       </label>
                       <input
                         type="email"
@@ -242,12 +242,12 @@ export default function ContactPage() {
                         className={labelClass}
                         style={{ color: "var(--text-secondary)" }}
                       >
-                        Phone
+                        Telefon
                         <span
                           className="ml-1 normal-case font-normal"
                           style={{ color: "var(--text-muted)" }}
                         >
-                          (optional)
+                          (valgfri)
                         </span>
                       </label>
                       <input
@@ -266,7 +266,7 @@ export default function ContactPage() {
                         className={labelClass}
                         style={{ color: "var(--text-secondary)" }}
                       >
-                        Message *
+                        Besked *
                       </label>
                       <textarea
                         name="message"
@@ -274,7 +274,7 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         rows={5}
-                        placeholder="Tell us about your business and what you need..."
+                        placeholder="Fortæl os om din virksomhed og hvad du har brug for..."
                         className={`${inputClass} resize-none`}
                       />
                     </div>
@@ -288,8 +288,8 @@ export default function ContactPage() {
                                    border border-red-500/20"
                       >
                         <p className="text-red-400 text-sm">
-                          Something went wrong. Please try again or email
-                          us directly at kontakt@poleni.dk
+                          Noget gik galt. Prøv igen eller skriv direkte til
+                          os på kontakt@poleni.dk
                         </p>
                       </motion.div>
                     )}
@@ -315,10 +315,10 @@ export default function ContactPage() {
                             className="block w-4 h-4 border-2 border-white/30
                                        border-t-white rounded-full"
                           />
-                          Sending...
+                          Sender...
                         </span>
                       ) : (
-                        "Send message →"
+                        "Send besked →"
                       )}
                     </button>
 
@@ -326,7 +326,7 @@ export default function ContactPage() {
                       className="text-xs text-center"
                       style={{ color: "var(--text-muted)" }}
                     >
-                      We respond within 24 hours. No spam, ever.
+                      Vi svarer inden for 24 timer. Aldrig spam.
                     </p>
 
                   </motion.form>
@@ -393,14 +393,14 @@ export default function ContactPage() {
                 className="font-semibold mb-4"
                 style={{ color: "var(--text-primary)" }}
               >
-                What happens next?
+                Hvad sker der nu?
               </h3>
               <div className="flex flex-col gap-4">
                 {[
-                  { step: "01", text: "We read your message and review your needs" },
-                  { step: "02", text: "We reply within 24 hours with an honest assessment" },
-                  { step: "03", text: "Free 30-min call to align on goals and pricing" },
-                  { step: "04", text: "You get a fixed quote — no surprises" },
+                  { step: "01", text: "Vi læser din besked og gennemgår dine behov" },
+                  { step: "02", text: "Vi svarer inden for 24 timer med en ærlig vurdering" },
+                  { step: "03", text: "Gratis 30-minutters opkald for at afstemme mål og pris" },
+                  { step: "04", text: "Du får et fast tilbud — ingen overraskelser" },
                 ].map((item) => (
                   <div key={item.step} className="flex items-start gap-3">
                     <span className="text-xs font-bold text-indigo-400
@@ -437,10 +437,10 @@ export default function ContactPage() {
                   className="font-medium"
                   style={{ color: "var(--text-primary)" }}
                 >
-                  No obligation.{" "}
+                  Ingen forpligtelse.{" "}
                 </span>
-                The consultation is completely free. You decide if
-                we're the right fit.
+                Konsultationen er helt gratis. Du bestemmer selv,
+                om vi er det rette match.
               </p>
             </motion.div>
 

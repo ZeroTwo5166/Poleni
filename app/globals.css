@@ -2,18 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  cursor: none !important;
+}
+
 :root,
 [data-theme="dark"] {
   --bg:             #080808;
-  --bg-card:        rgba(255, 255, 255, 0.03);
-  --bg-hover:       rgba(255, 255, 255, 0.05);
-  --border:         rgba(255, 255, 255, 0.06);
-  --border-hover:   rgba(255, 255, 255, 0.12);
+  --bg-card:        rgba(255, 255, 255, 0.06);
+  --bg-hover:       rgba(255, 255, 255, 0.09);
+  --border:         rgba(255, 255, 255, 0.12);
+  --border-hover:   rgba(255, 255, 255, 0.18);
   
   /* REFINED TEXT COLORS (DARK) */
-  --text-primary:   #f9fafb; /* Slightly off-white to reduce eye strain */
-  --text-secondary: #d1d5db; /* Gray 300 - much clearer than 400 on deep black */
-  --text-muted:     #808080; /* Perfect for labels/captions */
+  --text-primary:   #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted:     #808080;
   
   --navbar-bg:      rgba(8, 8, 8, 0.8);
   --grid-line:      rgba(255, 255, 255, 0.025);

@@ -16,20 +16,20 @@ import DeviceMockup from "@/components/home/deviceMockup"
 
 const faqs = [
   {
-    q: "Is the ads budget included in the price?",
-    a: "No. The monthly price covers our management fee only. Your ads budget (what you spend on Google or Meta) is separate and goes directly to the platform.",
+    q: "Er annoncebudgettet inkluderet i prisen?",
+    a: "Nej. Den månedlige pris dækker kun vores management-honorar. Dit annoncebudget (hvad du bruger på Google eller Meta) er separat og går direkte til platformen.",
   },
   {
-    q: "Can I pause or cancel anytime?",
-    a: "Yes. All marketing services are month-to-month. No lock-in contracts. Pause or cancel with 30 days notice.",
+    q: "Kan jeg sætte på pause eller opsige når som helst?",
+    a: "Ja. Alle marketingydelser er måned-til-måned. Ingen bindingsperiode. Sæt på pause eller opsig med 30 dages varsel.",
   },
   {
-    q: "Is the website price really one-time?",
-    a: "Yes. You pay once and own it forever. No monthly platform fees, no surprise charges. Hosting is extra but we'll help you set it up cheap.",
+    q: "Er hjemmesideprisen virkelig en engangsbetaling?",
+    a: "Ja. Du betaler én gang og ejer den for evigt. Ingen månedlige platformsgebyrer, ingen skjulte opkrævninger. Hosting er ekstra, men vi hjælper dig med at sætte det op billigt.",
   },
   {
-    q: "How accurate is this estimate?",
-    a: "Very accurate for standard projects. Custom projects may vary. Book a free consultation and we'll give you an exact quote.",
+    q: "Hvor præcist er dette estimat?",
+    a: "Meget præcist for standardprojekter. Tilpassede projekter kan variere. Book en gratis konsultation, så giver vi dig et nøjagtigt tilbud.",
   },
 ]
 
@@ -41,22 +41,22 @@ const colors = [
 ]
 
 const included = [
-  "Fixed price — no surprise invoices",
-  "You own the website forever",
-  "No lock-in on marketing services",
-  "Monthly reports on all services",
-  "Direct access to your team",
-  "Response within 24 hours",
+  "Fast pris — ingen overraskende fakturaer",
+  "Du ejer hjemmesiden for evigt",
+  "Ingen binding på marketingydelser",
+  "Månedlige rapporter på alle ydelser",
+  "Direkte adgang til dit team",
+  "Svar inden for 24 timer",
 ]
 
 export default function CalculatorPage() {
-  const [websiteType, setWebsiteType]   = useState<WebsiteTypeId>("static")
+  const [websiteType, setWebsiteType] = useState<WebsiteTypeId | null>(null)
   const [activeAddons, setActiveAddons] = useState<Set<AddonId>>(new Set())
   const [openFaq, setOpenFaq]           = useState<number | null>(null)
   const { theme }                       = useTheme()
   const isDark                          = theme === "dark"
 
-  const selectedSite  = WEBSITE_TYPES.find((t) => t.id === websiteType)!
+  const selectedSite = WEBSITE_TYPES.find((t) => t.id === websiteType) ?? null
   const monthlyTotal  = ADDONS
     .filter((a) => activeAddons.has(a.id))
     .reduce((sum, a) => sum + a.price, 0)
@@ -104,18 +104,18 @@ export default function CalculatorPage() {
                            border border-indigo-500/20 bg-indigo-500/5
                            text-indigo-400 text-xs font-medium mb-6">
             <span className="w-1 h-1 rounded-full bg-indigo-400" />
-            Growth calculator
+            Vækstberegner
           </span>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight"
             style={{ color: "var(--text-primary)" }}>
-            What does it cost
+            Hvad koster det
             <br />
-            <span className="gradient-text">to grow your business?</span>
+            <span className="gradient-text">at vækste din virksomhed?</span>
           </h1>
           <p className="text-lg max-w-2xl mx-auto leading-relaxed"
             style={{ color: "var(--text-secondary)" }}>
-            Build your package and see the exact price instantly.
-            No hidden fees. No surprises. No sales calls.
+            Sammensæt din pakke og se den præcise pris med det samme.
+            Ingen skjulte gebyrer. Ingen overraskelser. Ingen salgstelefonopkald.
           </p>
         </motion.div>
 
@@ -132,16 +132,18 @@ export default function CalculatorPage() {
             {/* Website type */}
             <div className="glass rounded-2xl p-6">
               <p className="text-sm font-medium mb-1" style={{ color: "var(--text-primary)" }}>
-                1. Choose your website type
+                1. Vælg din hjemmesidetype
               </p>
               <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>
-                One-time fixed price — you own it forever
+                Fast engangspris — du ejer den for evigt
               </p>
               <div className="grid grid-cols-2 gap-3">
                 {WEBSITE_TYPES.map((type) => (
                   <button
                     key={type.id}
-                    onClick={() => setWebsiteType(type.id)}
+                    onClick={() =>
+  setWebsiteType((prev) => (prev === type.id ? null : type.id))
+}
                     className="relative p-4 rounded-xl border text-left transition-all duration-200"
                     style={websiteType === type.id ? {
                       borderColor: "rgba(99,102,241,0.6)",
@@ -169,7 +171,7 @@ export default function CalculatorPage() {
                       <span className="text-sm font-bold mt-1" style={{
                         color: websiteType === type.id ? "var(--text-primary)" : "var(--text-secondary)",
                       }}>
-                        {type.price ? `${type.price.toLocaleString("da-DK")} kr` : "Contact us"}
+                        {type.price ? `${type.price.toLocaleString("da-DK")} kr` : "Kontakt os"}
                       </span>
                     </span>
                   </button>
@@ -180,10 +182,10 @@ export default function CalculatorPage() {
             {/* Addons */}
             <div className="glass rounded-2xl p-6">
               <p className="text-sm font-medium mb-1" style={{ color: "var(--text-primary)" }}>
-                2. Add marketing services
+                2. Tilføj marketingydelser
               </p>
               <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>
-                Month-to-month — cancel anytime
+                Måned-til-måned — opsig når som helst
               </p>
               <div className="flex flex-col gap-3">
                 {ADDONS.map((addon) => {
@@ -238,7 +240,7 @@ export default function CalculatorPage() {
             <div className="glass rounded-2xl p-6">
               <div className="flex items-center justify-between mb-3">
                 <p className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
-                  Growth potential
+                  Vækstpotentiale
                 </p>
                 <motion.span key={growthPct} initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }} className="text-2xl font-bold"
@@ -266,10 +268,10 @@ export default function CalculatorPage() {
               </AnimatePresence>
             </div>
 
-            {/* Everything included — moved here */}
+            {/* Everything included */}
             <div className="glass rounded-2xl p-6">
               <p className="text-sm font-medium mb-4" style={{ color: "var(--text-primary)" }}>
-                Everything included
+                Alt er inkluderet
               </p>
               <div className="grid grid-cols-1 gap-2">
                 {included.map((item) => (
@@ -298,30 +300,36 @@ export default function CalculatorPage() {
             {/* Price summary */}
             <div className="glass rounded-2xl p-6">
               <p className="text-xs uppercase tracking-widest mb-6" style={{ color: "var(--text-muted)" }}>
-                Your estimate
+                Dit estimat
               </p>
 
               <div className="flex items-start justify-between mb-4 pb-4"
                 style={{ borderBottom: "1px solid var(--border)" }}>
                 <div>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>One-time website</p>
-                  <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{selectedSite.label}</p>
+                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>Hjemmeside (engangsbetaling)</p>
+                  <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+  {selectedSite?.label ?? "Ingen hjemmeside valgt"}
+</p>
                 </div>
                 <AnimatePresence mode="wait">
                   <motion.p key={websiteType} initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
                     className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>
-                    {selectedSite.price ? `${selectedSite.price.toLocaleString("da-DK")} kr` : "Kontakt os"}
+                    {selectedSite
+  ? selectedSite.price
+    ? `${selectedSite.price.toLocaleString("da-DK")} kr`
+    : "Kontakt os"
+  : "0 kr"}
                   </motion.p>
                 </AnimatePresence>
               </div>
 
               <div className="flex items-start justify-between mb-6">
                 <div>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>Monthly marketing</p>
+                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>Månedlig markedsføring</p>
                   <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
                     {activeAddons.size === 0
-                      ? "No services selected"
+                      ? "Ingen ydelser valgt"
                       : [...activeAddons].map((id) => ADDONS.find((a) => a.id === id)?.label).join(" + ")}
                   </p>
                 </div>
@@ -334,12 +342,12 @@ export default function CalculatorPage() {
                 </AnimatePresence>
               </div>
 
-              {(selectedSite.price || monthlyTotal > 0) && (
+              {(selectedSite?.price || monthlyTotal > 0) && (
                 <div className="flex items-center justify-between mb-6 px-4 py-3
                                rounded-xl bg-indigo-500/5 border border-indigo-500/20">
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>First year total</p>
+                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>Første år i alt</p>
                   <p className="text-indigo-400 font-bold">
-                    {((selectedSite.price ?? 0) + monthlyTotal * 12).toLocaleString("da-DK")} kr
+                    {((selectedSite?.price ?? 0) + monthlyTotal * 12).toLocaleString("da-DK")} kr
                   </p>
                 </div>
               )}
@@ -347,10 +355,10 @@ export default function CalculatorPage() {
               <Link href="/contact"
                 className="block w-full py-3.5 text-center bg-indigo-500 hover:bg-indigo-400
                            text-white font-semibold rounded-xl transition-colors duration-200 mb-3">
-                Get exact quote →
+                Få et præcist tilbud →
               </Link>
               <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
-                Prices are estimates. Ads budget is separate and goes directly to Google / Meta.
+                Priserne er estimater. Annoncebudget er separat og går direkte til Google / Meta.
               </p>
             </div>
 
@@ -368,7 +376,7 @@ export default function CalculatorPage() {
           className="max-w-3xl mx-auto"
         >
           <h2 className="text-3xl font-bold text-center mb-8" style={{ color: "var(--text-primary)" }}>
-            Common questions
+            Ofte stillede spørgsmål
           </h2>
 
           <div className="flex flex-col gap-3">
@@ -406,12 +414,12 @@ export default function CalculatorPage() {
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center mt-16">
             <p className="text-sm mb-6" style={{ color: "var(--text-muted)" }}>
-              Still not sure? Book a free call — no pressure, no pitch.
+              Stadig i tvivl? Book et gratis opkald — ingen pres, ingen salgstale.
             </p>
             <Link href="/contact"
               className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-500
                          hover:bg-indigo-400 text-white font-semibold rounded-xl transition-colors duration-200">
-              Book free consultation →
+              Book gratis konsultation →
             </Link>
           </motion.div>
         </motion.div>

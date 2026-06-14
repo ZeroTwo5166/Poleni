@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 
-const words = ["Strategy.", "Action.", "Results."]
+const words = ["Strategi.", "Handling.", "Resultater."]
 
 export default function Preloader() {
   const [index, setIndex]     = useState(0)

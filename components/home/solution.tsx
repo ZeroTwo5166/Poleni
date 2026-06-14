@@ -17,8 +17,8 @@ const services: Service[] = [
   {
     icon:       "🖥️",
     title:      "Websites",
-    desc:       "Responsive, mobile-friendly, ready in 3–14 days.",
-    detail:     "Fixed one-time price. You own it forever. No monthly fee just to keep your site alive.",
+    desc:       "Responsivt, mobilvenligt, klar på 3–14 dage.",
+    detail:     "Fast engangspris. Du ejer det for altid. Ingen månedlig betaling bare for at holde din side kørende.",
     darkColor:  "border-violet-500/20 bg-violet-500/10",
     lightColor: "border-violet-400/30 bg-violet-50/80",
     darkTag:    "text-violet-400 border-violet-500/20 bg-violet-500/10",
@@ -30,8 +30,8 @@ const services: Service[] = [
   {
     icon:       "🎯",
     title:      "Google Ads",
-    desc:       "Daily monitoring. You pay only for real clicks.",
-    detail:     "We set up, manage, and improve your campaigns every single day. No wasted spend.",
+    desc:       "Daglig overvågning. Du betaler kun for reelle klik.",
+    detail:     "Vi opsætter, administrerer og forbedrer dine kampagner hver dag. Intet spildt budget.",
     darkColor:  "border-cyan-500/20 bg-cyan-500/10",
     lightColor: "border-cyan-400/30 bg-cyan-50/80",
     darkTag:    "text-cyan-400 border-cyan-500/20 bg-cyan-500/10",
@@ -43,8 +43,8 @@ const services: Service[] = [
   {
     icon:       "📱",
     title:      "Meta Ads",
-    desc:       "Facebook & Instagram ads. Cancel anytime.",
-    detail:     "Targeting, testing, and daily optimisation. Reach your exact customer. No lock-in.",
+    desc:       "Facebook & Instagram-annoncer. Opsig når som helst.",
+    detail:     "Målretning, test og daglig optimering. Ram præcis din kunde. Ingen binding.",
     darkColor:  "border-rose-500/20 bg-rose-500/10",
     lightColor: "border-rose-400/30 bg-rose-50/80",
     darkTag:    "text-rose-400 border-rose-500/20 bg-rose-500/10",
@@ -81,17 +81,16 @@ function ScrollCard({
 
   return (
     <motion.div
-    style={{
-  x, y, rotate, opacity, scale,
-  zIndex: 10 - index,
-  willChange: "transform, opacity",
-  transformPerspective: 1000,
-  backdropFilter: "blur(12px)",
-  boxShadow: isDark
-    ? undefined
-    : `0 8px 32px ${service.accent}18`,
-}}
-      
+      style={{
+        x, y, rotate, opacity, scale,
+        zIndex: 10 - index,
+        willChange: "transform, opacity",
+        transformPerspective: 1000,
+        backdropFilter: "blur(12px)",
+        boxShadow: isDark
+          ? undefined
+          : `0 8px 32px ${service.accent}18`,
+      }}
       className={`relative p-8 rounded-2xl border ${colorClass}
         group overflow-hidden flex flex-col gap-4 shadow-xl pointer-events-none`}
     >
@@ -103,16 +102,26 @@ function ScrollCard({
         style={{ background: `${service.accent}14` }}>
         {service.icon}
       </div>
+
       <div>
-        <h3 className="text-xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>{service.title}</h3>
-        <p className="text-sm font-semibold mb-3" style={{ color: service.accent }}>{service.desc}</p>
-        <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>{service.detail}</p>
+        <h3 className="text-xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>
+          {service.title}
+        </h3>
+        <p className="text-sm font-semibold mb-3" style={{ color: service.accent }}>
+          {service.desc}
+        </p>
+        <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+          {service.detail}
+        </p>
       </div>
-      <Link href={service.href}
+
+      <Link
+        href={service.href}
         className={`mt-auto inline-flex items-center gap-1.5 text-xs font-semibold
           px-3 py-1.5 rounded-full border w-fit transition-all duration-200
-          pointer-events-auto hover:opacity-80 ${tagClass}`}>
-        Learn more →
+          pointer-events-auto hover:opacity-80 ${tagClass}`}
+      >
+        Lær mere →
       </Link>
     </motion.div>
   )
@@ -130,10 +139,9 @@ export default function Solution() {
 
   return (
     <section
-      className="relative  min-h-screen py-32 px-6 overflow-hidden"
+      className="relative min-h-screen py-32 px-6 overflow-hidden"
       style={!isDark ? { backgroundColor: "#f5f0ff" } : undefined}
     >
-      {/* Top glow — dark mode only */}
       {isDark && (
         <>
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px pointer-events-none"
@@ -143,7 +151,6 @@ export default function Solution() {
         </>
       )}
 
-      {/* Background */}
       {isDark ? (
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.07) 0%, transparent 70%)" }} />
@@ -167,17 +174,18 @@ export default function Solution() {
                        text-violet-400 text-xs font-medium mb-4"
           >
             <span className="w-1 h-1 rounded-full bg-violet-600" />
-            What we offer
+            Hvad vi tilbyder
           </motion.span>
 
           <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
-            Three services. One team.{" "}
+            Tre services. Ét team.{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500 dark:from-purple-400 dark:to-pink-400">
-              Zero fluff.
+              Ingen fyld.
             </span>
           </h2>
+
           <p className="text-lg max-w-xl mx-auto" style={{ color: "var(--text-secondary)" }}>
-            Fixed prices. No lock-in. Pick what you need — or all three.
+            Faste priser. Ingen binding. Vælg det du har brug for — eller alle tre.
           </p>
         </div>
 
@@ -202,13 +210,16 @@ export default function Solution() {
           className="text-center mt-16"
         >
           <p className="text-sm mb-3" style={{ color: "var(--text-muted)" }}>
-            Not sure what you need?
+            Er du i tvivl om, hvad du har brug for?
           </p>
-          <Link href="/contact"
+
+          <Link
+            href="/contact"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm
                        text-white transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-            style={{ background: "linear-gradient(135deg, #7c3aed, #0891b2)" }}>
-            Get a free consultation →
+            style={{ background: "linear-gradient(135deg, #7c3aed, #0891b2)" }}
+          >
+            Få en gratis konsultation →
           </Link>
         </motion.div>
       </div>

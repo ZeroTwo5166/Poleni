@@ -7,24 +7,24 @@ import Link from "next/link"
 const values = [
   {
     icon: "◈",
-    title: "Transparency",
-    desc: "You see the price before you sign. No vague quotes, no surprise invoices.",
+    title: "Gennemsigtighed",
+    desc: "Du ser prisen, før du skriver under. Ingen uklare tilbud, ingen overraskelsesfakturaer.",
     color: "text-indigo-400",
     border: "border-indigo-500/20",
     bg: "bg-indigo-500/5",
   },
   {
     icon: "⬡",
-    title: "Honesty",
-    desc: "We tell you what you need — not what makes us the most money.",
+    title: "Ærlighed",
+    desc: "Vi fortæller dig, hvad du har brug for — ikke hvad der giver os mest penge.",
     color: "text-purple-400",
     border: "border-purple-500/20",
     bg: "bg-purple-500/5",
   },
   {
     icon: "○",
-    title: "No bullshit",
-    desc: "No 12-month lock-ins. No hidden fees. No corporate nonsense.",
+    title: "Intet bullshit",
+    desc: "Ingen 12-måneders binding. Ingen skjulte gebyrer. Ingen corporate nonsens.",
     color: "text-pink-400",
     border: "border-pink-500/20",
     bg: "bg-pink-500/5",
@@ -32,10 +32,10 @@ const values = [
 ]
 
 const stats = [
-  { value: "6+", label: "Clients served" },
-  { value: "100%", label: "Transparent pricing" },
-  { value: "24h", label: "Response time" },
-  { value: "0", label: "Lock-in contracts" },
+  { value: "6+", label: "Kunder hjulpet" },
+  { value: "100%", label: "Gennemsigtig prissætning" },
+  { value: "24h", label: "Svartid" },
+  { value: "0", label: "Bindingsaftaler" },
 ]
 
 export default function AboutPage() {
@@ -57,22 +57,22 @@ export default function AboutPage() {
                            border border-indigo-500/20 bg-indigo-500/5
                            text-indigo-400 text-xs font-medium mb-6">
             <span className="w-1 h-1 rounded-full bg-indigo-400" />
-            About Poleni
+            Om Poleni
           </span>
           <h1
             className="text-5xl md:text-7xl font-bold mb-8 leading-[1.1] tracking-tight"
             style={{ color: "var(--text-primary)" }}
           >
-            Built for businesses
+            Bygget til virksomheder
             <br />
-            <span className="gradient-text">tired of being overcharged</span>
+            <span className="gradient-text">trætte af at blive overopkrævet</span>
           </h1>
           <p
             className="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed opacity-80"
             style={{ color: "var(--text-secondary)" }}
           >
-            We started Poleni because small businesses deserve honest pricing
-            and real results — not 12-month traps and vague promises.
+            Vi startede Poleni, fordi små virksomheder fortjener ærlig prissætning
+            og reelle resultater — ikke 12-måneders fælder og vage løfter.
           </p>
         </motion.div>
 
@@ -85,36 +85,35 @@ export default function AboutPage() {
           className="glass rounded-3xl p-8 md:p-16 mb-12 border border-white/5"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            
+
             {/* Story Text */}
             <div className="space-y-6">
               <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
                                border border-purple-500/20 bg-purple-500/5
                                text-purple-400 text-xs font-medium">
                 <span className="w-1 h-1 rounded-full bg-purple-400" />
-                Founder story
+                Grundlæggerhistorie
               </span>
               <h2
                 className="text-3xl md:text-4xl font-bold"
                 style={{ color: "var(--text-primary)" }}
               >
-                Why we built Poleni
+                Hvorfor vi byggede Poleni
               </h2>
               <div className="space-y-4 text-base md:text-lg opacity-80" style={{ color: "var(--text-secondary)" }}>
                 <p>
-                  I kept seeing small business owners get burned by agencies —
-                  locked into 12-month contracts, paying monthly retainers for
-                  work they couldn&apos;t measure, and never knowing what they were
-                  actually getting.
+                  Jeg så hele tiden små virksomhedsejere blive udnyttet af bureauer —
+                  låst i 12-måneders kontrakter, betale månedlige retainers for
+                  arbejde de ikke kunne måle, og aldrig vide hvad de faktisk fik.
                 </p>
                 <p>
-                  So I built Poleni differently. Fixed prices. Transparent timelines.
-                  No lock-in. You see exactly what you&apos;re paying for before you
-                  pay a single krone.
+                  Så jeg byggede Poleni anderledes. Faste priser. Gennemsigtige tidslinjer.
+                  Ingen binding. Du ser præcis hvad du betaler for, før du
+                  betaler en eneste krone.
                 </p>
                 <p>
-                  Our developers and ad specialists are based in Copenhagen.
-                  Experienced, reliable, and fast.
+                  Vores udviklere og annonce-specialister er baseret i København.
+                  Erfarne, pålidelige og hurtige.
                 </p>
               </div>
             </div>
@@ -127,14 +126,14 @@ export default function AboutPage() {
                                 justify-center mx-auto mb-6 text-white text-3xl font-bold shadow-xl shadow-indigo-500/20">
                   P
                 </div>
-                <h3 className="font-bold text-xl mb-1" style={{ color: "var(--text-primary)" }}>Poleni Founder</h3>
-                <p className="text-sm mb-8 opacity-60" style={{ color: "var(--text-muted)" }}>Founder & CEO</p>
+                <h3 className="font-bold text-xl mb-1" style={{ color: "var(--text-primary)" }}>Poleni Grundlægger</h3>
+                <p className="text-sm mb-8 opacity-60" style={{ color: "var(--text-muted)" }}>Stifter & CEO</p>
 
                 <div className="space-y-3">
                   {[
-                    { dot: "bg-green-400", text: "Based in Copenhagen", pulse: true },
-                    { dot: "bg-indigo-400", text: "Full-stack developer", pulse: false },
-                    { dot: "bg-purple-400", text: "Google & Meta Ads certified", pulse: false },
+                    { dot: "bg-green-400", text: "Baseret i København", pulse: true },
+                    { dot: "bg-indigo-400", text: "Full-stack udvikler", pulse: false },
+                    { dot: "bg-purple-400", text: "Google & Meta Ads certificeret", pulse: false },
                   ].map((item) => (
                     <div
                       key={item.text}
@@ -157,7 +156,7 @@ export default function AboutPage() {
         {/* Values Section */}
         <div className="mb-24">
           <h2 className="text-3xl font-bold mb-12 text-center" style={{ color: "var(--text-primary)" }}>
-            What we stand for
+            Hvad vi står for
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {values.map((value, i) => (
@@ -203,22 +202,22 @@ export default function AboutPage() {
           className="glass rounded-[2.5rem] p-12 md:p-20 text-center relative overflow-hidden"
         >
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
-          
+
           <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: "var(--text-primary)" }}>
-            Ready to work together?
+            Klar til at arbejde sammen?
           </h2>
           <p className="mb-10 max-w-md mx-auto text-lg opacity-70" style={{ color: "var(--text-secondary)" }}>
-            Free consultation. No pressure. We&apos;ll tell you exactly what you need and what it costs.
+            Gratis konsultation. Ingen pres. Vi fortæller dig præcis hvad du har brug for og hvad det koster.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               href="/contact"
               className="w-full sm:w-auto px-10 py-5 bg-indigo-500 hover:bg-indigo-400 text-white font-bold rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-lg shadow-indigo-500/20"
             >
-              Book free consultation →
+              Book gratis konsultation →
             </Link>
-            
+
             <Link
               href="/services"
               className={`
@@ -228,7 +227,7 @@ export default function AboutPage() {
                   : "border-black/10 hover:border-black/20 text-gray-900 bg-black/5"}
               `}
             >
-              See our services
+              Se vores services
             </Link>
           </div>
         </motion.div>

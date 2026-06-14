@@ -16,12 +16,14 @@ import { useTheme } from "@/components/shared/themeProvider"
 import { fadeUp, fadeLeft, fadeRight, viewport } from "@/lib/animationVariants"
 
 export default function Calculator() {
-  const [websiteType, setWebsiteType] = useState<WebsiteTypeId>("static")
+  const [websiteType, setWebsiteType] = useState<WebsiteTypeId | null>(null)
   const [activeAddons, setActiveAddons] = useState<Set<AddonId>>(new Set())
   const { theme } = useTheme()
   const isDark = theme === "dark"
 
-  const selectedSite = WEBSITE_TYPES.find((t) => t.id === websiteType)!
+  const selectedSite = websiteType
+    ? WEBSITE_TYPES.find((t) => t.id === websiteType) ?? null
+    : null
 
   const monthlyTotal = useMemo(() =>
     ADDONS
@@ -40,6 +42,10 @@ export default function Calculator() {
       next.has(id) ? next.delete(id) : next.add(id)
       return next
     })
+  }, [])
+
+  const toggleWebsiteType = useCallback((id: WebsiteTypeId) => {
+    setWebsiteType((prev) => (prev === id ? null : id))
   }, [])
 
   return (
@@ -73,14 +79,14 @@ export default function Calculator() {
                            border border-emerald-500/20 bg-emerald-500/10
                            text-emerald-500 text-xs font-medium mb-4">
             <span className="w-1 h-1 rounded-full bg-emerald-500" />
-            Transparent pricing tool
+            Gennemsigtigt prissætningsværktøj
           </span>
           <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
-            What does it cost to{" "}
-            <span className="text-emerald-500">grow?</span>
+            Hvad koster det at{" "}
+            <span className="text-emerald-500">vokse?</span>
           </h2>
           <p className="text-lg max-w-xl mx-auto" style={{ color: "var(--text-secondary)" }}>
-            Build your package and see the price instantly. No hidden fees. No surprises.
+            Byg din pakke og se prisen med det samme. Ingen skjulte gebyrer. Ingen overraskelser.
           </p>
         </motion.div>
 
@@ -99,16 +105,20 @@ export default function Calculator() {
 
               {/* Website type */}
               <div className="glass rounded-2xl p-6">
-                <p className="text-sm font-semibold mb-4" style={{ color: "var(--text-primary)" }}>
-                  1. Choose your website type
-                </p>
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+                    1. Vælg din hjemmeside-type
+                  </p>
+                  <span className="text-xs" style={{ color: "var(--text-muted)" }}>Valgfri</span>
+                </div>
                 <div className="grid grid-cols-2 gap-3">
                   {WEBSITE_TYPES.map((type) => {
                     const isActive = websiteType === type.id
                     return (
                       <button
                         key={type.id}
-                        onClick={() => setWebsiteType(type.id)}
+                        onClick={() => toggleWebsiteType(type.id)}
+                        aria-pressed={isActive}
                         className="relative p-4 rounded-xl border transition-all duration-150 text-left transform-gpu"
                         style={isActive ? {
                           borderColor: "rgba(99,102,241,0.6)",
@@ -134,12 +144,17 @@ export default function Calculator() {
                     )
                   })}
                 </div>
+                {!websiteType && (
+                  <p className="text-xs mt-3" style={{ color: "var(--text-muted)" }}>
+                    Ingen hjemmeside valgt — kun marketingydelser bliver prissat.
+                  </p>
+                )}
               </div>
 
               {/* Addons */}
               <div className="glass rounded-2xl p-6">
                 <p className="text-sm font-semibold mb-4" style={{ color: "var(--text-primary)" }}>
-                  2. Add marketing services
+                  2. Tilføj marketingydelser
                 </p>
                 <div className="flex flex-col gap-3">
                   {ADDONS.map((addon) => {
@@ -209,17 +224,19 @@ export default function Calculator() {
             <div className="flex flex-col gap-6 lg:sticky lg:top-28">
               <div className="glass rounded-2xl p-6">
                 <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "var(--text-muted)" }}>
-                  Your estimate
+                  Dit estimat
                 </p>
 
                 <div className="flex items-start justify-between mb-4 pb-4" style={{ borderBottom: "1px solid var(--border)" }}>
                   <div>
-                    <p className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>One-time website</p>
-                    <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{selectedSite.label}</p>
+                    <p className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>Engangshjemmeside</p>
+                    <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                      {selectedSite ? selectedSite.label : "Ikke inkluderet"}
+                    </p>
                   </div>
                   <AnimatePresence mode="wait">
                     <motion.p
-                      key={websiteType}
+                      key={websiteType ?? "none"}
                       initial={{ opacity: 0, y: -8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
@@ -227,16 +244,20 @@ export default function Calculator() {
                       className="text-2xl font-bold"
                       style={{ color: "var(--text-primary)" }}
                     >
-                      {selectedSite.price ? `${selectedSite.price.toLocaleString("da-DK")} kr` : "Kontakt os"}
+                      {!selectedSite
+                        ? "—"
+                        : selectedSite.price
+                          ? `${selectedSite.price.toLocaleString("da-DK")} kr`
+                          : "Kontakt os"}
                     </motion.p>
                   </AnimatePresence>
                 </div>
 
                 <div className="flex items-start justify-between mb-6">
                   <div>
-                    <p className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>Monthly marketing</p>
+                    <p className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>Månedlig marketing</p>
                     <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
-                      {activeAddons.size === 0 ? "No services selected" : [...activeAddons].join(" + ")}
+                      {activeAddons.size === 0 ? "Ingen ydelser valgt" : [...activeAddons].join(" + ")}
                     </p>
                   </div>
                   <AnimatePresence mode="wait">
@@ -259,10 +280,10 @@ export default function Calculator() {
                   className="block w-full py-3.5 text-center bg-indigo-500 hover:bg-indigo-400
                              text-white font-semibold rounded-xl transition-colors duration-150"
                 >
-                  Get exact quote →
+                  Få et præcist tilbud →
                 </Link>
                 <p className="text-xs text-center mt-3" style={{ color: "var(--text-muted)" }}>
-                  Prices are estimates. Ads budget is separate.
+                  Priser er estimater. Annoncebudget er ikke inkluderet.
                 </p>
               </div>
 

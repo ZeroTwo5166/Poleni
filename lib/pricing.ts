@@ -1,29 +1,29 @@
 export const WEBSITE_TYPES = [
   {
     id:       "static",
-    label:    "Static website",
-    desc:     "3–5 pages, contact form",
+    label:    "Statisk hjemmeside",
+    desc:     "3–5 sider, kontaktformular",
     price:    4000,
     icon:     "🖥️",
   },
   {
     id:       "dynamic",
-    label:    "Dynamic / CMS",
-    desc:     "5–10 pages, blog, editable",
+    label:    "Dynamisk / CMS",
+    desc:     "5–10 sider, blog, redigerbar",
     price:    10000,
     icon:     "⚙️",
   },
   {
     id:       "ecommerce",
-    label:    "E-commerce",
-    desc:     "Shop, cart, checkout",
+    label:    "Webshop",
+    desc:     "Shop, kurv, checkout",
     price:    18000,
     icon:     "🛒",
   },
   {
     id:       "custom",
-    label:    "Custom",
-    desc:     "Let's talk",
+    label:    "Custom løsning",
+    desc:     "Lad os tage en snak",
     price:    null,
     icon:     "⚡",
   },
@@ -35,7 +35,7 @@ export const ADDONS = [
   {
     id:      "google",
     label:   "Google Ads",
-    desc:    "Campaign setup + daily management",
+    desc:    "Opsætning af kampagner + løbende optimering",
     price:   2500,
     color:   "from-blue-500/10 to-blue-600/5",
     border:  "border-blue-500/20",
@@ -45,7 +45,7 @@ export const ADDONS = [
   {
     id:      "meta",
     label:   "Meta Ads",
-    desc:    "Facebook + Instagram ads",
+    desc:    "Facebook- og Instagram-annoncer",
     price:   2000,
     color:   "from-pink-500/10 to-pink-600/5",
     border:  "border-pink-500/20",
@@ -55,7 +55,7 @@ export const ADDONS = [
   {
     id:      "seo",
     label:   "SEO",
-    desc:    "Keywords, on-page, monthly report",
+    desc:    "Søgeord, on-page optimering og månedlig rapport",
     price:   3500,
     color:   "from-green-500/10 to-green-600/5",
     border:  "border-green-500/20",
@@ -67,8 +67,9 @@ export const ADDONS = [
 export type AddonId = (typeof ADDONS)[number]["id"]
 
 export const GROWTH_MESSAGES: Record<number, string> = {
-  0: "Add ads or SEO to start getting traffic",
-  1: "Good start — one channel driving growth",
-  2: "Strong setup — two channels working together",
-  3: "Full growth stack — maximum visibility",
+  0: "Tilføj annoncering eller SEO for at begynde at få trafik",
+  1: "God start — én kanal skaber vækst",
+  2: "Stærk opsætning — to kanaler arbejder sammen",
+  3: "Komplet vækstpakke — maksimal synlighed",
 }
+

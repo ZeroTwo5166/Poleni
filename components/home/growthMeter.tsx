@@ -28,7 +28,7 @@ export default function GrowthMeter({ pct, message }: Props) {
           className="text-sm font-medium"
           style={{ color: "var(--text-primary)" }}
         >
-          Growth potential
+          Vækstpotentiale
         </p>
         <motion.span
           key={pct}

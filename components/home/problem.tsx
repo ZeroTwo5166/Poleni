@@ -7,19 +7,19 @@ import { fadeUp, viewport } from "@/lib/animationVariants"
 const painPoints = [
   {
     emoji: "😤",
-    title: "Trapped in 12-month contracts",
-    text: "You want out but you can't leave. You keep paying even when results don't come.",
+    title: "Fastlåst i 12 måneders kontrakter",
+    text: "Du vil gerne ud, men du kan ikke komme ud. Du betaler videre, selv når resultaterne udebliver.",
   },
   {
     emoji: "🤷",
-    title: "No idea what you're paying for",
-    text: "Vague invoices. Zero transparency. You ask questions, you get buzzwords.",
+    title: "Ingen idé om hvad du betaler for",
+    text: "Uklare fakturaer. Ingen gennemsigtighed. Du stiller spørgsmål og får buzzwords tilbage.",
   },
   {
     emoji: "📉",
-    title: "Monthly retainers, zero results",
-    text: "The agency is getting paid. Your business isn't growing. Something is wrong.",
-  }, 
+    title: "Månedlige gebyrer, ingen resultater",
+    text: "Bureauet får sin betaling. Din virksomhed vokser ikke. Noget er galt.",
+  },
 ]
 
 export default function Problem() {
@@ -27,7 +27,7 @@ export default function Problem() {
   const isDark = theme === "dark"
 
   return (
-<section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
       {/* Dark mode glow */}
       {isDark && (
         <>
@@ -87,7 +87,6 @@ export default function Problem() {
       )}
 
       <div className="relative z-10 max-w-4xl mx-auto text-center">
-
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -100,18 +99,18 @@ export default function Problem() {
                        text-red-500 text-xs font-medium mb-8"
           >
             <span className="w-1 h-1 rounded-full bg-red-500" />
-            Sound familiar?
+            Kender du det?
           </span>
 
           <h2
             className="text-4xl md:text-6xl font-bold leading-tight mb-6"
             style={{ color: "var(--text-primary)" }}
           >
-            Most agencies take your money.
+            De fleste bureauer tager dine penge.
             <br />
 
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">
-              Few deliver results.
+              Kun få skaber resultater.
             </span>
           </h2>
 
@@ -119,15 +118,14 @@ export default function Problem() {
             className="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-4"
             style={{ color: "var(--text-secondary)" }}
           >
-            If you've worked with an agency before, you've probably felt this.
+            Hvis du har arbejdet med et bureau før, har du sandsynligvis oplevet det her.
           </p>
 
           <p
             className="text-base max-w-xl mx-auto leading-relaxed mb-14"
             style={{ color: "var(--text-muted)" }}
           >
-            Long contracts. Confusing reports. A new account manager every 6
-            months. And somehow — still no real growth.
+            Lange kontrakter. Forvirrende rapporter. En ny kontaktperson hver 6. måned. Og alligevel — ingen reel vækst.
           </p>
         </motion.div>
 
@@ -149,28 +147,25 @@ export default function Problem() {
                 isDark
                   ? {
                       border: "1px solid rgba(239,68,68,0.10)",
-                      background: "linear-gradient(135deg,rgba(239,68,68,0.08),rgba(249,115,22,0.04))",
-backdropFilter: "blur(14px)",
+                      background:
+                        "linear-gradient(135deg,rgba(239,68,68,0.08),rgba(249,115,22,0.04))",
+                      backdropFilter: "blur(14px)",
                     }
                   : {
                       border: "1px solid rgba(239,68,68,0.10)",
                       background: "rgba(255,255,255,0.96)",
-                      boxShadow:
-                        "0 2px 10px rgba(239,68,68,0.04)",
+                      boxShadow: "0 2px 10px rgba(239,68,68,0.04)",
                     }
               }
             >
               <div
                 className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl"
                 style={{
-                  background:
-                    "linear-gradient(90deg, #ef4444, #f97316)",
+                  background: "linear-gradient(90deg, #ef4444, #f97316)",
                 }}
               />
 
-              <span className="text-3xl mb-4 block">
-                {item.emoji}
-              </span>
+              <span className="text-3xl mb-4 block">{item.emoji}</span>
 
               <h3
                 className="text-sm font-bold mb-2"
@@ -201,7 +196,7 @@ backdropFilter: "blur(14px)",
             className="text-base font-semibold"
             style={{ color: "var(--text-secondary)" }}
           >
-            Poleni is built differently.
+            Poleni er bygget anderledes.
           </p>
 
           <div
@@ -209,13 +204,13 @@ backdropFilter: "blur(14px)",
             style={{ color: "var(--text-muted)" }}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-            Fixed prices
+            Faste priser
 
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 ml-2" />
-            No contracts
+            Ingen binding
 
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 ml-2" />
-            Cancel anytime
+            Opsig når som helst
           </div>
 
           <motion.div

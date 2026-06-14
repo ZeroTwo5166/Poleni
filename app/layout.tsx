@@ -10,6 +10,7 @@ import StarField from "@/components/shared/starField"
 import ClockCursor from "@/components/shared/clockcursor"
 import MeshBackground from "@/components/shared/meshBackground"
 import ScrollToTop from "@/components/shared/scrollToTop"
+import LegalBar from "@/components/shared/legalBar"
 // REMOVE: import HorizontalScrollHandler from "@/components/shared/HorizontalScrollHandler"
 
 const geist = Geist({
@@ -51,6 +52,7 @@ export default function RootLayout({
               </main>
             <Footer />
           </div>
+          <LegalBar />
         </ThemeProvider>
       </body>
     </html>
