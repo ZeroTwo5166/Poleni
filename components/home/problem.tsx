@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { useTheme } from "@/components/shared/themeProvider"
-import { fadeUp, viewport } from "@/lib/animationVariants"
+import { fadeUp } from "@/lib/animationVariants"
 
 const painPoints = [
   {
@@ -28,7 +28,8 @@ export default function Problem() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
-      {/* Dark mode glow */}
+
+      {/* DARK MODE BACKGROUND (UNCHANGED) */}
       {isDark && (
         <>
           <div
@@ -46,41 +47,46 @@ export default function Problem() {
                 "radial-gradient(ellipse at top, rgba(239,68,68,0.07) 0%, transparent 70%)",
             }}
           />
-        </>
-      )}
 
-      {/* Background */}
-      {isDark ? (
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(239,68,68,0.04) 0%, transparent 70%)",
-          }}
-        />
-      ) : (
-        <>
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                "linear-gradient(180deg, #fdf6ec 0%, #fef3f2 55%, #f4f3ff 100%)",
+                "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(239,68,68,0.04) 0%, transparent 70%)",
+            }}
+          />
+        </>
+      )}
+
+      {/* LIGHT MODE — FIXED PREMIUM BACKGROUND */}
+      {!isDark && (
+        <>
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: `
+                radial-gradient(900px circle at 15% 10%, rgba(124,58,237,0.08), transparent 60%),
+                radial-gradient(800px circle at 85% 20%, rgba(236,72,153,0.06), transparent 55%),
+                radial-gradient(700px circle at 50% 100%, rgba(99,102,241,0.05), transparent 60%),
+                linear-gradient(180deg, #ffffff 0%, #faf7ff 55%, #f8f7ff 100%)
+              `,
+            }}
+          />
+
+          {/* subtle ambient depth (NO orange dominance anymore) */}
+          <div
+            className="absolute -left-24 top-1/4 w-[280px] h-[280px] rounded-full pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(124,58,237,0.06) 0%, transparent 70%)",
             }}
           />
 
           <div
-            className="absolute -left-20 top-1/4 w-[260px] h-[260px] rounded-full pointer-events-none"
+            className="absolute -right-24 bottom-1/3 w-[240px] h-[240px] rounded-full pointer-events-none"
             style={{
               background:
-                "radial-gradient(circle, rgba(251,146,60,0.08) 0%, transparent 70%)",
-            }}
-          />
-
-          <div
-            className="absolute -right-20 bottom-1/4 w-[220px] h-[220px] rounded-full pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(239,68,68,0.06) 0%, transparent 70%)",
+                "radial-gradient(circle, rgba(236,72,153,0.05) 0%, transparent 70%)",
             }}
           />
         </>
@@ -129,7 +135,7 @@ export default function Problem() {
           </p>
         </motion.div>
 
-        {/* Cards */}
+        {/* CARDS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {painPoints.map((item, i) => (
             <motion.div
@@ -142,22 +148,22 @@ export default function Problem() {
                 delay: i * 0.08,
                 ease: "easeOut",
               }}
-              className="relative p-6 rounded-2xl text-left overflow-hidden transform-gpu will-change-transform"
+              className="relative p-6 rounded-2xl text-left overflow-hidden"
               style={
                 isDark
                   ? {
                       border: "1px solid rgba(239,68,68,0.10)",
                       background:
                         "linear-gradient(135deg,rgba(239,68,68,0.08),rgba(249,115,22,0.04))",
-                      backdropFilter: "blur(14px)",
                     }
                   : {
-                      border: "1px solid rgba(239,68,68,0.10)",
-                      background: "rgba(255,255,255,0.96)",
-                      boxShadow: "0 2px 10px rgba(239,68,68,0.04)",
+                      border: "1px solid rgba(124,58,237,0.10)",
+                      background: "#ffffff",
+                      boxShadow: "0 18px 50px rgba(124,58,237,0.06)",
                     }
               }
             >
+              {/* top line */}
               <div
                 className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl"
                 style={{
@@ -184,7 +190,7 @@ export default function Problem() {
           ))}
         </div>
 
-        {/* Bottom */}
+        {/* bottom */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

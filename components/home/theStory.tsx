@@ -12,9 +12,16 @@ export default function TheStory() {
   return (
     <section
       className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
-      style={!isDark ? { backgroundColor: "#fff1f2" } : undefined}
+      style={
+        !isDark
+          ? {
+              /* FIXED LIGHT BASE — no more pink wash */
+              backgroundColor: "#faf8ff",
+            }
+          : undefined
+      }
     >
-      {/* Top glow — dark mode only */}
+      {/* DARK MODE TOP GLOW (UNCHANGED) */}
       {isDark && (
         <>
           <div
@@ -34,25 +41,10 @@ export default function TheStory() {
         </>
       )}
 
-      {/* Background */}
+      {/* BACKGROUND */}
       <div className="absolute inset-0 pointer-events-none">
-        {!isDark ? (
-          <div className="absolute inset-0" style={{ backgroundColor: "#fff1f2" }}>
-            <div
-              className="absolute inset-0 opacity-[0.04] mix-blend-multiply"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-              }}
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(244,63,94,0.10) 0%, rgba(251,113,133,0.06) 100%)",
-              }}
-            />
-          </div>
-        ) : (
+        {isDark ? (
+          /* DARK MODE BACKGROUND — UNTOUCHED */
           <div
             className="absolute left-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] opacity-60"
             style={{
@@ -60,6 +52,29 @@ export default function TheStory() {
                 "radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)",
             }}
           />
+        ) : (
+          /* ✅ FIXED LIGHT BACKGROUND (premium violet depth) */
+          <>
+            <div
+              className="absolute inset-0"
+              style={{
+                background: `
+                  radial-gradient(900px circle at 15% 20%, rgba(124,58,237,0.08), transparent 60%),
+                  radial-gradient(800px circle at 85% 30%, rgba(99,102,241,0.06), transparent 55%),
+                  radial-gradient(700px circle at 50% 100%, rgba(236,72,153,0.04), transparent 60%),
+                  linear-gradient(180deg, #ffffff 0%, #faf8ff 60%, #f6f5ff 100%)
+                `,
+              }}
+            />
+
+            {/* subtle noise (kept but toned down) */}
+            <div
+              className="absolute inset-0 opacity-[0.03] mix-blend-multiply"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+              }}
+            />
+          </>
         )}
       </div>
 
@@ -69,7 +84,6 @@ export default function TheStory() {
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          exit="exit"
           viewport={viewport}
           className="mb-12 text-center"
         >
@@ -78,14 +92,10 @@ export default function TheStory() {
             ${
               isDark
                 ? "border-rose-500/20 bg-rose-500/5 text-rose-400"
-                : "border-rose-300 bg-rose-200 text-rose-600 shadow-sm"
+                : "border-rose-200 bg-white text-rose-600 shadow-sm"
             }`}
           >
-            <span
-              className={`w-1 h-1 rounded-full ${
-                isDark ? "bg-rose-400" : "bg-rose-400"
-              }`}
-            />
+            <span className="w-1 h-1 rounded-full bg-rose-400" />
             Hvad der adskiller Poleni
           </span>
 
@@ -95,59 +105,43 @@ export default function TheStory() {
           >
             Du er ikke et nummer.
             <br />
-            {isDark ? (
-              <span
-                style={{
-                  backgroundImage:
-                    "linear-gradient(135deg, #fb7185 0%, #fda4af 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                Du er vores omdømme.
-              </span>
-            ) : (
-              <span
-                style={{
-                  backgroundImage:
-                    "linear-gradient(135deg, #f43f5e 0%, #fb7185 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                Du er vores omdømme.
-              </span>
-            )}
+            <span
+              style={{
+                backgroundImage:
+                  "linear-gradient(135deg, #f43f5e 0%, #fb7185 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Du er vores omdømme.
+            </span>
           </h2>
         </motion.div>
 
-        {/* Quote box */}
+        {/* Quote */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          exit="exit"
           viewport={viewport}
           className={`relative p-8 md:p-12 rounded-2xl border-2 mb-8 overflow-hidden
             ${
               isDark
                 ? "border-white/[0.06] bg-black"
-                : "border-rose-200 bg-white/80 shadow-xl shadow-rose-100/60"
+                : "border-violet-200 bg-white shadow-[0_20px_60px_rgba(124,58,237,0.10)]"
             }`}
-          style={!isDark ? { backdropFilter: "blur(12px)" } : undefined}
         >
           <span
             className={`absolute -top-2 left-4 text-9xl font-serif leading-none pointer-events-none select-none
-            ${isDark ? "text-rose-500/40" : "text-rose-300"}`}
+            ${isDark ? "text-rose-500/40" : "text-violet-200"}`}
           >
             "
           </span>
 
           <p
             className="text-lg md:text-xl italic leading-relaxed mb-6 relative z-10 font-medium"
-            style={{ color: isDark ? "#ffffff" : "#1e293b" }}
+            style={{ color: isDark ? "#fff" : "#0f172a" }}
           >
             "Store bureauer har 100+ kunder. Du er bare endnu en række i deres
             regneark. De mister ikke søvn over noget. Vi mister søvn over dig."
@@ -156,26 +150,22 @@ export default function TheStory() {
           <div
             className="w-12 h-1 mb-6 rounded-full"
             style={{
-              background: isDark
-                ? "rgba(255,255,255,0.1)"
-                : "linear-gradient(90deg, #f43f5e, #fb7185)",
+              background: "linear-gradient(90deg, #f43f5e, #fb7185)",
             }}
           />
 
-          <div className="flex flex-col gap-5 relative z-10">
+          <div className="flex flex-col gap-5">
             <p
               className="text-base leading-relaxed"
-              style={{ color: isDark ? "var(--text-secondary)" : "#334155" }}
+              style={{
+                color: isDark ? "var(--text-secondary)" : "#334155",
+              }}
             >
               Vi har ikke 100 kunder. Vi har en lille gruppe virksomheder, vi
-              virkelig går op i. Hver eneste kunde er kritisk for os.{" "}
-              <span
-                className="font-bold"
-                style={{ color: "#f43f5e" }}
-              >
+              virkelig går op i.{" "}
+              <span className="font-bold text-rose-500">
                 Hvis du ikke vokser, vokser vi ikke.
-              </span>{" "}
-              Vores omdømme afhænger af dig.
+              </span>
             </p>
 
             <p
@@ -184,13 +174,12 @@ export default function TheStory() {
                 color: isDark ? "var(--text-primary)" : "#0f172a",
               }}
             >
-              Store bureauer taler om resultater. Vi leverer dem. Fordi vores
-              vækst afhænger af din.
+              Store bureauer taler om resultater. Vi leverer dem.
             </p>
           </div>
         </motion.div>
 
-        {/* Feature pills */}
+        {/* Pills */}
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10"
           variants={staggerContainer}
@@ -210,14 +199,14 @@ export default function TheStory() {
                 ${
                   isDark
                     ? "border-white/[0.06] bg-white/[0.02]"
-                    : "border-rose-200/60 bg-rose-50/80"
+                    : "border-violet-200 bg-white shadow-sm"
                 }`}
             >
               <span className="text-xl">{item.icon}</span>
               <span
                 className="text-sm font-bold"
                 style={{
-                  color: isDark ? "var(--text-secondary)" : "#9f1239",
+                  color: isDark ? "var(--text-secondary)" : "#6d28d9",
                 }}
               >
                 {item.label}
@@ -240,7 +229,7 @@ export default function TheStory() {
                        transition-all duration-200 shadow-lg active:scale-95 hover:scale-105"
             style={{
               background: "linear-gradient(135deg, #f43f5e, #fb7185)",
-              boxShadow: "0 8px 24px rgba(244,63,94,0.3)",
+              boxShadow: "0 10px 30px rgba(244,63,94,0.25)",
             }}
           >
             Tal med os →

@@ -12,7 +12,7 @@ const testimonials = [
     author: "Mads K.",
     role: "Ejer, Maiya.dk",
     initials: "MK",
-    color: "bg-indigo-500",
+    color: "bg-emerald-500",
   },
   {
     quote:
@@ -20,7 +20,7 @@ const testimonials = [
     author: "Sarah L.",
     role: "Grundlægger, MightyLoyalty",
     initials: "SL",
-    color: "bg-purple-500",
+    color: "bg-emerald-600",
   },
   {
     quote:
@@ -28,7 +28,7 @@ const testimonials = [
     author: "Thomas B.",
     role: "CEO, The Hideout Brunch",
     initials: "TB",
-    color: "bg-pink-500",
+    color: "bg-emerald-700",
   },
 ]
 
@@ -39,21 +39,21 @@ export default function TrustSignals() {
   return (
     <section className="relative py-32 px-6 overflow-hidden">
 
-      {/* Top glow — dark mode only */}
+      {/* subtle green glow (dark only) */}
       {isDark && (
         <>
           <div
             className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px pointer-events-none"
             style={{
               background:
-                "linear-gradient(90deg, transparent, rgba(6,182,212,0.4), transparent)",
+                "linear-gradient(90deg, transparent, rgba(16,185,129,0.25), transparent)",
             }}
           />
           <div
             className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] pointer-events-none"
             style={{
               background:
-                "radial-gradient(ellipse at top, rgba(6,182,212,0.12) 0%, transparent 70%)",
+                "radial-gradient(ellipse at top, rgba(16,185,129,0.10) 0%, transparent 70%)",
             }}
           />
         </>
@@ -61,6 +61,7 @@ export default function TrustSignals() {
 
       <div className="relative z-10 max-w-6xl mx-auto">
 
+        {/* Header */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -71,10 +72,10 @@ export default function TrustSignals() {
         >
           <span
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-                       border border-cyan-500/20 bg-cyan-500/5
-                       text-cyan-500 text-xs font-medium mb-4"
+                       border border-emerald-500/20 bg-emerald-500/10
+                       text-emerald-600 text-xs font-medium mb-4"
           >
-            <span className="w-1 h-1 rounded-full bg-cyan-500" />
+            <span className="w-1 h-1 rounded-full bg-emerald-500" />
             Hvad kunder siger
           </span>
 
@@ -86,6 +87,7 @@ export default function TrustSignals() {
           </h2>
         </motion.div>
 
+        {/* Cards */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-3 gap-4"
           variants={staggerContainer}
@@ -99,7 +101,18 @@ export default function TrustSignals() {
               key={t.author}
               variants={fadeUp}
               whileHover={{ scale: 1.02, y: -4 }}
-              className="relative p-6 rounded-2xl glass cursor-default"
+              className="relative p-6 rounded-2xl"
+              style={
+                isDark
+                  ? {
+                      background: "#0f1412",
+                      border: "1px solid rgba(16,185,129,0.12)",
+                    }
+                  : {
+                      background: "#ffffff",
+                      border: "1px solid rgba(15,23,42,0.08)",
+                    }
+              }
             >
               <span
                 className="text-4xl font-serif absolute top-4 right-5"
@@ -131,10 +144,7 @@ export default function TrustSignals() {
                   >
                     {t.author}
                   </p>
-                  <p
-                    className="text-xs"
-                    style={{ color: "var(--text-muted)" }}
-                  >
+                  <p className="text-xs" style={{ color: "var(--text-muted)" }}>
                     {t.role}
                   </p>
                 </div>
@@ -143,6 +153,7 @@ export default function TrustSignals() {
           ))}
         </motion.div>
 
+        {/* CTA */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -157,8 +168,8 @@ export default function TrustSignals() {
 
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-500
-                       hover:bg-indigo-400 text-white font-semibold rounded-xl
+            className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-500
+                       hover:bg-emerald-400 text-black font-semibold rounded-xl
                        transition-colors duration-200"
           >
             Kom i gang gratis →

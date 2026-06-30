@@ -189,6 +189,7 @@ export default function ServicesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
+
           >
             {websites.map((service, i) => (
               <motion.div
@@ -401,6 +402,12 @@ export default function ServicesPage() {
             </div>
           </motion.div>
         )}
+
+
+
+
+
+
 
         {/* Full table */}
         <motion.div

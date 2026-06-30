@@ -118,19 +118,43 @@ export default function Hero() {
         pointerEvents: scrollProgress > 0.9 ? "none" : "auto",
       }}
     >
-      {/* Ambient glows */}
-      <div
-        className="absolute -left-40 top-1/4 w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{
-          background: `radial-gradient(circle, ${t.glow1} 0%, transparent 70%)`,
-        }}
-      />
-      <div
-        className="absolute -right-40 bottom-1/4 w-[400px] h-[400px] rounded-full pointer-events-none"
-        style={{
-          background: `radial-gradient(circle, ${t.glow2} 0%, transparent 70%)`,
-        }}
-      />
+      {/* Ambient glows - Only visible in light mode, now moving much faster */}
+      {!isDark && (
+        <>
+          <motion.div
+            animate={{
+              x: [0, 150, -100, 100, 0],
+              y: [0, -100, 120, -60, 0],
+              scale: [1, 1.2, 0.9, 1.1, 1],
+            }}
+            transition={{
+              duration: 3, // Sped up
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute -left-40 top-1/4 w-[500px] h-[500px] rounded-full pointer-events-none"
+            style={{
+              background: `radial-gradient(circle, ${t.glow1} 0%, transparent 70%)`,
+            }}
+          />
+          <motion.div
+            animate={{
+              x: [0, -180, 120, -100, 0],
+              y: [0, 150, -100, 80, 0],
+              scale: [1, 0.8, 1.2, 0.9, 1],
+            }}
+            transition={{
+              duration: 4, // Sped up
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute -right-40 bottom-1/4 w-[400px] h-[400px] rounded-full pointer-events-none"
+            style={{
+              background: `radial-gradient(circle, ${t.glow2} 0%, transparent 70%)`,
+            }}
+          />
+        </>
+      )}
 
       {/* Floating tags */}
       {tags.map((tag, i) => (

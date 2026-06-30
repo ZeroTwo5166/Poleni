@@ -13,14 +13,19 @@ const reasons = [
     desc: "Ingen skjulte gebyrer.",
     detail:
       'Du ser den præcise pris, før du skriver under. Ingen uklare tilbud, ingen overraskelsesfakturaer, ingen "det kommer an på det".',
+    
+    // -- Dark Theme (Untouched) --
     color: "text-indigo-400",
-    border: "border-indigo-500/30",
-    bg: "bg-indigo-500/10",
-
-    lightBg: "bg-indigo-400/50",
-    lightBorder: "border-indigo-200/60",
-
-    accent: "#4f46e5",
+    darkBg: "bg-zinc-900/95",
+    darkBorder: "border-indigo-500/30",
+    darkShadow: "rgba(99,102,241,0.2)",
+    accent: "#4f46e5", // Indigo
+    
+    // -- Light Theme (New Bluish Look) --
+    lightBg: "bg-gradient-to-b from-white to-blue-50/80",
+    lightBorder: "border-blue-200",
+    lightShadow: "rgba(37,99,235,0.12)",
+    lightAccent: "#2563eb", // Blue-600
   },
   {
     icon: <Zap size={28} />,
@@ -28,14 +33,19 @@ const reasons = [
     desc: "Opsig når som helst.",
     detail:
       "Annoncer kører måned til måned. Pause når som helst, opsig når som helst. Vi beholder kunder fordi vi leverer resultater — ikke fordi vi binder dem i kontrakter.",
+    
+    // -- Dark Theme (Untouched) --
     color: "text-purple-400",
-    border: "border-purple-500/30",
-    bg: "bg-purple-500/10",
-
-    lightBg: "bg-purple-400/50",
-    lightBorder: "border-purple-200/60",
-
-    accent: "#9333ea",
+    darkBg: "bg-zinc-900/95",
+    darkBorder: "border-purple-500/30",
+    darkShadow: "rgba(168,85,247,0.2)",
+    accent: "#9333ea", // Purple
+    
+    // -- Light Theme (New Bluish Look) --
+    lightBg: "bg-gradient-to-b from-white to-sky-50/80",
+    lightBorder: "border-sky-200",
+    lightShadow: "rgba(2,132,199,0.12)",
+    lightAccent: "#0284c7", // Sky-600
   },
   {
     icon: <HeartHandshake size={28} />,
@@ -43,14 +53,19 @@ const reasons = [
     desc: "Vi er små med vilje.",
     detail:
       "Store bureauer har 100+ kunder. Det har vi ikke. Hver kunde er vigtig for os — du får et rigtigt team, ikke en account manager der skifter hver 6. måned.",
+    
+    // -- Dark Theme (Untouched) --
     color: "text-pink-400",
-    border: "border-pink-500/30",
-    bg: "bg-pink-500/10",
-
-    lightBg: "bg-pink-400/50",
-    lightBorder: "border-pink-200/60",
-
-    accent: "#db2777",
+    darkBg: "bg-zinc-900/95",
+    darkBorder: "border-pink-500/30",
+    darkShadow: "rgba(236,72,153,0.2)",
+    accent: "#db2777", // Pink
+    
+    // -- Light Theme (New Bluish Look) --
+    lightBg: "bg-gradient-to-b from-white to-cyan-50/80",
+    lightBorder: "border-cyan-200",
+    lightShadow: "rgba(8,145,178,0.12)",
+    lightAccent: "#0891b2", // Cyan-600
   },
 ]
 
@@ -86,17 +101,13 @@ function TiltCard({ reason, isDark }: { reason: (typeof reasons)[0]; isDark: boo
         rotateY,
         transformStyle: "preserve-3d",
         willChange: "transform",
-        ...(isDark
-          ? {}
-          : {
-              boxShadow: `0 4px 24px ${reason.accent}18`,
-              backdropFilter: "blur(12px)",
-              border: `1px solid ${reason.accent}25`,
-            }),
+        boxShadow: isDark
+          ? `0 0 40px -15px ${reason.darkShadow}`
+          : `0 15px 40px -15px ${reason.lightShadow}`,
       }}
-      className={`relative p-8 rounded-2xl group cursor-default overflow-hidden flex flex-col gap-3 transition-shadow duration-300 ${
+      className={`relative p-8 rounded-2xl group cursor-default overflow-hidden flex flex-col gap-3 transition-shadow duration-300 border ${
         isDark
-          ? `${reason.border} ${reason.bg}`
+          ? `${reason.darkBorder} ${reason.darkBg}`
           : `${reason.lightBorder} ${reason.lightBg}`
       }`}
     >
@@ -104,7 +115,8 @@ function TiltCard({ reason, isDark }: { reason: (typeof reasons)[0]; isDark: boo
         <span
           className={`inline-block mb-2 ${isDark ? reason.color : ""}`}
           style={{
-            color: !isDark ? reason.accent : undefined,
+            // Use lightAccent for light theme, allowing dark theme to remain untouched
+            color: !isDark ? reason.lightAccent : undefined,
             transform: "translateZ(20px)",
           }}
         >
@@ -122,7 +134,8 @@ function TiltCard({ reason, isDark }: { reason: (typeof reasons)[0]; isDark: boo
           <p
             className="text-sm font-semibold mb-3"
             style={{
-              color: isDark ? "var(--text-secondary)" : reason.accent,
+              // Use lightAccent for light theme
+              color: isDark ? "var(--text-secondary)" : reason.lightAccent,
             }}
           >
             {reason.desc}
@@ -131,7 +144,7 @@ function TiltCard({ reason, isDark }: { reason: (typeof reasons)[0]; isDark: boo
           <p
             className="text-sm leading-relaxed"
             style={{
-              color: isDark ? "var(--text-muted)" : "#334155",
+              color: isDark ? "var(--text-muted)" : "#475569",
             }}
           >
             {reason.detail}
@@ -148,55 +161,38 @@ export default function WhyPoleni() {
 
   return (
     <section
-      className="relative min-h-screen py-32 px-6 overflow-hidden"
-      style={
-        isDark
-          ? undefined
-          : {
-              background: "linear-gradient(180deg, #ffffff 0%, #fafafa 100%)",
-            }
-      }
+      className={`relative min-h-screen py-32 px-6 overflow-hidden transition-colors duration-500 ${
+        // A very subtle, icy blue-tinted background for light mode
+        isDark ? "bg-transparent" : "bg-[#f4f7fb]"
+      }`}
     >
-      {isDark && (
+      {/* Background Ornaments */}
+      {isDark ? (
         <>
           <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px pointer-events-none"
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px pointer-events-none opacity-50"
             style={{
-              background:
-                "linear-gradient(90deg, transparent, rgba(99,102,241,0.4), transparent)",
+              background: "linear-gradient(90deg, transparent, rgba(99,102,241,0.4), transparent)",
             }}
           />
           <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] pointer-events-none"
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] pointer-events-none mix-blend-screen"
             style={{
-              background:
-                "radial-gradient(ellipse at top, rgba(59,130,246,0.18) 0%, transparent 70%)",
+              background: "radial-gradient(ellipse at top, rgba(99,102,241,0.06) 0%, transparent 60%)",
             }}
           />
         </>
-      )}
-
-      {isDark ? (
-        <div
-          className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(168,85,247,0.05) 0%, transparent 70%)",
-          }}
-        />
       ) : (
         <>
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(circle at top, rgba(59,130,246,0.04) 0%, transparent 60%)",
-            }}
-          />
-          <div
-            className="absolute inset-0 pointer-events-none bg-gradient-to-r from-blue-600 to-indigo-500"
-            style={{ opacity: 0.3 }}
-          />
+          {/* Subtle blue-tinted dot matrix and soft cool-toned radial glows */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.05]"
+            style={{ backgroundImage: "radial-gradient(rgba(37,99,235,0.4) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+          <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] pointer-events-none"
+            style={{ background: "radial-gradient(circle, rgba(37,99,235,0.05) 0%, transparent 70%)" }} />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] pointer-events-none"
+            style={{ background: "radial-gradient(circle, rgba(8,145,178,0.04) 0%, transparent 70%)" }} />
+          <div className="absolute top-[30%] left-[40%] w-[50%] h-[50%] pointer-events-none"
+            style={{ background: "radial-gradient(circle, rgba(2,132,199,0.03) 0%, transparent 70%)" }} />
         </>
       )}
 
@@ -209,27 +205,33 @@ export default function WhyPoleni() {
           className="text-center mb-16"
         >
           <span
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-                           border border-blue-500/20 bg-blue-500/10
-                           text-blue-600 dark:text-blue-400 text-xs font-bold mb-4"
+            className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-bold mb-6 ${
+              isDark
+                ? "border-indigo-500/20 bg-indigo-500/10 text-indigo-400"
+                : "border-blue-200 bg-blue-50 text-blue-700" // Blue badge for light mode
+            }`}
           >
-            <span className="w-1 h-1 rounded-full bg-blue-600 dark:bg-blue-400" />
+            <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${isDark ? "bg-indigo-500" : "bg-blue-600"}`} />
             Hvorfor Poleni
           </span>
 
           <h2
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="text-4xl md:text-5xl font-bold mb-6 tracking-tight"
             style={{ color: "var(--text-primary)" }}
           >
             Intet bullshit.{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-indigo-300">
+            <span className={`text-transparent bg-clip-text ${
+              isDark 
+                ? "bg-gradient-to-r from-indigo-500 to-purple-500"
+                : "bg-gradient-to-r from-blue-600 to-cyan-500" // Cool gradient for light mode
+            }`}>
               Kun resultater.
             </span>
           </h2>
 
           <p
             className="text-lg max-w-xl mx-auto"
-            style={{ color: "var(--text-secondary)" }}
+            style={{ color: isDark ? "var(--text-secondary)" : "#475569" }}
           >
             Vi byggede Poleni fordi små virksomheder fortjener ærlig prissætning
             og reelle resultater — ikke 12-måneders fælder.

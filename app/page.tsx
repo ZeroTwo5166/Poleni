@@ -45,20 +45,21 @@ export default function HomePage() {
     className="relative max-w-3xl w-full mx-auto text-center rounded-2xl border px-8 py-12 overflow-hidden"
     style={{ borderColor: "var(--border)" }}
   >
-    {/* Background - Confined inside the card */}
-    <div
-      className="absolute inset-0 -z-10"
-      style={
-        isDark
-          ? {
-              background:
-                "linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(99,102,241,0.06) 100%)",
-            }
-          : {
-              background: "rgba(226, 232, 240, 0.8)", // Semi-transparent mid-tone gray
-            }
-      }
-    />
+{/* Background - Confined inside the card */}
+<div
+  className="absolute inset-0 -z-10"
+  style={
+    isDark
+      ? {
+          background:
+            "linear-gradient(135deg, #052e1b 0%, #064e3b 50%, #052014 100%)",
+          opacity: 1,
+        }
+      : {
+          background: "rgba(226, 232, 240, 0.8)", // unchanged light theme
+        }
+  }
+/>
 
     <div className="relative z-10">
       {/* Badge */}

@@ -22,7 +22,20 @@ export default function GrowthMeter({ pct, message }: Props) {
   const gradientClass = colors[idx]
 
   return (
-    <div className="glass rounded-2xl p-6">
+    <div
+  className="rounded-2xl p-6"
+  style={
+    isDark
+      ? {
+          backgroundColor: "#0b0b0f",
+          border: "1px solid rgba(255,255,255,0.08)",
+        }
+      : {
+          backgroundColor: "#ffffff",
+          border: "1px solid rgba(15, 23, 42, 0.08)",
+        }
+  }
+>
       <div className="flex items-center justify-between mb-3">
         <p
           className="text-sm font-medium"

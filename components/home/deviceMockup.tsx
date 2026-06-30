@@ -168,7 +168,20 @@ export default function DeviceMockup({ websiteType, activeAddons }: Props) {
   }
 
   return (
-    <div className="glass rounded-2xl p-6">
+    <div
+  className="rounded-2xl p-6"
+  style={
+    isDark
+      ? {
+          backgroundColor: "#0b0b0f",
+          border: "1px solid rgba(255,255,255,0.08)",
+        }
+      : {
+          backgroundColor: "#ffffff",
+          border: "1px solid rgba(15, 23, 42, 0.08)",
+        }
+  }
+>
       <p
         className="text-xs uppercase tracking-widest mb-6"
         style={{ color: "var(--text-muted)" }}
