@@ -89,7 +89,7 @@ export default function ContactPage() {
     transition-all duration-200
     ${isDark
       ? "bg-white/[0.04] border border-white/[0.08] text-white placeholder-gray-600 focus:border-indigo-500/50 focus:bg-white/[0.06]"
-      : "bg-black/[0.04] border border-black/[0.08] text-gray-900 placeholder-gray-400 focus:border-indigo-500/50 focus:bg-black/[0.06]"}
+      : "bg-indigo-500/[0.04] border border-indigo-500/[0.12] text-gray-900 placeholder-gray-400 focus:border-indigo-500/50 focus:bg-indigo-500/[0.07]"}
   `
 
   const labelClass = `
@@ -97,7 +97,18 @@ export default function ContactPage() {
   `
 
   return (
-    <main className="min-h-screen pt-32 pb-24 px-6">
+    <main className="relative min-h-screen pt-32 pb-24 px-6 overflow-hidden">
+      {!isDark && (
+        <div
+          className="absolute inset-0 pointer-events-none -z-10"
+          style={{
+            background: `
+              radial-gradient(900px circle at 15% 10%, rgba(99,102,241,0.07), transparent 55%),
+              radial-gradient(700px circle at 85% 90%, rgba(16,185,129,0.05), transparent 60%)
+            `,
+          }}
+        />
+      )}
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
@@ -114,7 +125,7 @@ export default function ContactPage() {
             Gratis konsultation
           </span>
           <h1
-            className="text-5xl md:text-6xl font-bold mb-6 leading-tight"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight"
             style={{ color: "var(--text-primary)" }}
           >
             Lad os tale om

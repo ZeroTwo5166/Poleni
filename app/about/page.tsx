@@ -43,7 +43,19 @@ export default function AboutPage() {
   const isDark = theme === "dark"
 
   return (
-    <main className="min-h-screen pt-32 pb-24 px-6 overflow-x-hidden">
+    <main className="relative min-h-screen pt-32 pb-24 px-6 overflow-x-hidden">
+      {!isDark && (
+        <div
+          className="absolute inset-0 pointer-events-none -z-10"
+          style={{
+            background: `
+              radial-gradient(900px circle at 10% 10%, rgba(99,102,241,0.07), transparent 55%),
+              radial-gradient(800px circle at 90% 25%, rgba(168,85,247,0.06), transparent 55%),
+              radial-gradient(700px circle at 50% 100%, rgba(236,72,153,0.05), transparent 60%)
+            `,
+          }}
+        />
+      )}
       <div className="max-w-5xl mx-auto">
 
         {/* Header Section */}
@@ -60,7 +72,7 @@ export default function AboutPage() {
             Om Poleni
           </span>
           <h1
-            className="text-5xl md:text-7xl font-bold mb-8 leading-[1.1] tracking-tight"
+            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-8 leading-[1.1] tracking-tight"
             style={{ color: "var(--text-primary)" }}
           >
             Bygget til virksomheder
@@ -139,8 +151,8 @@ export default function AboutPage() {
                       key={item.text}
                       className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors"
                       style={{
-                        background: isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)",
-                        border: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
+                        background: isDark ? "rgba(255,255,255,0.03)" : "rgba(99,102,241,0.05)",
+                        border: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(99,102,241,0.12)"}`,
                       }}
                     >
                       <div className={`w-2 h-2 rounded-full shrink-0 ${item.dot} ${item.pulse ? "animate-pulse" : ""}`} />
@@ -158,7 +170,7 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold mb-12 text-center" style={{ color: "var(--text-primary)" }}>
             Hvad vi står for
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {values.map((value, i) => (
               <motion.div
                 key={value.title}
@@ -184,6 +196,7 @@ export default function AboutPage() {
               key={stat.label}
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.04, y: -3 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
               className="glass rounded-2xl p-8 text-center"

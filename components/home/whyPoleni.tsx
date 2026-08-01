@@ -4,7 +4,14 @@ import React from "react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { useTheme } from "@/components/shared/themeProvider"
 import { fadeUp, staggerContainer, viewport } from "@/lib/animationVariants"
-import { Banknote, Zap, HeartHandshake } from "lucide-react"
+import { 
+  Banknote, 
+  Zap, 
+  HeartHandshake, 
+  MessageSquare, 
+  Target, 
+  TrendingUp 
+} from "lucide-react"
 
 const reasons = [
   {
@@ -22,9 +29,9 @@ const reasons = [
     accent: "#4f46e5", // Indigo
     
     // -- Light Theme (New Bluish Look) --
-    lightBg: "bg-gradient-to-b from-white to-blue-50/80",
-    lightBorder: "border-blue-200",
-    lightShadow: "rgba(37,99,235,0.12)",
+    lightBg: "bg-gradient-to-br from-white via-blue-50 to-blue-100/70",
+    lightBorder: "border-blue-300",
+    lightShadow: "rgba(37,99,235,0.16)",
     lightAccent: "#2563eb", // Blue-600
   },
   {
@@ -42,9 +49,9 @@ const reasons = [
     accent: "#9333ea", // Purple
     
     // -- Light Theme (New Bluish Look) --
-    lightBg: "bg-gradient-to-b from-white to-sky-50/80",
-    lightBorder: "border-sky-200",
-    lightShadow: "rgba(2,132,199,0.12)",
+    lightBg: "bg-gradient-to-br from-white via-sky-50 to-sky-100/70",
+    lightBorder: "border-sky-300",
+    lightShadow: "rgba(2,132,199,0.16)",
     lightAccent: "#0284c7", // Sky-600
   },
   {
@@ -62,10 +69,28 @@ const reasons = [
     accent: "#db2777", // Pink
     
     // -- Light Theme (New Bluish Look) --
-    lightBg: "bg-gradient-to-b from-white to-cyan-50/80",
-    lightBorder: "border-cyan-200",
-    lightShadow: "rgba(8,145,178,0.12)",
+    lightBg: "bg-gradient-to-br from-white via-cyan-50 to-cyan-100/70",
+    lightBorder: "border-cyan-300",
+    lightShadow: "rgba(8,145,178,0.16)",
     lightAccent: "#0891b2", // Cyan-600
+  },
+]
+
+const steps = [
+  {
+    icon: <MessageSquare size={24} />,
+    title: "1. Uforpligtende snak",
+    desc: "Vi tager en ærlig snak om din forretning og vurderer, om vi er et godt match. Ingen aggressive salgstaler.",
+  },
+  {
+    icon: <Target size={24} />,
+    title: "2. Strategi & Opsætning",
+    desc: "Vi lægger en skræddersyet plan, bygger dine kampagner og sætter sporing op, så alt kan måles fra dag ét.",
+  },
+  {
+    icon: <TrendingUp size={24} />,
+    title: "3. Skalering & Vækst",
+    desc: "Kampagnerne går live. Vi overvåger, optimerer og skalerer budgettet i takt med, at vi ser et positivt afkast.",
   },
 ]
 
@@ -161,7 +186,7 @@ export default function WhyPoleni() {
 
   return (
     <section
-      className={`relative min-h-screen py-32 px-6 overflow-hidden transition-colors duration-500 ${
+      className={`relative min-h-screen py-32 px-6 overflow-hidden transition-colors duration-500 flex flex-col justify-center ${
         // A very subtle, icy blue-tinted background for light mode
         isDark ? "bg-transparent" : "bg-[#f4f7fb]"
       }`}
@@ -185,18 +210,19 @@ export default function WhyPoleni() {
       ) : (
         <>
           {/* Subtle blue-tinted dot matrix and soft cool-toned radial glows */}
-          <div className="absolute inset-0 pointer-events-none opacity-[0.05]"
+          <div className="absolute inset-0 pointer-events-none opacity-[0.07]"
             style={{ backgroundImage: "radial-gradient(rgba(37,99,235,0.4) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
           <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] pointer-events-none"
-            style={{ background: "radial-gradient(circle, rgba(37,99,235,0.05) 0%, transparent 70%)" }} />
+            style={{ background: "radial-gradient(circle, rgba(37,99,235,0.09) 0%, transparent 70%)" }} />
           <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] pointer-events-none"
-            style={{ background: "radial-gradient(circle, rgba(8,145,178,0.04) 0%, transparent 70%)" }} />
+            style={{ background: "radial-gradient(circle, rgba(8,145,178,0.08) 0%, transparent 70%)" }} />
           <div className="absolute top-[30%] left-[40%] w-[50%] h-[50%] pointer-events-none"
-            style={{ background: "radial-gradient(circle, rgba(2,132,199,0.03) 0%, transparent 70%)" }} />
+            style={{ background: "radial-gradient(circle, rgba(2,132,199,0.06) 0%, transparent 70%)" }} />
         </>
       )}
 
-      <div className="relative z-10 max-w-6xl mx-auto">
+      <div className="relative z-10 max-w-6xl mx-auto w-full">
+        {/* Header Section */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -238,8 +264,9 @@ export default function WhyPoleni() {
           </p>
         </motion.div>
 
+        {/* Cards Section - Added mt-24 to push the cards down */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-16 lg:mt-24"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -249,6 +276,59 @@ export default function WhyPoleni() {
           {reasons.map((reason) => (
             <TiltCard key={reason.title} reason={reason} isDark={isDark} />
           ))}
+        </motion.div>
+
+        {/* New Process Section to fill out the page */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="mt-32 max-w-5xl mx-auto text-center"
+        >
+          <h3 
+            className="text-3xl font-bold mb-16 tracking-tight" 
+            style={{ color: "var(--text-primary)" }}
+          >
+            Sådan fungerer samarbejdet
+          </h3>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12 relative">
+            {/* Connecting line for desktop views */}
+            <div 
+              className={`hidden lg:block absolute top-10 left-[15%] right-[15%] h-px -z-10 ${
+                isDark 
+                  ? "bg-gradient-to-r from-transparent via-zinc-200 to-transparent" 
+                  : "bg-gradient-to-r from-transparent via-blue-700 to-transparent"
+              }`} 
+            />
+            
+            {steps.map((step, i) => (
+              <div key={i} className="flex flex-col items-center">
+                <div 
+                  className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-xl ${
+                    isDark 
+                      ? 'bg-zinc-800/80 text-indigo-400 border border-indigo-500/20 shadow-indigo-500/10' 
+                      : 'bg-white text-blue-600 border border-blue-100 shadow-blue-500/10'
+                  }`}
+                >
+                  {step.icon}
+                </div>
+                <h4 
+                  className="text-xl font-bold mb-3" 
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  {step.title}
+                </h4>
+                <p 
+                  className="text-sm leading-relaxed max-w-[280px]" 
+                  style={{ color: isDark ? "var(--text-muted)" : "#475569" }}
+                >
+                  {step.desc}
+                </p>
+              </div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

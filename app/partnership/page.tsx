@@ -72,7 +72,7 @@ export default function PartnershipPage() {
             Partnership model
           </span>
           <h1
-            className="text-5xl md:text-7xl font-bold leading-tight mb-6"
+            className="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-6"
             style={{ color: "var(--text-primary)" }}
           >
             Already have a business

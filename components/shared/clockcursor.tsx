@@ -4,9 +4,11 @@
 import { motion, useMotionValue, useSpring } from "framer-motion"
 import { useEffect, useState } from "react"
 import { useTheme } from "@/components/shared/themeProvider"
+import { useIsCompactViewport } from "@/lib/useIsCompactViewport"
 
 export default function ClockCursor() {
   const { theme } = useTheme()
+  const isCompact = useIsCompactViewport()
   const [hovering, setHovering] = useState(false)
 
   const mouseX = useMotionValue(-100)
@@ -51,6 +53,9 @@ export default function ClockCursor() {
 
   if (!isDark) {
     // ---------------- LIGHT THEME: blend-difference circle ----------------
+    const base = isCompact ? 64 : 100
+    const hoverSize = isCompact ? 26 : 40
+
     return (
       <motion.div
         className="fixed top-0 left-0 z-[99999] pointer-events-none rounded-full bg-white mix-blend-difference"
@@ -62,8 +67,8 @@ export default function ClockCursor() {
           willChange: "transform",
         }}
         animate={{
-          width: hovering ? 140 : 100,
-          height: hovering ? 140 : 100,
+          width: hovering ? hoverSize : base,
+          height: hovering ? hoverSize : base,
         }}
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
       />
@@ -71,6 +76,13 @@ export default function ClockCursor() {
   }
 
   // ---------------- DARK THEME: glowing sun ----------------
+  const ringBase = isCompact ? 46 : 70
+  const ringHover = isCompact ? 20 : 28
+  const glowBase = isCompact ? 76 : 110
+  const glowHover = isCompact ? 32 : 46
+  const coreBase = isCompact ? 26 : 40
+  const coreHover = isCompact ? 14 : 20
+
   return (
     <motion.div
       className="fixed top-0 left-0 z-[99999] pointer-events-none"
@@ -91,8 +103,8 @@ export default function ClockCursor() {
           border: "1.5px dashed rgba(255,205,110,0.55)",
         }}
         animate={{
-          width: hovering ? 100 : 70,
-          height: hovering ? 100 : 70,
+          width: hovering ? ringHover : ringBase,
+          height: hovering ? ringHover : ringBase,
           rotate: 360,
           opacity: hovering ? 0.8 : 0.45,
         }}
@@ -115,8 +127,8 @@ export default function ClockCursor() {
           filter: "blur(6px)",
         }}
         animate={{
-          width: hovering ? 160 : 110,
-          height: hovering ? 160 : 110,
+          width: hovering ? glowHover : glowBase,
+          height: hovering ? glowHover : glowBase,
           opacity: hovering ? 0.9 : 0.55,
         }}
         transition={{ type: "spring", stiffness: 250, damping: 20 }}
@@ -131,10 +143,10 @@ export default function ClockCursor() {
           background: "radial-gradient(circle, #fff7e0 0%, #ffd166 55%, #ff9f43 100%)",
         }}
         animate={{
-          width: hovering ? 50 : 40,
-          height: hovering ? 50 : 40,
+          width: hovering ? coreHover : coreBase,
+          height: hovering ? coreHover : coreBase,
           boxShadow: hovering
-            ? "0 0 20px 6px rgba(255,209,102,0.9), 0 0 45px 14px rgba(255,159,67,0.5)"
+            ? "0 0 8px 2px rgba(255,209,102,0.95), 0 0 16px 4px rgba(255,159,67,0.55)"
             : "0 0 14px 3px rgba(255,209,102,0.8), 0 0 30px 8px rgba(255,159,67,0.35)",
         }}
         transition={{ type: "spring", stiffness: 300, damping: 22 }}

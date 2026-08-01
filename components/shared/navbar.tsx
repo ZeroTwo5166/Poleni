@@ -136,7 +136,7 @@ export default function Navbar() {
                     <motion.span
                       layoutId="nav-pill"
                       className={`absolute inset-0 rounded-lg ${
-                        isDark ? "bg-white/8" : "bg-black/5"
+                        isDark ? "bg-white/8" : "bg-indigo-500/8"
                       }`}
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     />
@@ -212,7 +212,7 @@ export default function Navbar() {
                         pathname === link.href
                           ? isDark
                             ? "text-white bg-white/5"
-                            : "text-gray-900 bg-black/5"
+                            : "text-indigo-600 bg-indigo-500/8"
                           : isDark
                           ? "text-gray-400 hover:text-white"
                           : "text-gray-500 hover:text-gray-900"

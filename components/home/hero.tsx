@@ -192,13 +192,13 @@ export default function Hero() {
       ))}
 
       {/* Main content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center pt-16 pb-32">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center py-10 lg:pt-16 lg:pb-32">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-8 ${t.badge}`}
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-4 md:mb-8 ${t.badge}`}
         >
           <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${t.badgeDot}`} />
           <span className={`text-sm font-semibold ${t.badgeText}`}>
@@ -211,7 +211,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className={`text-6xl font-bold tracking-tight leading-[1.05] mb-4 ${t.h1}`}
+          className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] lg:leading-[1.05] mb-3 md:mb-4 ${t.h1}`}
         >
           Hjemmesider og annoncer,
           <br />
@@ -223,13 +223,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className={`text-lg md:text-xl max-w-xl mx-auto mt-6 mb-4 leading-relaxed ${t.body}`}
+          className={`text-base md:text-lg lg:text-xl max-w-xl mx-auto mt-3 md:mt-6 mb-2 md:mb-4 leading-relaxed ${t.body}`}
         >
           Faste priser. Ingen binding. Opsig når som helst.
         </motion.p>
 
         {/* Carousel */}
-        <div className="h-8 flex items-center justify-center mb-10 overflow-hidden">
+        <div className="h-8 flex items-center justify-center mb-4 md:mb-10 overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.span
               key={carouselIdx}
@@ -245,11 +245,11 @@ export default function Hero() {
         </div>
 
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 mb-4 md:mb-6">
           <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
             <Link
               href="#calculator"
-              className="group relative px-8 py-4 text-white font-semibold rounded-xl transition-all duration-300 text-base w-full text-center overflow-hidden block"
+              className="group relative px-6 py-3 md:px-8 md:py-4 text-white font-semibold rounded-xl transition-all duration-300 text-base w-full text-center overflow-hidden block"
               style={t.ctaPrimary}
             >
               <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" />
@@ -260,7 +260,7 @@ export default function Hero() {
           <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
             <Link
               href="/contact"
-              className={`px-8 py-4 rounded-xl font-medium transition-all duration-300 text-base w-full text-center block ${t.ctaSecondary}`}
+              className={`px-6 py-3 md:px-8 md:py-4 rounded-xl font-medium transition-all duration-300 text-base w-full text-center block ${t.ctaSecondary}`}
             >
               Gratis rådgivning →
             </Link>
@@ -272,10 +272,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex items-center justify-center mb-10"
+          className="flex items-center justify-center mb-4 md:mb-10"
         >
           <span
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium border backdrop-blur-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium border backdrop-blur-sm max-w-full flex-wrap justify-center text-center"
             style={t.promoStyle}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse shrink-0" />
@@ -290,7 +290,7 @@ export default function Hero() {
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className={`flex flex-col items-center gap-1 p-4 rounded-xl border shadow-sm ${t.statCard}`}
+              className={`flex flex-col items-center gap-1 p-2.5 md:p-4 rounded-xl border shadow-sm ${t.statCard}`}
             >
               <span className={`text-2xl font-bold tracking-tight ${t.statValue}`}>
                 {stat.value}

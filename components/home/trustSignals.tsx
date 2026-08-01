@@ -89,7 +89,7 @@ export default function TrustSignals() {
 
         {/* Cards */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -109,8 +109,10 @@ export default function TrustSignals() {
                       border: "1px solid rgba(16,185,129,0.12)",
                     }
                   : {
-                      background: "#ffffff",
-                      border: "1px solid rgba(15,23,42,0.08)",
+                      background:
+                        "linear-gradient(160deg, #ffffff 0%, #ecfdf5 100%)",
+                      border: "1px solid rgba(16,185,129,0.18)",
+                      boxShadow: "0 12px 32px rgba(16,185,129,0.06)",
                     }
               }
             >

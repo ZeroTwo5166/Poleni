@@ -157,22 +157,28 @@ export default function Calculator() {
                     const isActive = websiteType === type.id
 
                     return (
-                      <button
+                      <motion.button
                         key={type.id}
                         onClick={() => toggleWebsiteType(type.id)}
-                        className="relative p-4 rounded-xl border text-left transition-all duration-150"
+                        whileHover={{ scale: 1.03, y: -2 }}
+                        whileTap={{ scale: 0.97 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                        className="relative p-4 rounded-xl border text-left"
                         style={
                           isActive
                             ? {
                                 backgroundColor: "rgba(16,185,129,0.10)",
-                                borderColor: "rgba(16,185,129,0.5)",
+                                borderColor: "rgba(16,185,129,0.6)",
                               }
                             : isDark
                             ? {
                                 backgroundColor: "#0a0a0a",
-                                borderColor: "rgba(255,255,255,0.10)",
+                                borderColor: "rgba(255,255,255,0.22)",
                               }
-                            : {}
+                            : {
+                                backgroundColor: "rgba(255,255,255,0.55)",
+                                borderColor: "rgba(16,185,129,0.20)",
+                              }
                         }
                       >
                         <span className="flex flex-col gap-1">
@@ -196,7 +202,7 @@ export default function Calculator() {
                             {type.desc}
                           </span>
                         </span>
-                      </button>
+                      </motion.button>
                     )
                   })}
                 </div>
@@ -222,22 +228,28 @@ export default function Calculator() {
                     const isActive = activeAddons.has(addon.id)
 
                     return (
-                      <button
+                      <motion.button
                         key={addon.id}
                         onClick={() => toggleAddon(addon.id)}
-                        className="flex items-center gap-3 p-4 rounded-xl border transition-all duration-150"
+                        whileHover={{ scale: 1.02, x: 2 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                        className="flex items-center gap-3 p-4 rounded-xl border"
                         style={
                           isActive
                             ? {
                                 backgroundColor: "rgba(99,102,241,0.12)",
-                                borderColor: "rgba(99,102,241,0.5)",
+                                borderColor: "rgba(99,102,241,0.6)",
                               }
                             : isDark
                             ? {
                                 backgroundColor: "#0a0a0a",
-                                borderColor: "rgba(255,255,255,0.10)",
+                                borderColor: "rgba(255,255,255,0.22)",
                               }
-                            : {}
+                            : {
+                                backgroundColor: "rgba(255,255,255,0.55)",
+                                borderColor: "rgba(99,102,241,0.20)",
+                              }
                         }
                       >
                         {/* Radio indicator */}
@@ -246,7 +258,9 @@ export default function Calculator() {
                           style={{
                             borderColor: isActive
                               ? "#6366f1"
-                              : "rgba(255,255,255,0.25)",
+                              : isDark
+                              ? "rgba(255,255,255,0.25)"
+                              : "rgba(99,102,241,0.3)",
                             backgroundColor: isActive
                               ? "#6366f1"
                               : "transparent",
@@ -276,7 +290,7 @@ export default function Calculator() {
                         >
                           {addon.price.toLocaleString("da-DK")} kr/md
                         </span>
-                      </button>
+                      </motion.button>
                     )
                   })}
                 </div>

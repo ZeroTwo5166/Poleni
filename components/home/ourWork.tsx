@@ -92,7 +92,7 @@ export default function OurWork() {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -172,7 +172,7 @@ export default function OurWork() {
                 className={`relative group rounded-2xl cursor-default flex flex-col justify-between overflow-hidden transition-all duration-300 ${
                   isDark
                     ? "bg-[#0b0b0f] border border-white/10 hover:border-white/20 hover:shadow-[0_8px_30px_rgba(245,158,11,0.1)]"
-                    : "bg-white border border-gray-200 shadow-xl shadow-black/5 hover:shadow-2xl hover:shadow-amber-500/10"
+                    : "bg-gradient-to-b from-white to-amber-50/60 border border-amber-200/70 shadow-xl shadow-amber-500/5 hover:shadow-2xl hover:shadow-amber-500/15"
                 }`}
               >
                 {c.href ? (

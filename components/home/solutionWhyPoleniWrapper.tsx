@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from "react"
 import Solution from "@/components/home/solution"
 import WhyPoleni from "@/components/home/whyPoleni"
+import { useIsCompactViewport } from "@/lib/useIsCompactViewport"
 
 // Cubic ease-in-out: makes motion feel physical, not mechanical
 function easeInOut(t: number): number {
@@ -18,6 +19,7 @@ function remap(v: number, inMin: number, inMax: number, outMin: number, outMax: 
 export default function SolutionWhyPoleniWrapper() {
   const outerRef = useRef<HTMLDivElement>(null)
   const [progress, setProgress] = useState(0)
+  const isCompact = useIsCompactViewport()
 
   useEffect(() => {
     const outer = outerRef.current
@@ -54,6 +56,17 @@ export default function SolutionWhyPoleniWrapper() {
   const overlayOpacity = progress < 0.5
     ? remap(progress, 0.1, 0.5,  0, 0.55)
     : remap(progress, 0.5, 0.85, 0.55, 0)
+
+  // Below laptop/tablet size the pin technique doesn't fit reliably —
+  // fall back to normal stacked flow (each section handles its own reveal).
+  if (isCompact) {
+    return (
+      <>
+        <Solution />
+        <WhyPoleni />
+      </>
+    )
+  }
 
   return (
     <div style={{ height: "200vh" }}>

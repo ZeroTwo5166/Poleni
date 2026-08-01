@@ -177,8 +177,9 @@ export default function DeviceMockup({ websiteType, activeAddons }: Props) {
           border: "1px solid rgba(255,255,255,0.08)",
         }
       : {
-          backgroundColor: "#ffffff",
-          border: "1px solid rgba(15, 23, 42, 0.08)",
+          background: "linear-gradient(160deg, #ffffff 0%, #f2f1ff 100%)",
+          border: "1px solid rgba(99, 102, 241, 0.14)",
+          boxShadow: "0 20px 50px rgba(99,102,241,0.08)",
         }
   }
 >
@@ -190,7 +191,7 @@ export default function DeviceMockup({ websiteType, activeAddons }: Props) {
       </p>
 
       {/* Phone frame — wider and taller */}
-      <div className="mx-auto w-[300px]">
+      <div className="mx-auto w-full max-w-[300px]">
         <div
           className="relative rounded-[3rem] border-[8px] shadow-2xl overflow-hidden"
           style={{

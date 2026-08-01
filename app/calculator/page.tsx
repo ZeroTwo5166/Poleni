@@ -77,16 +77,16 @@ export default function CalculatorPage() {
     borderColor: "rgba(255,255,255,0.15)",
     backgroundColor: "rgba(255,255,255,0.08)",
   } : {
-    borderColor: "rgba(0,0,0,0.15)",
-    backgroundColor: "rgba(0,0,0,0.04)",
+    borderColor: "rgba(99,102,241,0.18)",
+    backgroundColor: "rgba(255,255,255,0.6)",
   }
 
   const inactiveAddon = isDark ? {
     borderColor: "rgba(255,255,255,0.15)",
     backgroundColor: "rgba(255,255,255,0.08)",
   } : {
-    borderColor: "rgba(0,0,0,0.15)",
-    backgroundColor: "rgba(0,0,0,0.04)",
+    borderColor: "rgba(99,102,241,0.18)",
+    backgroundColor: "rgba(255,255,255,0.6)",
   }
 
   return (
@@ -106,7 +106,7 @@ export default function CalculatorPage() {
             <span className="w-1 h-1 rounded-full bg-indigo-400" />
             Vækstberegner
           </span>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight"
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight"
             style={{ color: "var(--text-primary)" }}>
             Hvad koster det
             <br />
@@ -139,12 +139,14 @@ export default function CalculatorPage() {
               </p>
               <div className="grid grid-cols-2 gap-3">
                 {WEBSITE_TYPES.map((type) => (
-                  <button
+                  <motion.button
                     key={type.id}
                     onClick={() =>
   setWebsiteType((prev) => (prev === type.id ? null : type.id))
 }
-                    className="relative p-4 rounded-xl border text-left transition-all duration-200"
+                    whileHover={{ scale: 1.03, y: -2 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="relative p-4 rounded-xl border text-left transition-colors duration-200"
                     style={websiteType === type.id ? {
                       borderColor: "rgba(99,102,241,0.6)",
                       backgroundColor: "rgba(99,102,241,0.12)",
@@ -174,7 +176,7 @@ export default function CalculatorPage() {
                         {type.price ? `${type.price.toLocaleString("da-DK")} kr` : "Kontakt os"}
                       </span>
                     </span>
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             </div>
@@ -191,11 +193,13 @@ export default function CalculatorPage() {
                 {ADDONS.map((addon) => {
                   const isActive = activeAddons.has(addon.id)
                   return (
-                    <button
+                    <motion.button
                       key={addon.id}
                       onClick={() => toggleAddon(addon.id)}
+                      whileHover={{ scale: 1.02, x: 2 }}
+                      whileTap={{ scale: 0.98 }}
                       className={`flex items-center justify-between p-4 rounded-xl border
-                        transition-all duration-200 text-left
+                        transition-colors duration-200 text-left
                         ${isActive ? addon.active : ""}`}
                       style={!isActive ? inactiveAddon : undefined}
                     >
@@ -230,7 +234,7 @@ export default function CalculatorPage() {
                         style={{ color: "var(--text-secondary)" }}>
                         {addon.price.toLocaleString("da-DK")} kr/md
                       </span>
-                    </button>
+                    </motion.button>
                   )
                 })}
               </div>

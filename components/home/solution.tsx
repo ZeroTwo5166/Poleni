@@ -10,6 +10,7 @@ interface Service {
   title: string
   desc: string
   detail: string
+  features: string[]
   darkColor: string
   lightColor: string
   darkTag: string
@@ -26,9 +27,14 @@ const services: Service[] = [
     desc: "Responsivt, mobilvenligt, klar på 3–14 dage.",
     detail:
       "Fast engangspris. Du ejer det for altid. Ingen månedlig betaling bare for at holde din side kørende.",
+    features: [
+      "Skræddersyet design til din branche",
+      "SEO-optimeret fra dag ét",
+      "Hosting & support inkluderet i 12 måneder",
+    ],
     darkColor: "border-white/10 bg-zinc-950",
     lightColor:
-      "border-violet-200 bg-white shadow-[0_12px_40px_rgba(124,58,237,0.10)]",
+      "border-violet-200 bg-gradient-to-br from-white to-violet-50 shadow-[0_12px_40px_rgba(124,58,237,0.12)]",
     darkTag: "text-violet-300 border-white/10 bg-zinc-900",
     lightTag: "text-violet-700 border-violet-200 bg-violet-50",
     glow: "rgba(124,58,237,0.10)",
@@ -41,9 +47,14 @@ const services: Service[] = [
     desc: "Daglig overvågning. Du betaler kun for reelle klik.",
     detail:
       "Vi opsætter, administrerer og forbedrer dine kampagner hver dag. Intet spildt budget.",
+    features: [
+      "Søgeordsanalyse & konkurrentindsigt",
+      "A/B-test af annoncer løbende",
+      "Månedlig rapport med klar ROI",
+    ],
     darkColor: "border-white/10 bg-zinc-950",
     lightColor:
-      "border-cyan-200 bg-white shadow-[0_12px_40px_rgba(6,182,212,0.10)]",
+      "border-cyan-200 bg-gradient-to-br from-white to-cyan-50 shadow-[0_12px_40px_rgba(6,182,212,0.12)]",
     darkTag: "text-cyan-300 border-white/10 bg-zinc-900",
     lightTag: "text-cyan-700 border-cyan-200 bg-cyan-50",
     glow: "rgba(6,182,212,0.10)",
@@ -56,9 +67,14 @@ const services: Service[] = [
     desc: "Facebook & Instagram-annoncer. Opsig når som helst.",
     detail:
       "Målretning, test og daglig optimering. Ram præcis din kunde. Ingen binding.",
+    features: [
+      "Skræddersyet målgruppeopsætning",
+      "Kreativt annoncedesign inkluderet",
+      "Ugentlig opfølgning på performance",
+    ],
     darkColor: "border-white/10 bg-zinc-950",
     lightColor:
-      "border-rose-200 bg-white shadow-[0_12px_40px_rgba(244,63,94,0.10)]",
+      "border-rose-200 bg-gradient-to-br from-white to-rose-50 shadow-[0_12px_40px_rgba(244,63,94,0.12)]",
     darkTag: "text-rose-300 border-white/10 bg-zinc-900",
     lightTag: "text-rose-700 border-rose-200 bg-rose-50",
     glow: "rgba(244,63,94,0.10)",
@@ -109,10 +125,8 @@ function ScrollCard({
       className={`relative p-8 rounded-2xl border ${colorClass}
         group overflow-hidden flex flex-col gap-4
         shadow-xl
-        transition-all duration-300
-        hover:translate-y-[-4px]
-        hover:shadow-2xl
-        pointer-events-none`}
+        transition-shadow duration-300
+        hover:shadow-2xl`}
     >
       {/* top accent */}
       <div
@@ -132,8 +146,8 @@ function ScrollCard({
 
       {/* icon */}
       <div
-        className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"
-        style={{ background: `${service.accent}14` }}
+        className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+        style={{ background: `${service.accent}1f` }}
       >
         {service.icon}
       </div>
@@ -157,6 +171,27 @@ function ScrollCard({
         >
           {service.detail}
         </p>
+
+        <ul className="flex flex-col gap-2 mt-4">
+          {service.features.map((feature) => (
+            <li
+              key={feature}
+              className="flex items-start gap-2 text-sm"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              <span
+                className="shrink-0 mt-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold"
+                style={{
+                  background: `${service.accent}18`,
+                  color: service.accent,
+                }}
+              >
+                ✓
+              </span>
+              {feature}
+            </li>
+          ))}
+        </ul>
       </div>
 
       <Link
@@ -184,7 +219,7 @@ export default function Solution() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen py-32 px-6 overflow-hidden"
+      className="relative min-h-screen pt-40 pb-32 px-6 overflow-hidden"
       style={
         isDark
           ? {
@@ -202,9 +237,9 @@ export default function Solution() {
             }
       }
     >
-      <div className="relative z-10 max-w-6xl mx-auto">
+      <div className="relative z-10 max-w-6xl mx-auto w-full">
         {/* header */}
-        <div className="text-center mb-24">
+        <div className="text-center mb-28 mt-8">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -236,7 +271,7 @@ export default function Solution() {
         </div>
 
         {/* cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {services.map((service, index) => (
             <ScrollCard
               key={service.title}
@@ -254,7 +289,7 @@ export default function Solution() {
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
-          className="text-center mt-16"
+          className="text-center mt-24 mb-8"
         >
           <p className="text-sm mb-3" style={{ color: "var(--text-muted)" }}>
             Er du i tvivl om, hvad du har brug for?

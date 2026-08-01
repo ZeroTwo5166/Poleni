@@ -136,12 +136,13 @@ export default function Problem() {
         </motion.div>
 
         {/* CARDS */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {painPoints.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -6, transition: { type: "spring", stiffness: 300, damping: 20 } }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{
                 duration: 0.45,
@@ -157,9 +158,10 @@ export default function Problem() {
                         "linear-gradient(135deg,rgba(239,68,68,0.08),rgba(249,115,22,0.04))",
                     }
                   : {
-                      border: "1px solid rgba(124,58,237,0.10)",
-                      background: "#ffffff",
-                      boxShadow: "0 18px 50px rgba(124,58,237,0.06)",
+                      border: "1px solid rgba(124,58,237,0.14)",
+                      background:
+                        "linear-gradient(160deg, #ffffff 0%, #faf5ff 100%)",
+                      boxShadow: "0 18px 50px rgba(124,58,237,0.08)",
                     }
               }
             >

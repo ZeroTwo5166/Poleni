@@ -11,7 +11,8 @@ export default function TheStory() {
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
+      // Removed "flex items-center justify-center" and added "pt-32 pb-24" so it aligns at the top
+      className="relative min-h-screen pt-32 pb-24 px-6 overflow-hidden flex flex-col"
       style={
         !isDark
           ? {
@@ -53,7 +54,7 @@ export default function TheStory() {
             }}
           />
         ) : (
-          /* ✅ FIXED LIGHT BACKGROUND (premium violet depth) */
+          /* FIXED LIGHT BACKGROUND (premium violet depth) */
           <>
             <div
               className="absolute inset-0"
@@ -67,7 +68,7 @@ export default function TheStory() {
               }}
             />
 
-            {/* subtle noise (kept but toned down) */}
+            {/* subtle noise */}
             <div
               className="absolute inset-0 opacity-[0.03] mix-blend-multiply"
               style={{
@@ -78,7 +79,7 @@ export default function TheStory() {
         )}
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto">
+      <div className="relative z-10 max-w-4xl mx-auto w-full">
         {/* Header */}
         <motion.div
           variants={fadeUp}
@@ -108,7 +109,7 @@ export default function TheStory() {
             <span
               style={{
                 backgroundImage:
-                  "linear-gradient(135deg, #f43f5e 0%, #fb7185 100%)",
+                  "linear-gradient(135deg, #f43f5e, #fb7185)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -129,7 +130,7 @@ export default function TheStory() {
             ${
               isDark
                 ? "border-white/[0.06] bg-black"
-                : "border-violet-200 bg-white shadow-[0_20px_60px_rgba(124,58,237,0.10)]"
+                : "border-violet-300 bg-gradient-to-br from-white to-rose-50/60 shadow-[0_20px_60px_rgba(124,58,237,0.14)]"
             }`}
         >
           <span
@@ -181,7 +182,7 @@ export default function TheStory() {
 
         {/* Pills */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10"
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -199,7 +200,7 @@ export default function TheStory() {
                 ${
                   isDark
                     ? "border-white/[0.06] bg-white/[0.02]"
-                    : "border-violet-200 bg-white shadow-sm"
+                    : "border-violet-300 bg-gradient-to-br from-white to-violet-50 shadow-sm"
                 }`}
             >
               <span className="text-xl">{item.icon}</span>
@@ -213,6 +214,33 @@ export default function TheStory() {
               </span>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* NEW CONTENT: Core Principles (Fills the page naturally without clutter) */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16"
+        >
+          <div className={`p-8 rounded-2xl border ${isDark ? 'border-white/[0.06] bg-white/[0.01]' : 'border-violet-500 bg-violet-50/50'}`}>
+            <h3 className="text-lg font-bold mb-3" style={{ color: isDark ? '#fff' : '#0f172a' }}>
+              1. Ærlighed frem for alt
+            </h3>
+            <p className="text-sm leading-relaxed" style={{ color: isDark ? 'var(--text-secondary)' : '#475569' }}>
+              Vi siger tingene som de er. Hvis vi ikke tror, vi kan skabe et positivt afkast for din forretning, siger vi pænt nej tak fra starten.
+            </p>
+          </div>
+          
+          <div className={`p-8 rounded-2xl border ${isDark ? 'border-white/[0.06] bg-white/[0.01]' : 'border-violet-500 bg-violet-50/50'}`}>
+            <h3 className="text-lg font-bold mb-3" style={{ color: isDark ? '#fff' : '#0f172a' }}>
+              2. Bundlinje over forfængelighed
+            </h3>
+            <p className="text-sm leading-relaxed" style={{ color: isDark ? 'var(--text-secondary)' : '#475569' }}>
+              Likes og visninger betaler ikke dine regninger. Vi optimerer benhårdt efter de resultater og konverteringer, der skaber reel værdi.
+            </p>
+          </div>
         </motion.div>
 
         {/* CTA */}

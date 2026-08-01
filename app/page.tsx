@@ -17,7 +17,7 @@ import { useTheme } from "@/components/shared/themeProvider"
 
 
 export default function HomePage() {
-    const { theme } = useTheme()
+  const { theme } = useTheme()
   const isDark = theme === "dark"
 
 
@@ -34,67 +34,69 @@ export default function HomePage() {
         <Problem />
 
         {/* SOLUTION → WHY POLENI scroll-lock slide */}
-       <SolutionWhyPoleniWrapper/>
+        <SolutionWhyPoleniWrapper />
 
         <TheStory />
         <Calculator />
-        
+
         {/* Guarantee Banner */}
         <div className="w-full px-6 py-16 flex justify-center">
-  <div
-    className="relative max-w-3xl w-full mx-auto text-center rounded-2xl border px-8 py-12 overflow-hidden"
-    style={{ borderColor: "var(--border)" }}
-  >
-{/* Background - Confined inside the card */}
-<div
-  className="absolute inset-0 -z-10"
-  style={
-    isDark
-      ? {
-          background:
-            "linear-gradient(135deg, #052e1b 0%, #064e3b 50%, #052014 100%)",
-          opacity: 1,
-        }
-      : {
-          background: "rgba(226, 232, 240, 0.8)", // unchanged light theme
-        }
-  }
-/>
+          <div
+            className="relative max-w-3xl w-full mx-auto text-center rounded-2xl border px-8 py-12 overflow-hidden"
+            style={{ borderColor: "var(--border)" }}
+          >
+            {/* Background - Confined inside the card */}
+            <div
+              className="absolute inset-0 -z-10"
+              style={
+                isDark
+                  ? {
+                    background:
+                      "linear-gradient(135deg, #052e1b 0%, #064e3b 50%, #052014 100%)",
+                    opacity: 1,
+                  }
+                  : {
+                    background:
+                      "linear-gradient(135deg, #d1fae5 0%, #a7f3d0 45%, #ecfdf5 100%)",
+                    opacity: 1,
+                  }
+              }
+            />
 
-    <div className="relative z-10">
-      {/* Badge */}
-      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-500 text-xs font-medium mb-6">
-        <span className="w-1 h-1 rounded-full bg-emerald-500" />
-        Vores garanti
-      </div>
+            <div className="relative z-10">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-500 text-xs font-medium mb-6">
+                <span className="w-1 h-1 rounded-full bg-emerald-500" />
+                Vores garanti
+              </div>
 
-      {/* Heading */}
-      <h2
-        className="text-3xl md:text-4xl font-bold mb-4"
-        style={{ color: "var(--text-primary)" }}
-      >
-        90 dage.{" "}
-        <span className="text-emerald-500">Eller vi arbejder gratis.</span>
-      </h2>
+              {/* Heading */}
+              <h2
+                className="text-3xl md:text-4xl font-bold mb-4"
+                style={{ color: "var(--text-primary)" }}
+              >
+                90 dage.{" "}
+                <span className="text-emerald-500">Eller vi arbejder gratis.</span>
+              </h2>
 
-      {/* Body */}
-      <p
-        className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-8"
-        style={{ color: "var(--text-secondary)" }}
-      >
-        Vi opsætter din hjemmeside og lancerer dine annoncer. I de første 90
-        dage arbejder vi hårdt for at skabe resultater. Hvis du ikke ser en
-        tydelig forbedring i dine kampagner eller din synlighed efter 90 dage,{" "}
-        <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>
-          fortsætter vi uden ekstra betaling
-        </span>{" "}
-        indtil du er tilfreds. Ingen binding. Du har kontrollen.
-      </p>
-    </div>
-  </div>
+              {/* Body */}
+              <p
+                className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-8"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                Vi opsætter din hjemmeside og lancerer dine annoncer. I de første 90
+                dage arbejder vi hårdt for at skabe resultater. Hvis du ikke ser en
+                tydelig forbedring i dine kampagner eller din synlighed efter 90 dage,{" "}
+                <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>
+                  fortsætter vi uden ekstra betaling
+                </span>{" "}
+                indtil du er tilfreds. Ingen binding. Du har kontrollen.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <ScrollFade/>
+        <ScrollFade />
       </div>
     </>
   )

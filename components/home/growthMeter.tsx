@@ -31,8 +31,9 @@ export default function GrowthMeter({ pct, message }: Props) {
           border: "1px solid rgba(255,255,255,0.08)",
         }
       : {
-          backgroundColor: "#ffffff",
-          border: "1px solid rgba(15, 23, 42, 0.08)",
+          background: "linear-gradient(160deg, #ffffff 0%, #f2f1ff 100%)",
+          border: "1px solid rgba(99, 102, 241, 0.14)",
+          boxShadow: "0 20px 50px rgba(99,102,241,0.08)",
         }
   }
 >
@@ -56,7 +57,7 @@ export default function GrowthMeter({ pct, message }: Props) {
 
       <div
         className="h-2.5 rounded-full overflow-hidden mb-3"
-        style={{ background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)" }}
+        style={{ background: isDark ? "rgba(255,255,255,0.06)" : "rgba(99,102,241,0.10)" }}
       >
         <motion.div
           className={`h-full rounded-full bg-gradient-to-r ${gradientClass}`}

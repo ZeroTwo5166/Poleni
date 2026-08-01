@@ -12,9 +12,9 @@ const websites = [
     price:    "4.000 kr",
     type:     "engangsbetaling",
     delivery: "3–5 dage",
-    color:    "border-indigo-500/20 bg-indigo-500/5",
+    color:    "border-indigo-500 bg-indigo-500/5",
     dot:      "bg-indigo-400",
-    tag:      "text-indigo-400 border-indigo-500/20 bg-indigo-500/5",
+    tag:      "text-indigo-400 border-indigo-500 bg-indigo-500/5",
     includes: [
       "3–5 sider",
       "Kontaktformular",
@@ -29,9 +29,9 @@ const websites = [
     price:    "10.000 kr",
     type:     "engangsbetaling",
     delivery: "10–14 dage",
-    color:    "border-purple-500/20 bg-purple-500/5",
+    color:    "border-purple-500 bg-purple-500/5",
     dot:      "bg-purple-400",
-    tag:      "text-purple-400 border-purple-500/20 bg-purple-500/5",
+    tag:      "text-purple-400 border-purple-500 bg-purple-500/5",
     popular:  true,
     includes: [
       "5–10 sider",
@@ -48,9 +48,9 @@ const websites = [
     price:    "18.000 kr",
     type:     "engangsbetaling",
     delivery: "14–21 dage",
-    color:    "border-pink-500/20 bg-pink-500/5",
+    color:    "border-pink-500 bg-pink-500/5",
     dot:      "bg-pink-400",
-    tag:      "text-pink-400 border-pink-500/20 bg-pink-500/5",
+    tag:      "text-pink-400 border-pink-500 bg-pink-500/5",
     includes: [
       "Produktkatalog",
       "Indkøbskurv",
@@ -69,9 +69,9 @@ const marketing = [
     price:    "2.500 kr",
     type:     "pr. måned",
     delivery: "Løbende",
-    color:    "border-blue-500/20 bg-blue-500/5",
+    color:    "border-blue-500 bg-blue-500/5",
     dot:      "bg-blue-400",
-    tag:      "text-blue-400 border-blue-500/20 bg-blue-500/5",
+    tag:      "text-blue-400 border-blue-500 bg-blue-500/5",
     includes: [
       "Kampagneopsætning",
       "Daglig styring",
@@ -86,9 +86,9 @@ const marketing = [
     price:    "2.000 kr",
     type:     "pr. måned",
     delivery: "Løbende",
-    color:    "border-pink-500/20 bg-pink-500/5",
+    color:    "border-pink-500 bg-pink-500/5",
     dot:      "bg-pink-400",
-    tag:      "text-pink-400 border-pink-500/20 bg-pink-500/5",
+    tag:      "text-pink-400 border-pink-500 bg-pink-500/5",
     includes: [
       "Annoncekreativer",
       "Målgruppeopsætning",
@@ -103,9 +103,9 @@ const marketing = [
     price:    "3.500 kr",
     type:     "pr. måned",
     delivery: "Løbende",
-    color:    "border-green-500/20 bg-green-500/5",
+    color:    "border-green-500 bg-green-500/5",
     dot:      "bg-green-400",
-    tag:      "text-green-400 border-green-500/20 bg-green-500/5",
+    tag:      "text-green-400 border-green-500 bg-green-500/5",
     includes: [
       "Søgeordsanalyse",
       "On-page SEO",
@@ -124,7 +124,19 @@ export default function ServicesPage() {
   const isDark            = theme === "dark"
 
   return (
-    <main className="min-h-screen pt-32 pb-24 px-6">
+    <main className="relative min-h-screen pt-32 pb-24 px-6 overflow-hidden">
+      {!isDark && (
+        <div
+          className="absolute inset-0 pointer-events-none -z-10"
+          style={{
+            background: `
+              radial-gradient(900px circle at 12% 8%, rgba(99,102,241,0.07), transparent 55%),
+              radial-gradient(800px circle at 88% 15%, rgba(236,72,153,0.05), transparent 55%),
+              radial-gradient(700px circle at 50% 100%, rgba(6,182,212,0.05), transparent 60%)
+            `,
+          }}
+        />
+      )}
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
@@ -141,7 +153,7 @@ export default function ServicesPage() {
             Hvad vi tilbyder
           </span>
           <h1
-            className="text-5xl md:text-6xl font-bold mb-6 leading-tight"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight"
             style={{ color: "var(--text-primary)" }}
           >
             Services og
@@ -188,7 +200,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16"
 
           >
             {websites.map((service, i) => (
@@ -259,12 +271,9 @@ export default function ServicesPage() {
                       >
                         {service.price}
                       </p>
-                      <p
-                        className="text-xs mt-0.5"
-                        style={{ color: "var(--text-muted)" }}
-                      >
-                        {service.type}
-                      </p>
+                      <p className="text-xs mt-0.5 text-emerald-500">
+  {service.type}
+</p>
                     </div>
                   </div>
                   <Link
@@ -291,7 +300,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
           >
             {marketing.map((service, i) => (
               <motion.div
@@ -379,30 +388,29 @@ export default function ServicesPage() {
 
         {/* Global Weekly Update Banner */}
         {tab === "marketing" && (
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mb-16 p-5 rounded-2xl border border-dashed text-sm leading-relaxed"
-            style={{ 
-              borderColor: "var(--border)", 
-              backgroundColor: isDark ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.01)" 
-            }}
-          >
-            <div className="flex items-start gap-3">
-              <span className="text-xl mt-0.5 shrink-0">✨</span>
-              <div>
-                <h4 className="font-semibold mb-1" style={{ color: "var(--text-primary)" }}>
-                  Ugentlig statusopdatering
-                </h4>
-                <p style={{ color: "var(--text-secondary)" }}>
-                  Du hører fra os hver uge. Vi sender en kort statusopdatering om hvad der er blevet arbejdet på, og hvad vi har opnået. Ingen lange rapporter – bare et klart og handlingsorienteret overblik.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
+  <motion.div
+    initial={{ opacity: 0, y: 16 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay: 0.2 }}
+    className={`mb-16 p-5 rounded-2xl border border-dashed text-sm leading-relaxed ${
+      isDark 
+        ? "bg-emerald-500/10 border-emerald-500/30" 
+        : "bg-emerald-50 border-emerald-300"
+    }`}
+  >
+    <div className="flex items-start gap-3">
+      <span className="text-xl mt-0.5 shrink-0">✨</span>
+      <div>
+        <h4 className="font-semibold mb-1" style={{ color: "var(--text-primary)" }}>
+          Ugentlig statusopdatering
+        </h4>
+        <p style={{ color: "var(--text-secondary)" }}>
+          Du hører fra os hver uge. Vi sender en kort statusopdatering om hvad der er blevet arbejdet på, og hvad vi har opnået. Ingen lange rapporter – bare et klart og handlingsorienteret overblik.
+        </p>
+      </div>
+    </div>
+  </motion.div>
+)}
 
 
 
