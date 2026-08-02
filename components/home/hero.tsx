@@ -192,7 +192,7 @@ export default function Hero() {
       ))}
 
       {/* Main content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center py-10 lg:pt-16 lg:pb-32">
+      <div className="relative z-10 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-6 text-center py-10 lg:pt-16 lg:pb-32">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -211,7 +211,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] lg:leading-[1.05] mb-3 md:mb-4 ${t.h1}`}
+          className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold tracking-tight leading-[1.1] lg:leading-[1.05] mb-3 md:mb-4 ${t.h1}`}
         >
           Hjemmesider og annoncer,
           <br />
@@ -223,13 +223,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className={`text-base md:text-lg lg:text-xl max-w-xl mx-auto mt-3 md:mt-6 mb-2 md:mb-4 leading-relaxed ${t.body}`}
+          className={`text-base md:text-lg lg:text-xl xl:text-2xl max-w-xl xl:max-w-2xl mx-auto mt-3 md:mt-6 mb-2 md:mb-4 leading-relaxed ${t.body}`}
         >
           Faste priser. Ingen binding. Opsig når som helst.
         </motion.p>
 
         {/* Carousel */}
-        <div className="h-8 flex items-center justify-center mb-4 md:mb-10 overflow-hidden">
+        <div className="h-8 xl:h-10 flex items-center justify-center mb-4 md:mb-10 overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.span
               key={carouselIdx}
@@ -237,7 +237,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.25 }}
-              className={`text-base font-bold ${t.carouselColor[carouselIdx]}`}
+              className={`text-base xl:text-lg font-bold ${t.carouselColor[carouselIdx]}`}
             >
               {carousel[carouselIdx]}
             </motion.span>
@@ -249,7 +249,7 @@ export default function Hero() {
           <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
             <Link
               href="calculator"
-              className="group relative px-6 py-3 md:px-8 md:py-4 text-white font-semibold rounded-xl transition-all duration-300 text-base w-full text-center overflow-hidden block"
+              className="group relative px-6 py-3 md:px-8 md:py-4 xl:px-10 xl:py-5 text-white font-semibold rounded-xl transition-all duration-300 text-base xl:text-lg w-full text-center overflow-hidden block"
               style={t.ctaPrimary}
             >
               <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" />
@@ -260,7 +260,7 @@ export default function Hero() {
           <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
             <Link
               href="/contact"
-              className={`px-6 py-3 md:px-8 md:py-4 rounded-xl font-medium transition-all duration-300 text-base w-full text-center block ${t.ctaSecondary}`}
+              className={`px-6 py-3 md:px-8 md:py-4 xl:px-10 xl:py-5 rounded-xl font-medium transition-all duration-300 text-base xl:text-lg w-full text-center block ${t.ctaSecondary}`}
             >
               Gratis rådgivning →
             </Link>
@@ -286,16 +286,16 @@ export default function Hero() {
         </motion.div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto">
+        <div className="grid grid-cols-3 gap-4 max-w-lg xl:max-w-xl mx-auto">
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className={`flex flex-col items-center gap-1 p-2.5 md:p-4 rounded-xl border shadow-sm ${t.statCard}`}
+              className={`flex flex-col items-center gap-1 p-2.5 md:p-4 xl:p-5 rounded-xl border shadow-sm ${t.statCard}`}
             >
-              <span className={`text-2xl font-bold tracking-tight ${t.statValue}`}>
+              <span className={`text-2xl xl:text-3xl font-bold tracking-tight ${t.statValue}`}>
                 {stat.value}
               </span>
-              <span className={`text-xs text-center font-medium leading-tight ${t.statLabel}`}>
+              <span className={`text-xs xl:text-sm text-center font-medium leading-tight ${t.statLabel}`}>
                 {stat.label}
               </span>
             </div>

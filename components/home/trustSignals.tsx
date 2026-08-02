@@ -199,8 +199,8 @@ export default function TrustSignals() {
                 {stat.value}
               </p>
               <p
-                className="text-xs uppercase tracking-widest font-semibold opacity-60"
-                style={{ color: "var(--text-muted)" }}
+                className="text-xs uppercase tracking-widest font-semibold"
+                style={{ color: "var(--text-muted)", opacity: isDark ? 1 : 0.6 }}
               >
                 {stat.label}
               </p>

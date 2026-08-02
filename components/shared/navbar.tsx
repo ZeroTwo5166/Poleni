@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion"
 import { useTheme } from "./themeProvider"
 
 const links = [
@@ -63,6 +63,9 @@ export default function Navbar() {
   const { theme } = useTheme()
   const isDark = theme === "dark"
 
+  const { scrollYProgress } = useScroll()
+  const progressScaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 40 })
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener("scroll", onScroll)
@@ -96,6 +99,15 @@ export default function Navbar() {
               : "py-5 bg-transparent"
           }`}
       >
+        {/* Scroll progress indicator */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 h-[2px] origin-left"
+          style={{
+            scaleX: progressScaleX,
+            background: "linear-gradient(90deg, #6366f1, #a855f7)",
+          }}
+        />
+
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
 
           {/* Logo */}

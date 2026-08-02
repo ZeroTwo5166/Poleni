@@ -80,8 +80,8 @@ export default function AboutPage() {
             <span className="gradient-text">trætte af at blive overopkrævet</span>
           </h1>
           <p
-            className="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed opacity-80"
-            style={{ color: "var(--text-secondary)" }}
+            className="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
+            style={{ color: "var(--text-secondary)", opacity: isDark ? 1 : 0.8 }}
           >
             Vi startede Poleni, fordi små virksomheder fortjener ærlig prissætning
             og reelle resultater — ikke 12-måneders fælder og vage løfter.
@@ -112,7 +112,7 @@ export default function AboutPage() {
               >
                 Hvorfor vi byggede Poleni
               </h2>
-              <div className="space-y-4 text-base md:text-lg opacity-80" style={{ color: "var(--text-secondary)" }}>
+              <div className="space-y-4 text-base md:text-lg" style={{ color: "var(--text-secondary)", opacity: isDark ? 1 : 0.8 }}>
                 <p>
                   Jeg så hele tiden små virksomhedsejere blive udnyttet af bureauer —
                   låst i 12-måneders kontrakter, betale månedlige retainers for
@@ -139,7 +139,7 @@ export default function AboutPage() {
                   P
                 </div>
                 <h3 className="font-bold text-xl mb-1" style={{ color: "var(--text-primary)" }}>Poleni Grundlægger</h3>
-                <p className="text-sm mb-8 opacity-60" style={{ color: "var(--text-muted)" }}>Stifter & CEO</p>
+                <p className="text-sm mb-8" style={{ color: "var(--text-muted)", opacity: isDark ? 1 : 0.6 }}>Stifter & CEO</p>
 
                 <div className="space-y-3">
                   {[
@@ -183,7 +183,7 @@ export default function AboutPage() {
               >
                 <span className={`text-4xl ${value.color} mb-6 block`}>{value.icon}</span>
                 <h3 className="text-xl font-bold mb-3" style={{ color: "var(--text-primary)" }}>{value.title}</h3>
-                <p className="text-sm leading-relaxed opacity-70" style={{ color: "var(--text-secondary)" }}>{value.desc}</p>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)", opacity: isDark ? 1 : 0.7 }}>{value.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -202,7 +202,7 @@ export default function AboutPage() {
               className="glass rounded-2xl p-8 text-center"
             >
               <p className="text-4xl font-bold mb-2 tracking-tighter" style={{ color: "var(--text-primary)" }}>{stat.value}</p>
-              <p className="text-xs uppercase tracking-widest opacity-50 font-bold" style={{ color: "var(--text-muted)" }}>{stat.label}</p>
+              <p className="text-xs uppercase tracking-widest font-bold" style={{ color: "var(--text-muted)", opacity: isDark ? 1 : 0.5 }}>{stat.label}</p>
             </motion.div>
           ))}
         </div>
@@ -219,7 +219,7 @@ export default function AboutPage() {
           <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: "var(--text-primary)" }}>
             Klar til at arbejde sammen?
           </h2>
-          <p className="mb-10 max-w-md mx-auto text-lg opacity-70" style={{ color: "var(--text-secondary)" }}>
+          <p className="mb-10 max-w-md mx-auto text-lg" style={{ color: "var(--text-secondary)", opacity: isDark ? 1 : 0.7 }}>
             Gratis konsultation. Ingen pres. Vi fortæller dig præcis hvad du har brug for og hvad det koster.
           </p>
 

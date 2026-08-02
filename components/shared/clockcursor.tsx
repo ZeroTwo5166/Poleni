@@ -90,13 +90,13 @@ export default function ClockCursor() {
     )
   }
 
-  // ---------------- DARK THEME: glowing sun ----------------
-  const ringBase = isCompact ? 46 : 70
-  const ringHover = isCompact ? 14 : 20
-  const glowBase = isCompact ? 76 : 110
-  const glowHover = isCompact ? 22 : 32
-  const coreBase = isCompact ? 26 : 40
-  const coreHover = isCompact ? 10 : 14
+  // ---------------- DARK THEME: black hole (EHT 2019 palette) ----------------
+  const diskBase = isCompact ? 50 : 76
+  const diskHover = isCompact ? 16 : 22
+  const photonBase = isCompact ? 34 : 52
+  const photonHover = isCompact ? 12 : 16
+  const coreBase = isCompact ? 22 : 34
+  const coreHover = isCompact ? 8 : 12
 
   return (
     <motion.div
@@ -109,60 +109,59 @@ export default function ClockCursor() {
         willChange: "transform",
       }}
     >
-      {/* Rotating dashed ring (rays) */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 rounded-full"
-        style={{
-          translateX: "-50%",
-          translateY: "-50%",
-          border: "1.5px dashed rgba(255,205,110,0.55)",
-        }}
-        animate={{
-          width: hovering ? ringHover : ringBase,
-          height: hovering ? ringHover : ringBase,
-          rotate: 360,
-          opacity: hovering ? 0.8 : 0.45,
-        }}
-        transition={{
-          width: { type: "spring", stiffness: 250, damping: 22 },
-          height: { type: "spring", stiffness: 250, damping: 22 },
-          opacity: { type: "spring", stiffness: 250, damping: 22 },
-          rotate: { duration: 14, repeat: Infinity, ease: "linear" },
-        }}
-      />
-
-      {/* Soft outer glow */}
+      {/* Accretion disk — swirling conic gradient, fast spin */}
       <motion.div
         className="absolute top-1/2 left-1/2 rounded-full"
         style={{
           translateX: "-50%",
           translateY: "-50%",
           background:
-            "radial-gradient(circle, rgba(255,214,120,0.5) 0%, rgba(255,170,60,0.2) 45%, transparent 75%)",
-          filter: "blur(6px)",
+            "conic-gradient(from 0deg, rgba(255,240,200,0.95), rgba(255,170,60,0.85) 15%, rgba(230,90,30,0.7) 35%, rgba(140,20,10,0.55) 55%, rgba(230,90,30,0.7) 75%, rgba(255,170,60,0.85) 90%, rgba(255,240,200,0.95) 100%)",
+          WebkitMask: "radial-gradient(circle, transparent 55%, black 60%, black 100%)",
+          mask: "radial-gradient(circle, transparent 55%, black 60%, black 100%)",
         }}
         animate={{
-          width: hovering ? glowHover : glowBase,
-          height: hovering ? glowHover : glowBase,
-          opacity: hovering ? 0.9 : 0.55,
+          width: hovering ? diskHover : diskBase,
+          height: hovering ? diskHover : diskBase,
+          rotate: 360,
+          opacity: hovering ? 0.95 : 0.8,
         }}
-        transition={{ type: "spring", stiffness: 250, damping: 20 }}
+        transition={{
+          width: { type: "spring", stiffness: 250, damping: 22 },
+          height: { type: "spring", stiffness: 250, damping: 22 },
+          opacity: { type: "spring", stiffness: 250, damping: 22 },
+          rotate: { duration: 2.5, repeat: Infinity, ease: "linear" },
+        }}
       />
 
-      {/* Bright sun core */}
+      {/* Photon ring — thin bright edge just outside the event horizon */}
       <motion.div
         className="absolute top-1/2 left-1/2 rounded-full"
         style={{
           translateX: "-50%",
           translateY: "-50%",
-          background: "radial-gradient(circle, #fff7e0 0%, #ffd166 55%, #ff9f43 100%)",
+          border: "1px solid rgba(255,225,180,0.85)",
+          boxShadow: "0 0 8px 1px rgba(255,180,90,0.55)",
+        }}
+        animate={{
+          width: hovering ? photonHover : photonBase,
+          height: hovering ? photonHover : photonBase,
+          opacity: hovering ? 0.9 : 0.65,
+        }}
+        transition={{ type: "spring", stiffness: 300, damping: 22 }}
+      />
+
+      {/* Event horizon — the black core, swallowing light */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 rounded-full bg-black"
+        style={{
+          translateX: "-50%",
+          translateY: "-50%",
+          boxShadow: "inset 0 0 10px 2px rgba(0,0,0,0.95), 0 0 14px 5px rgba(0,0,0,0.6)",
         }}
         animate={{
           width: hovering ? coreHover : coreBase,
           height: hovering ? coreHover : coreBase,
-          boxShadow: hovering
-            ? "0 0 8px 2px rgba(255,209,102,0.95), 0 0 16px 4px rgba(255,159,67,0.55)"
-            : "0 0 14px 3px rgba(255,209,102,0.8), 0 0 30px 8px rgba(255,159,67,0.35)",
         }}
         transition={{ type: "spring", stiffness: 300, damping: 22 }}
       />

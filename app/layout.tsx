@@ -7,7 +7,7 @@ import Navbar from "@/components/shared/navbar"
 import Footer from "@/components/shared/footer"
 import ThemeProvider from "@/components/shared/themeProvider"
 import Preloader from "@/components/shared/preloader"
-import StarField from "@/components/shared/starField"
+import GalaxyBackground from "@/components/shared/galaxyBackground"
 import ClockCursor from "@/components/shared/clockcursor"
 import MeshBackground from "@/components/shared/meshBackground"
 import ScrollToTop from "@/components/shared/scrollToTop"
@@ -56,7 +56,7 @@ export default function RootLayout({
           
           {/* Background effects - lowest layer */}
           <div style={{ position: "fixed", inset: 0, zIndex: 0 }}>
-            <StarField />
+            <GalaxyBackground />
             <MeshBackground />
           </div>
           
