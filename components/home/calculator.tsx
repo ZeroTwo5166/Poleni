@@ -131,11 +131,7 @@ export default function Calculator() {
 
               {/* WEBSITE TYPE */}
               <div
-                className={`rounded-2xl p-6 border ${
-                  isDark
-                    ? "bg-zinc-950 border-white/10"
-                    : "glass"
-                }`}
+                className="glass rounded-2xl p-6 border"
               >
                 <div className="flex items-center justify-between mb-4">
                   <p
@@ -172,8 +168,8 @@ export default function Calculator() {
                               }
                             : isDark
                             ? {
-                                backgroundColor: "#0a0a0a",
-                                borderColor: "rgba(255,255,255,0.22)",
+                                background: "linear-gradient(160deg,#0a0a0a 0%,rgba(16,185,129,0.06) 100%)",
+                                borderColor: "rgba(255,255,255,0.16)",
                               }
                             : {
                                 backgroundColor: "rgba(255,255,255,0.55)",
@@ -210,11 +206,7 @@ export default function Calculator() {
 
               {/* ADDONS */}
               <div
-                className={`rounded-2xl p-6 border ${
-                  isDark
-                    ? "bg-zinc-950 border-white/10"
-                    : "glass"
-                }`}
+                className="glass rounded-2xl p-6 border"
               >
                 <p
                   className="text-sm font-semibold mb-4"
@@ -243,8 +235,8 @@ export default function Calculator() {
                               }
                             : isDark
                             ? {
-                                backgroundColor: "#0a0a0a",
-                                borderColor: "rgba(255,255,255,0.22)",
+                                background: "linear-gradient(160deg,#0a0a0a 0%,rgba(99,102,241,0.08) 100%)",
+                                borderColor: "rgba(255,255,255,0.16)",
                               }
                             : {
                                 backgroundColor: "rgba(255,255,255,0.55)",
@@ -310,11 +302,7 @@ export default function Calculator() {
             <div className="flex flex-col gap-6 lg:sticky lg:top-28">
 
               <div
-                className={`rounded-2xl p-6 border ${
-                  isDark
-                    ? "bg-zinc-950 border-white/10"
-                    : "glass"
-                }`}
+                className="glass rounded-2xl p-6 border"
               >
                 <p
                   className="text-xs uppercase tracking-widest mb-4"
@@ -375,7 +363,7 @@ export default function Calculator() {
 
                 <Link
                   href="/contact"
-                  className="block w-full py-3.5 text-center font-semibold rounded-xl bg-indigo-500 hover:bg-indigo-400 text-white"
+                  className="shimmer block w-full py-3.5 text-center font-semibold rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 text-white"
                 >
                   Få et præcist tilbud →
                 </Link>

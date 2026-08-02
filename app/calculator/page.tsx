@@ -357,7 +357,7 @@ export default function CalculatorPage() {
               )}
 
               <Link href="/contact"
-                className="block w-full py-3.5 text-center bg-indigo-500 hover:bg-indigo-400
+                className="shimmer block w-full py-3.5 text-center bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400
                            text-white font-semibold rounded-xl transition-colors duration-200 mb-3">
                 Få et præcist tilbud →
               </Link>

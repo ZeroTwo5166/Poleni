@@ -151,7 +151,7 @@ export default function Navbar() {
             <ThemeToggle />
             <Link
               href="/contact"
-              className="px-4 py-2 text-sm text-white bg-indigo-500 hover:bg-indigo-400 rounded-lg transition-colors duration-200 font-medium"
+              className="shimmer px-4 py-2 text-sm text-white bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 rounded-lg transition-colors duration-200 font-medium"
             >
               Kom i gang
             </Link>
@@ -232,7 +232,7 @@ export default function Navbar() {
             >
               <Link
                 href="/contact"
-                className="block w-full py-4 text-center text-white bg-indigo-500 hover:bg-indigo-400 rounded-xl font-medium text-lg transition-colors duration-200"
+                className="shimmer block w-full py-4 text-center text-white bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 rounded-xl font-medium text-lg transition-colors duration-200"
               >
                 Kom i gang
               </Link>

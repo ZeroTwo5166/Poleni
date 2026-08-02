@@ -149,7 +149,7 @@ export default function Problem() {
                 delay: i * 0.08,
                 ease: "easeOut",
               }}
-              className="relative p-6 rounded-2xl text-left overflow-hidden"
+              className="shimmer relative p-6 rounded-2xl text-left overflow-hidden"
               style={
                 isDark
                   ? {

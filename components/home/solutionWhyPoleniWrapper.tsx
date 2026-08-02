@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState } from "react"
 import Solution from "@/components/home/solution"
-import WhyPoleni from "@/components/home/whyPoleni"
+import WhyPoleni, { WhyPoleniProcess } from "@/components/home/whyPoleni"
 import { useIsCompactViewport } from "@/lib/useIsCompactViewport"
 
 // Cubic ease-in-out: makes motion feel physical, not mechanical
@@ -18,8 +18,26 @@ function remap(v: number, inMin: number, inMax: number, outMin: number, outMax: 
 
 export default function SolutionWhyPoleniWrapper() {
   const outerRef = useRef<HTMLDivElement>(null)
+  const solutionContentRef = useRef<HTMLDivElement>(null)
   const [progress, setProgress] = useState(0)
+  const [fitScale, setFitScale] = useState(1)
   const isCompact = useIsCompactViewport()
+
+  // Solution's content (header + 3 cards + CTA) can be taller than 100vh on
+  // shorter laptop screens, which the pin box would otherwise clip. Scale
+  // the whole panel down to fit instead of losing the pin/slam animation.
+  useEffect(() => {
+    if (isCompact) return
+    const measure = () => {
+      const content = solutionContentRef.current?.firstElementChild as HTMLElement | null
+      if (!content) return
+      const natural = content.scrollHeight
+      setFitScale(natural > 0 ? Math.min(1, window.innerHeight / natural) : 1)
+    }
+    measure()
+    window.addEventListener("resize", measure)
+    return () => window.removeEventListener("resize", measure)
+  }, [isCompact])
 
   useEffect(() => {
     const outer = outerRef.current
@@ -69,6 +87,7 @@ export default function SolutionWhyPoleniWrapper() {
   }
 
   return (
+    <>
     <div style={{ height: "200vh" }}>
       <div ref={outerRef} style={{ position: "relative", height: "200vh" }}>
 
@@ -95,7 +114,12 @@ export default function SolutionWhyPoleniWrapper() {
               pointerEvents: progress > 0.45 ? "none" : "auto",
             }}
           >
-            <Solution />
+            <div
+              ref={solutionContentRef}
+              style={{ transform: `scaleY(${fitScale})`, transformOrigin: "top center" }}
+            >
+              <Solution />
+            </div>
           </div>
 
           {/* ── WhyPoleni — slams in from left with mass ── */}
@@ -115,7 +139,7 @@ export default function SolutionWhyPoleniWrapper() {
               pointerEvents: progress > 0.55 ? "auto" : "none",
             }}
           >
-            <WhyPoleni />
+            <WhyPoleni hideProcess />
           </div>
 
           {/* ── Sweep overlay — cinematic dark wipe ── */}
@@ -134,5 +158,10 @@ export default function SolutionWhyPoleniWrapper() {
         </div>
       </div>
     </div>
+
+    {/* Process steps continue in normal flow once the pin/slam finishes —
+        too tall to fit the 100vh pin box alongside the reason cards. */}
+    <WhyPoleniProcess />
+    </>
   )
 }

@@ -129,7 +129,7 @@ export default function TheStory() {
           className={`relative p-8 md:p-12 rounded-2xl border-2 mb-8 overflow-hidden
             ${
               isDark
-                ? "border-white/[0.06] bg-black"
+                ? "border-rose-500/20 bg-[linear-gradient(160deg,#0a0a0d_0%,rgba(244,63,94,0.10)_100%)]"
                 : "border-violet-300 bg-gradient-to-br from-white to-rose-50/60 shadow-[0_20px_60px_rgba(124,58,237,0.14)]"
             }`}
         >
@@ -199,7 +199,7 @@ export default function TheStory() {
               className={`flex items-center gap-3 p-4 rounded-xl border-2
                 ${
                   isDark
-                    ? "border-white/[0.06] bg-white/[0.02]"
+                    ? "border-rose-500/15 bg-rose-500/[0.04]"
                     : "border-violet-300 bg-gradient-to-br from-white to-violet-50 shadow-sm"
                 }`}
             >
@@ -224,7 +224,7 @@ export default function TheStory() {
           viewport={viewport}
           className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16"
         >
-          <div className={`p-8 rounded-2xl border ${isDark ? 'border-white/[0.06] bg-white/[0.01]' : 'border-violet-500 bg-violet-50/50'}`}>
+          <div className={`p-8 rounded-2xl border ${isDark ? 'border-rose-500/15 bg-rose-500/[0.03]' : 'border-violet-500 bg-violet-50/50'}`}>
             <h3 className="text-lg font-bold mb-3" style={{ color: isDark ? '#fff' : '#0f172a' }}>
               1. Ærlighed frem for alt
             </h3>
@@ -233,7 +233,7 @@ export default function TheStory() {
             </p>
           </div>
           
-          <div className={`p-8 rounded-2xl border ${isDark ? 'border-white/[0.06] bg-white/[0.01]' : 'border-violet-500 bg-violet-50/50'}`}>
+          <div className={`p-8 rounded-2xl border ${isDark ? 'border-rose-500/15 bg-rose-500/[0.03]' : 'border-violet-500 bg-violet-50/50'}`}>
             <h3 className="text-lg font-bold mb-3" style={{ color: isDark ? '#fff' : '#0f172a' }}>
               2. Bundlinje over forfængelighed
             </h3>
@@ -253,7 +253,7 @@ export default function TheStory() {
         >
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 text-white font-bold rounded-xl
+            className="shimmer inline-flex items-center gap-2 px-8 py-4 text-white font-bold rounded-xl
                        transition-all duration-200 shadow-lg active:scale-95 hover:scale-105"
             style={{
               background: "linear-gradient(135deg, #f43f5e, #fb7185)",

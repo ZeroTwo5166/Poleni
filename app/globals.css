@@ -9,18 +9,19 @@
 :root,
 [data-theme="dark"] {
   --bg:             #080808;
-  --bg-card:        rgba(255, 255, 255, 0.06);
-  --bg-hover:       rgba(255, 255, 255, 0.09);
-  --border:         rgba(255, 255, 255, 0.12);
-  --border-hover:   rgba(255, 255, 255, 0.18);
-  
+  --bg-card:        rgba(139, 92, 246, 0.07);
+  --bg-hover:       rgba(139, 92, 246, 0.12);
+  --border:         rgba(255, 255, 255, 0.13);
+  --border-hover:   rgba(167, 139, 250, 0.4);
+
   /* REFINED TEXT COLORS (DARK) */
   --text-primary:   #f9fafb;
   --text-secondary: #d1d5db;
   --text-muted:     #808080;
-  
+
   --navbar-bg:      rgba(8, 8, 8, 0.8);
   --grid-line:      rgba(255, 255, 255, 0.025);
+  --shadow-color:   rgba(99, 102, 241, 0.25);
 }
 
 [data-theme="light"] {
@@ -28,24 +29,24 @@
   --bg:             #f8f9ff; 
   
   /* Glass cards have a slight blue-ish tint to distinguish from the warm bg */
-  --bg-card:        rgba(255, 255, 255, 0.65);
-  --bg-hover:       rgba(255, 255, 255, 0.9);
-  
+  --bg-card:        rgba(255, 255, 255, 0.72);
+  --bg-hover:       rgba(255, 255, 255, 0.92);
+
   /* Border colors now use a faint Indigo/Violet tint */
-  --border:         rgba(99, 102, 241, 0.12);
-  --border-hover:   rgba(99, 102, 241, 0.3);
- 
+  --border:         rgba(99, 102, 241, 0.16);
+  --border-hover:   rgba(99, 102, 241, 0.4);
+
   /* Text: Deep Navy instead of Black for a premium "ink" look */
-  --text-primary:   #0f172a; 
-  --text-secondary: #334155; 
+  --text-primary:   #0f172a;
+  --text-secondary: #334155;
   --text-muted:     #64748b;
- 
+
   /* Navbar with a more saturated blur effect */
   --navbar-bg:      rgba(248, 249, 255, 0.8);
   --grid-line:      rgba(99, 102, 241, 0.07);
-  
+
   /* Colorful shadows! This adds a subtle indigo glow to cards */
-  --shadow-color:   rgba(99, 102, 241, 0.08);
+  --shadow-color:   rgba(99, 102, 241, 0.14);
 }
 
 /* Force cursor effect element above everything */
@@ -119,8 +120,62 @@ body.cursor-light * {
 .glass {
   background:      var(--bg-card) !important;
   border:          1px solid var(--border) !important;
-  backdrop-filter: blur(12px);
-  transition:      background 0.3s ease, border 0.3s ease;
+  backdrop-filter: blur(16px);
+  box-shadow:      0 8px 32px -8px var(--shadow-color), inset 0 1px 0 0 rgba(255,255,255,0.04);
+  transition:      background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.glass:hover {
+  border-color: var(--border-hover) !important;
+  box-shadow:   0 16px 48px -12px var(--shadow-color), inset 0 1px 0 0 rgba(255,255,255,0.06);
+}
+
+/* ── Interactive spotlight: a radial glow that follows the cursor. ──
+   Pair with the useSpotlight() hook (sets --spot-x / --spot-y via JS).
+   Override --spot-color (as "r,g,b") per-section to match its accent. */
+.spotlight {
+  position: relative;
+  overflow: hidden;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    280px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(var(--spot-color, 99, 102, 241), 0.22),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.spotlight:hover::before {
+  opacity: 1;
+}
+.spotlight > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Shimmer sweep: a diagonal highlight that sweeps across on hover. ── */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%);
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+}
+.shimmer:hover::after {
+  transform: translateX(120%);
 }
 
 @keyframes fade-up {

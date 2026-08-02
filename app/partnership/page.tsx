@@ -302,7 +302,7 @@ export default function PartnershipPage() {
                 <button
                   onClick={handleSubmit}
                   disabled={loading || !form.business || !form.revenue || !form.product || !form.tracking || !form.email}
-                  className="w-full py-4 bg-indigo-500 hover:bg-indigo-400
+                  className="shimmer w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400
                              disabled:opacity-40 disabled:cursor-not-allowed
                              text-white font-semibold rounded-xl
                              transition-colors duration-200 mt-2"

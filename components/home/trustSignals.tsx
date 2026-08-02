@@ -32,12 +32,19 @@ const testimonials = [
   },
 ]
 
+const trustStats = [
+  { value: "6+", label: "Kunder hjulpet" },
+  { value: "100%", label: "Gennemsigtig pris" },
+  { value: "24h", label: "Svartid" },
+  { value: "0", label: "Bindingsaftaler" },
+]
+
 export default function TrustSignals() {
   const { theme } = useTheme()
   const isDark = theme === "dark"
 
   return (
-    <section className="relative py-32 px-6 overflow-hidden">
+    <section className="relative pt-32 pb-12 px-6 overflow-hidden">
 
       {/* subtle green glow (dark only) */}
       {isDark && (
@@ -101,12 +108,13 @@ export default function TrustSignals() {
               key={t.author}
               variants={fadeUp}
               whileHover={{ scale: 1.02, y: -4 }}
-              className="relative p-6 rounded-2xl"
+              className="shimmer relative p-6 rounded-2xl"
               style={
                 isDark
                   ? {
-                      background: "#0f1412",
-                      border: "1px solid rgba(16,185,129,0.12)",
+                      background:
+                        "linear-gradient(160deg, #0a0f0c 0%, rgba(16,185,129,0.14) 100%)",
+                      border: "1px solid rgba(16,185,129,0.18)",
                     }
                   : {
                       background:
@@ -155,6 +163,51 @@ export default function TrustSignals() {
           ))}
         </motion.div>
 
+        {/* Trust stats */}
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={viewport}
+        >
+          {trustStats.map((stat) => (
+            <motion.div
+              key={stat.label}
+              variants={fadeUp}
+              whileHover={{ scale: 1.04, y: -3 }}
+              className="rounded-2xl p-6 text-center"
+              style={
+                isDark
+                  ? {
+                      background:
+                        "linear-gradient(160deg, #0a0f0c 0%, rgba(16,185,129,0.10) 100%)",
+                      border: "1px solid rgba(16,185,129,0.15)",
+                    }
+                  : {
+                      background:
+                        "linear-gradient(160deg, #ffffff 0%, #ecfdf5 100%)",
+                      border: "1px solid rgba(16,185,129,0.16)",
+                    }
+              }
+            >
+              <p
+                className="text-3xl font-bold mb-1 tracking-tight"
+                style={{ color: "var(--text-primary)" }}
+              >
+                {stat.value}
+              </p>
+              <p
+                className="text-xs uppercase tracking-widest font-semibold opacity-60"
+                style={{ color: "var(--text-muted)" }}
+              >
+                {stat.label}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
+
         {/* CTA */}
         <motion.div
           variants={fadeUp}
@@ -170,8 +223,8 @@ export default function TrustSignals() {
 
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-500
-                       hover:bg-emerald-400 text-black font-semibold rounded-xl
+            className="shimmer inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-400
+                       hover:from-emerald-400 hover:to-teal-300 text-black font-semibold rounded-xl
                        transition-colors duration-200"
           >
             Kom i gang gratis →

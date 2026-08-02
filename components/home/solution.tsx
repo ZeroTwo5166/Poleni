@@ -4,6 +4,7 @@ import { useRef } from "react"
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion"
 import Link from "next/link"
 import { useTheme } from "@/components/shared/themeProvider"
+import { useSpotlight } from "@/lib/useSpotlight"
 
 interface Service {
   icon: string
@@ -18,6 +19,7 @@ interface Service {
   glow: string
   href: string
   accent: string
+  spotRgb: string
 }
 
 const services: Service[] = [
@@ -32,13 +34,15 @@ const services: Service[] = [
       "SEO-optimeret fra dag ét",
       "Hosting & support inkluderet i 12 måneder",
     ],
-    darkColor: "border-white/10 bg-zinc-950",
+    darkColor:
+      "border-violet-500/25 bg-[linear-gradient(160deg,#0c0a14_0%,rgba(124,58,237,0.14)_100%)]",
     lightColor:
       "border-violet-200 bg-gradient-to-br from-white to-violet-50 shadow-[0_12px_40px_rgba(124,58,237,0.12)]",
     darkTag: "text-violet-300 border-white/10 bg-zinc-900",
     lightTag: "text-violet-700 border-violet-200 bg-violet-50",
     glow: "rgba(124,58,237,0.10)",
     accent: "#7c3aed",
+    spotRgb: "124,58,237",
     href: "/services",
   },
   {
@@ -52,13 +56,15 @@ const services: Service[] = [
       "A/B-test af annoncer løbende",
       "Månedlig rapport med klar ROI",
     ],
-    darkColor: "border-white/10 bg-zinc-950",
+    darkColor:
+      "border-cyan-500/25 bg-[linear-gradient(160deg,#08111a_0%,rgba(6,182,212,0.14)_100%)]",
     lightColor:
       "border-cyan-200 bg-gradient-to-br from-white to-cyan-50 shadow-[0_12px_40px_rgba(6,182,212,0.12)]",
     darkTag: "text-cyan-300 border-white/10 bg-zinc-900",
     lightTag: "text-cyan-700 border-cyan-200 bg-cyan-50",
     glow: "rgba(6,182,212,0.10)",
     accent: "#0891b2",
+    spotRgb: "6,182,212",
     href: "/services",
   },
   {
@@ -72,13 +78,15 @@ const services: Service[] = [
       "Kreativt annoncedesign inkluderet",
       "Ugentlig opfølgning på performance",
     ],
-    darkColor: "border-white/10 bg-zinc-950",
+    darkColor:
+      "border-rose-500/25 bg-[linear-gradient(160deg,#150a0d_0%,rgba(244,63,94,0.14)_100%)]",
     lightColor:
       "border-rose-200 bg-gradient-to-br from-white to-rose-50 shadow-[0_12px_40px_rgba(244,63,94,0.12)]",
     darkTag: "text-rose-300 border-white/10 bg-zinc-900",
     lightTag: "text-rose-700 border-rose-200 bg-rose-50",
     glow: "rgba(244,63,94,0.10)",
     accent: "#e11d48",
+    spotRgb: "244,63,94",
     href: "/services",
   },
 ]
@@ -107,22 +115,28 @@ function ScrollCard({
   const rotate = useTransform(progress, [0, 0.45], [config.rotate, 0])
   const opacity = useTransform(progress, [0, 0.15, 0.45], [0, 0.7, 1])
   const scale = useTransform(progress, [0, 0.45], [0.92, 1])
+  const { ref: spotRef, onMouseMove } = useSpotlight<HTMLDivElement>()
 
   const colorClass = isDark ? service.darkColor : service.lightColor
   const tagClass = isDark ? service.darkTag : service.lightTag
 
   return (
     <motion.div
-      style={{
-        x,
-        y,
-        rotate,
-        opacity,
-        scale,
-        zIndex: 10 - index,
-        willChange: "transform",
-      }}
-      className={`relative p-8 rounded-2xl border ${colorClass}
+      ref={spotRef}
+      onMouseMove={onMouseMove}
+      style={
+        {
+          x,
+          y,
+          rotate,
+          opacity,
+          scale,
+          zIndex: 10 - index,
+          willChange: "transform",
+          "--spot-color": service.spotRgb,
+        } as unknown as React.CSSProperties
+      }
+      className={`spotlight relative p-8 rounded-2xl border ${colorClass}
         group overflow-hidden flex flex-col gap-4
         shadow-xl
         transition-shadow duration-300

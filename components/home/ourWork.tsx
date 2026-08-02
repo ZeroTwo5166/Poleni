@@ -169,9 +169,9 @@ export default function OurWork() {
                 key={c.title}
                 variants={fadeUp}
                 whileHover={{ y: -6 }}
-                className={`relative group rounded-2xl cursor-default flex flex-col justify-between overflow-hidden transition-all duration-300 ${
+                className={`shimmer relative group rounded-2xl cursor-default flex flex-col justify-between overflow-hidden transition-all duration-300 ${
                   isDark
-                    ? "bg-[#0b0b0f] border border-white/10 hover:border-white/20 hover:shadow-[0_8px_30px_rgba(245,158,11,0.1)]"
+                    ? "bg-[linear-gradient(160deg,#0b0b0f_0%,rgba(245,158,11,0.10)_100%)] border border-amber-500/15 hover:border-amber-400/30 hover:shadow-[0_8px_30px_rgba(245,158,11,0.15)]"
                     : "bg-gradient-to-b from-white to-amber-50/60 border border-amber-200/70 shadow-xl shadow-amber-500/5 hover:shadow-2xl hover:shadow-amber-500/15"
                 }`}
               >
@@ -212,7 +212,7 @@ export default function OurWork() {
 
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4
+            className="shimmer inline-flex items-center gap-2 px-8 py-4
                        bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400
                        text-white font-bold rounded-xl shadow-[0_8px_20px_rgba(245,158,11,0.3)]
                        hover:shadow-[0_8px_25px_rgba(245,158,11,0.4)] hover:-translate-y-1

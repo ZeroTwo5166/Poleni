@@ -552,7 +552,7 @@ export default function ServicesPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="px-8 py-4 bg-indigo-500 hover:bg-indigo-400 text-white
+              className="shimmer px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 text-white
                          font-semibold rounded-xl transition-colors duration-200
                          text-center"
             >

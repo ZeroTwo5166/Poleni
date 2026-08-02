@@ -11,7 +11,6 @@ const SECTIONS = [
     body: ["Poleni er dataansvarlig for de personoplysninger, der er beskrevet i denne politik."],
     list: [
       "Poleni (CVR: 46361571)",
-      "Høje Gladsaxe 33, 11. tv, 2860 Søborg",
       "kontakt@poleni.dk",
       "+45 42 33 39 95",
     ],

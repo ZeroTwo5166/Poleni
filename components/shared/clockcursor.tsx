@@ -28,24 +28,24 @@ export default function ClockCursor() {
       })
     }
 
-    const handleEnter = () => setHovering(true)
-    const handleLeave = () => setHovering(false)
-
-    const targets = document.querySelectorAll("a, button, [data-cursor]")
-    targets.forEach((el) => {
-      el.addEventListener("mouseenter", handleEnter)
-      el.addEventListener("mouseleave", handleLeave)
-    })
+    const handleOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (target.closest("a, button, [data-cursor]")) setHovering(true)
+    }
+    const handleOut = (e: MouseEvent) => {
+      const related = e.relatedTarget as HTMLElement | null
+      if (!related || !related.closest("a, button, [data-cursor]")) setHovering(false)
+    }
 
     window.addEventListener("mousemove", move, { passive: true })
+    document.addEventListener("mouseover", handleOver)
+    document.addEventListener("mouseout", handleOut)
 
     return () => {
       cancelAnimationFrame(raf)
       window.removeEventListener("mousemove", move)
-      targets.forEach((el) => {
-        el.removeEventListener("mouseenter", handleEnter)
-        el.removeEventListener("mouseleave", handleLeave)
-      })
+      document.removeEventListener("mouseover", handleOver)
+      document.removeEventListener("mouseout", handleOut)
     }
   }, [])
 
@@ -54,7 +54,7 @@ export default function ClockCursor() {
   if (!isDark) {
     // ---------------- LIGHT THEME: blend-difference circle ----------------
     const base = isCompact ? 64 : 100
-    const hoverSize = isCompact ? 26 : 40
+    const hoverSize = isCompact ? 18 : 28
 
     return (
       <motion.div
@@ -77,11 +77,11 @@ export default function ClockCursor() {
 
   // ---------------- DARK THEME: glowing sun ----------------
   const ringBase = isCompact ? 46 : 70
-  const ringHover = isCompact ? 20 : 28
+  const ringHover = isCompact ? 14 : 20
   const glowBase = isCompact ? 76 : 110
-  const glowHover = isCompact ? 32 : 46
+  const glowHover = isCompact ? 22 : 32
   const coreBase = isCompact ? 26 : 40
-  const coreHover = isCompact ? 14 : 20
+  const coreHover = isCompact ? 10 : 14
 
   return (
     <motion.div

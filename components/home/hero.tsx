@@ -248,7 +248,7 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 mb-4 md:mb-6">
           <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
             <Link
-              href="#calculator"
+              href="calculator"
               className="group relative px-6 py-3 md:px-8 md:py-4 text-white font-semibold rounded-xl transition-all duration-300 text-base w-full text-center overflow-hidden block"
               style={t.ctaPrimary}
             >

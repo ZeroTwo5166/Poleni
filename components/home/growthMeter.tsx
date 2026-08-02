@@ -27,8 +27,9 @@ export default function GrowthMeter({ pct, message }: Props) {
   style={
     isDark
       ? {
-          backgroundColor: "#0b0b0f",
-          border: "1px solid rgba(255,255,255,0.08)",
+          background: "linear-gradient(160deg, #0b0b0f 0%, rgba(99,102,241,0.12) 100%)",
+          border: "1px solid rgba(99,102,241,0.22)",
+          boxShadow: "0 20px 50px rgba(99,102,241,0.12)",
         }
       : {
           background: "linear-gradient(160deg, #ffffff 0%, #f2f1ff 100%)",

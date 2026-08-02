@@ -2,10 +2,23 @@
 
 import { useTheme } from "@/components/shared/themeProvider"
 
+const lightBlobs = [
+  { top: "-5%", left: "-5%", w: 680, h: 680, color: "139,92,246", anim: "drift-1 16s ease-in-out infinite" },
+  { top: "-8%", right: "-5%", w: 620, h: 620, color: "99,102,241", anim: "drift-2 20s ease-in-out infinite" },
+  { top: "38%", left: "-8%", w: 560, h: 560, color: "6,182,212", anim: "drift-3 24s ease-in-out infinite" },
+  { top: "30%", right: "-8%", w: 640, h: 640, color: "236,72,153", anim: "drift-4 18s ease-in-out infinite" },
+  { bottom: "-8%", left: "5%", w: 580, h: 580, color: "251,146,60", anim: "drift-5 22s ease-in-out infinite" },
+  { bottom: "-5%", right: "0%", w: 600, h: 600, color: "244,63,94", anim: "drift-6 26s ease-in-out infinite" },
+] as const
+
 export default function MeshBackground() {
   const { theme } = useTheme()
 
   if (theme !== "light") return null
+
+  const blobs = lightBlobs
+  const opacityMax = 0.45
+  const opacityMid = 0.15
 
   return (
     <>
@@ -56,59 +69,24 @@ export default function MeshBackground() {
         className="pointer-events-none"
         style={{ position: "fixed", inset: 0, zIndex: 0, overflow: "hidden" }}
       >
-        {/* Violet — top left */}
-        <div style={{
-          position: "absolute", borderRadius: "50%",
-          width: 680, height: 680, top: "-5%", left: "-5%",
-          background: "radial-gradient(circle, rgba(139,92,246,0.45) 0%, rgba(139,92,246,0.15) 45%, transparent 70%)",
-          filter: "blur(10px)",
-          animation: "drift-1 16s ease-in-out infinite",
-        }} />
-
-        {/* Indigo — top right */}
-        <div style={{
-          position: "absolute", borderRadius: "50%",
-          width: 620, height: 620, top: "-8%", right: "-5%",
-          background: "radial-gradient(circle, rgba(99,102,241,0.42) 0%, rgba(99,102,241,0.14) 45%, transparent 70%)",
-          filter: "blur(10px)",
-          animation: "drift-2 20s ease-in-out infinite",
-        }} />
-
-        {/* Cyan — middle left */}
-        <div style={{
-          position: "absolute", borderRadius: "50%",
-          width: 560, height: 560, top: "38%", left: "-8%",
-          background: "radial-gradient(circle, rgba(6,182,212,0.38) 0%, rgba(6,182,212,0.12) 45%, transparent 70%)",
-          filter: "blur(10px)",
-          animation: "drift-3 24s ease-in-out infinite",
-        }} />
-
-        {/* Pink — middle right */}
-        <div style={{
-          position: "absolute", borderRadius: "50%",
-          width: 640, height: 640, top: "30%", right: "-8%",
-          background: "radial-gradient(circle, rgba(236,72,153,0.40) 0%, rgba(236,72,153,0.13) 45%, transparent 70%)",
-          filter: "blur(10px)",
-          animation: "drift-4 18s ease-in-out infinite",
-        }} />
-
-        {/* Amber — bottom left */}
-        <div style={{
-          position: "absolute", borderRadius: "50%",
-          width: 580, height: 580, bottom: "-8%", left: "5%",
-          background: "radial-gradient(circle, rgba(251,146,60,0.35) 0%, rgba(251,146,60,0.10) 45%, transparent 70%)",
-          filter: "blur(10px)",
-          animation: "drift-5 22s ease-in-out infinite",
-        }} />
-
-        {/* Rose — bottom right */}
-        <div style={{
-          position: "absolute", borderRadius: "50%",
-          width: 600, height: 600, bottom: "-5%", right: "0%",
-          background: "radial-gradient(circle, rgba(244,63,94,0.35) 0%, rgba(244,63,94,0.10) 45%, transparent 70%)",
-          filter: "blur(10px)",
-          animation: "drift-6 26s ease-in-out infinite",
-        }} />
+        {blobs.map((b, i) => (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              borderRadius: "50%",
+              width: b.w,
+              height: b.h,
+              top: "top" in b ? b.top : undefined,
+              left: "left" in b ? b.left : undefined,
+              right: "right" in b ? b.right : undefined,
+              bottom: "bottom" in b ? b.bottom : undefined,
+              background: `radial-gradient(circle, rgba(${b.color},${opacityMax}) 0%, rgba(${b.color},${opacityMid}) 45%, transparent 70%)`,
+              filter: "blur(10px)",
+              animation: b.anim,
+            }}
+          />
+        ))}
       </div>
     </>
   )
