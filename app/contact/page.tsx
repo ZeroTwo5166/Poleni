@@ -1,11 +1,12 @@
-// app/contact/page.tsx
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "@/components/shared/themeProvider"
 
 type FormState = "idle" | "loading" | "success" | "error"
+
+const CALENDLY_URL = "https://calendly.com/eubishbayadi/30min"
 
 const contactInfo = [
   {
@@ -57,6 +58,49 @@ export default function ContactPage() {
   const { theme } = useTheme()
   const isDark    = theme === "dark"
 
+  // ── Calendar modal ──
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false)
+  const [calendlySrc, setCalendlySrc] = useState<string | null>(null)
+  const [calendlyLoaded, setCalendlyLoaded] = useState(false)
+  const [calendlyKey, setCalendlyKey] = useState(0)
+
+  // Plain iframe embed instead of Calendly's inline-widget JS. The JS
+  // widget throws an internal null-reference error from its own
+  // postMessage handler in SPA/remount scenarios and requires a
+  // non-static-position container — both are bugs in widget.js itself.
+  // An iframe sidesteps that whole class of bug since widget.js never runs.
+  useEffect(() => {
+    if (!isCalendarOpen) return
+    setCalendlyLoaded(false)
+    const domain = window.location.hostname
+    setCalendlySrc(
+      `${CALENDLY_URL}?embed_domain=${domain}&embed_type=Inline&hide_gdpr_banner=1`
+    )
+  }, [isCalendarOpen, calendlyKey])
+
+  // Close on Escape + lock body scroll while modal is open
+  useEffect(() => {
+    if (!isCalendarOpen) return
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setIsCalendarOpen(false)
+    }
+    document.addEventListener("keydown", onKeyDown)
+
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown)
+      document.body.style.overflow = prevOverflow
+    }
+  }, [isCalendarOpen])
+
+  function refreshCalendly() {
+    setCalendlyLoaded(false)
+    setCalendlyKey((k) => k + 1)
+  }
+
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
@@ -85,11 +129,11 @@ export default function ContactPage() {
 
   // Reusable input class based on theme
   const inputClass = `
-    w-full px-4 py-3 rounded-xl text-sm outline-none
+    w-full px-4 py-3.5 rounded-xl text-sm outline-none
     transition-all duration-200
     ${isDark
-      ? "bg-white/[0.04] border border-white/[0.08] text-white placeholder-gray-600 focus:border-indigo-500/50 focus:bg-white/[0.06]"
-      : "bg-indigo-500/[0.04] border border-indigo-500/[0.12] text-gray-900 placeholder-gray-400 focus:border-indigo-500/50 focus:bg-indigo-500/[0.07]"}
+      ? "bg-white/[0.04] border border-white/[0.08] text-white placeholder-gray-600 focus:border-indigo-500/50 focus:bg-white/[0.06] focus:ring-4 focus:ring-indigo-500/10"
+      : "bg-indigo-500/[0.04] border border-indigo-500/[0.12] text-gray-900 placeholder-gray-400 focus:border-indigo-500/50 focus:bg-indigo-500/[0.07] focus:ring-4 focus:ring-indigo-500/10"}
   `
 
   const labelClass = `
@@ -151,11 +195,17 @@ export default function ContactPage() {
           >
             <div className="glass rounded-2xl p-8">
               <h2
-                className="text-xl font-semibold mb-6"
+                className="text-xl font-semibold mb-1"
                 style={{ color: "var(--text-primary)" }}
               >
                 Send os en besked
               </h2>
+              <p
+                className="text-sm mb-6"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                Udfyld formularen herunder, så vender vi tilbage hurtigst muligt.
+              </p>
 
               <AnimatePresence mode="wait">
 
@@ -207,7 +257,7 @@ export default function ContactPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     onSubmit={handleSubmit}
-                    className="flex flex-col gap-4"
+                    className="flex flex-col gap-5"
                   >
                     {/* Name */}
                     <div>
@@ -228,47 +278,48 @@ export default function ContactPage() {
                       />
                     </div>
 
-                    {/* Email */}
-                    <div>
-                      <label
-                        className={labelClass}
-                        style={{ color: "var(--text-secondary)" }}
-                      >
-                        E-mail *
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={form.email}
-                        onChange={handleChange}
-                        required
-                        placeholder="you@company.dk"
-                        className={inputClass}
-                      />
-                    </div>
-
-                    {/* Phone */}
-                    <div>
-                      <label
-                        className={labelClass}
-                        style={{ color: "var(--text-secondary)" }}
-                      >
-                        Telefon
-                        <span
-                          className="ml-1 normal-case font-normal"
-                          style={{ color: "var(--text-muted)" }}
+                    {/* Email + Phone side by side */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                      <div>
+                        <label
+                          className={labelClass}
+                          style={{ color: "var(--text-secondary)" }}
                         >
-                          (valgfri)
-                        </span>
-                      </label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={form.phone}
-                        onChange={handleChange}
-                        placeholder="+45 00 00 00 00"
-                        className={inputClass}
-                      />
+                          E-mail *
+                        </label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={form.email}
+                          onChange={handleChange}
+                          required
+                          placeholder="you@company.dk"
+                          className={inputClass}
+                        />
+                      </div>
+
+                      <div>
+                        <label
+                          className={labelClass}
+                          style={{ color: "var(--text-secondary)" }}
+                        >
+                          Telefon
+                          <span
+                            className="ml-1 normal-case font-normal"
+                            style={{ color: "var(--text-muted)" }}
+                          >
+                            (valgfri)
+                          </span>
+                        </label>
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={form.phone}
+                          onChange={handleChange}
+                          placeholder="+45 00 00 00 00"
+                          className={inputClass}
+                        />
+                      </div>
                     </div>
 
                     {/* Message */}
@@ -312,7 +363,7 @@ export default function ContactPage() {
                       className="shimmer w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400
                                  disabled:opacity-50 disabled:cursor-not-allowed
                                  text-white font-semibold rounded-xl
-                                 transition-colors duration-200 text-sm mt-2"
+                                 transition-colors duration-200 text-sm"
                     >
                       {formState === "loading" ? (
                         <span className="flex items-center justify-center gap-2">
@@ -334,12 +385,65 @@ export default function ContactPage() {
                     </button>
 
                     <p
-                      className="text-xs text-center"
+                      className="text-xs text-center -mt-1"
                       style={{ color: "var(--text-muted)" }}
                     >
                       Vi svarer inden for 24 timer. Aldrig spam.
                     </p>
 
+                    {/* Divider */}
+                    <div className="flex items-center gap-3 my-1">
+                      <div
+                        className="flex-1 h-px"
+                        style={{
+                          background: isDark
+                            ? "rgba(255,255,255,0.08)"
+                            : "rgba(0,0,0,0.08)",
+                        }}
+                      />
+                      <span
+                        className="text-xs"
+                        style={{ color: "var(--text-muted)" }}
+                      >
+                        eller
+                      </span>
+                      <div
+                        className="flex-1 h-px"
+                        style={{
+                          background: isDark
+                            ? "rgba(255,255,255,0.08)"
+                            : "rgba(0,0,0,0.08)",
+                        }}
+                      />
+                    </div>
+
+                    {/* Book a meeting → opens calendar modal */}
+                    <button
+                      type="button"
+                      onClick={() => setIsCalendarOpen(true)}
+                      className={`
+                        w-full py-4 rounded-xl text-sm font-semibold
+                        flex items-center justify-center gap-2
+                        border transition-colors duration-200
+                        ${isDark
+                          ? "border-white/10 bg-white/[0.04] text-white hover:bg-white/[0.08] hover:border-white/20"
+                          : "border-indigo-500/15 bg-indigo-500/[0.04] text-gray-900 hover:bg-indigo-500/[0.08] hover:border-indigo-500/25"}
+                      `}
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-4 h-4"
+                      >
+                        <rect x="3" y="4" width="18" height="18" rx="2" />
+                        <path d="M16 2v4M8 2v4M3 10h18" />
+                      </svg>
+                      Book et gratis møde i stedet
+                    </button>
                   </motion.form>
                 )}
 
@@ -458,6 +562,150 @@ export default function ContactPage() {
           </motion.div>
         </div>
       </div>
+
+      {/* ── Calendar modal ── */}
+      <AnimatePresence>
+        {isCalendarOpen && (
+          <motion.div
+            key="calendar-modal-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
+            style={{ background: "rgba(0,0,0,0.6)" }}
+            onClick={() => setIsCalendarOpen(false)}
+          >
+            <motion.div
+              key="calendar-modal"
+              initial={{ opacity: 0, scale: 0.96, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 12 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+              onClick={(e) => e.stopPropagation()}
+              className={`
+                relative w-full max-w-2xl rounded-2xl border overflow-hidden
+                ${isDark
+                  ? "border-white/[0.08] bg-[#0a0a0f]"
+                  : "border-indigo-500/[0.1] bg-white"}
+              `}
+              style={{ boxShadow: "0 24px 80px rgba(0,0,0,0.35)" }}
+            >
+              {/* Modal header */}
+              <div
+                className={`
+                  flex items-center justify-between gap-3 px-6 py-5 border-b
+                  ${isDark ? "border-white/[0.08]" : "border-indigo-500/[0.1]"}
+                `}
+              >
+                <div>
+                  <p
+                    className="text-sm font-semibold"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    Book et gratis møde
+                  </p>
+                  <p
+                    className="text-xs mt-0.5"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    30 minutter, ingen forpligtelse.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={refreshCalendly}
+                    disabled={!calendlyLoaded}
+                    title="Genindlæs kalenderen"
+                    aria-label="Genindlæs kalenderen"
+                    className={`
+                      w-8 h-8 rounded-lg flex items-center justify-center border
+                      transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed
+                      ${isDark
+                        ? "border-white/10 text-gray-400 hover:text-white hover:border-white/20"
+                        : "border-black/10 text-gray-500 hover:text-gray-900 hover:border-black/20"}
+                    `}
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={`w-4 h-4 ${!calendlyLoaded ? "animate-spin" : ""}`}
+                    >
+                      <path d="M21 12a9 9 0 1 1-2.64-6.36" />
+                      <path d="M21 4v6h-6" />
+                    </svg>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setIsCalendarOpen(false)}
+                    title="Luk"
+                    aria-label="Luk kalenderen"
+                    className={`
+                      w-8 h-8 rounded-lg flex items-center justify-center border
+                      transition-colors duration-200
+                      ${isDark
+                        ? "border-white/10 text-gray-400 hover:text-white hover:border-white/20"
+                        : "border-black/10 text-gray-500 hover:text-gray-900 hover:border-black/20"}
+                    `}
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-4 h-4"
+                    >
+                      <path d="M18 6 6 18M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              {/* Widget */}
+              <div className="relative" style={{ height: "min(70vh, 620px)" }}>
+                {!calendlyLoaded && (
+                  <div
+                    className="absolute inset-0 flex items-center justify-center z-10"
+                    style={{
+                      background: isDark
+                        ? "rgba(0,0,0,0.15)"
+                        : "rgba(255,255,255,0.6)",
+                    }}
+                  >
+                    <span
+                      className="block w-6 h-6 border-2 rounded-full animate-spin"
+                      style={{
+                        borderColor: isDark
+                          ? "rgba(255,255,255,0.15)"
+                          : "rgba(99,102,241,0.15)",
+                        borderTopColor: isDark ? "#818cf8" : "#6366f1",
+                      }}
+                    />
+                  </div>
+                )}
+                {calendlySrc && (
+                  <iframe
+                    key={calendlyKey}
+                    src={calendlySrc}
+                    onLoad={() => setCalendlyLoaded(true)}
+                    title="Book et gratis møde"
+                    style={{ width: "100%", height: "100%", border: "none", display: "block" }}
+                  />
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   )
 }

@@ -1,6 +1,7 @@
 // layout.tsx - remove the HorizontalScrollHandler import and usage
 import type { Metadata } from "next"
 import { Geist } from "next/font/google"
+import Script from "next/script"
 import "./globals.css"
 import Navbar from "@/components/shared/navbar"
 import Footer from "@/components/shared/footer"
@@ -30,8 +31,26 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="da" suppressHydrationWarning>
+    <html lang="da" suppressHydrationWarning data-scroll-behavior="smooth">
       <body className={`${geist.variable} font-sans antialiased`}>
+        {/* Calendly assets — loaded right after hydration (not on click) so
+            the booking widget (guarantee section, contact page) is already
+            initializing well before the user scrolls to it. `beforeInteractive`
+            was tried here first but its SSR-to-head hoisting doesn't survive a
+            client-side re-render if hydration bails for any other reason,
+            which surfaced as a "script tag" console error + full tree
+            regeneration — afterInteractive avoids that whole hydration path. */}
+        <link rel="preconnect" href="https://calendly.com" />
+        <link rel="preconnect" href="https://assets.calendly.com" />
+        <link
+          href="https://assets.calendly.com/assets/external/widget.css"
+          rel="stylesheet"
+        />
+        <Script
+          src="https://assets.calendly.com/assets/external/widget.js"
+          strategy="afterInteractive"
+        />
+
         <ThemeProvider>
           <Preloader />
           

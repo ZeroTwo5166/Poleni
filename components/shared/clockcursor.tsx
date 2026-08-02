@@ -10,6 +10,7 @@ export default function ClockCursor() {
   const { theme } = useTheme()
   const isCompact = useIsCompactViewport()
   const [hovering, setHovering] = useState(false)
+  const [overIframe, setOverIframe] = useState(false)
 
   const mouseX = useMotionValue(-100)
   const mouseY = useMotionValue(-100)
@@ -28,11 +29,23 @@ export default function ClockCursor() {
       })
     }
 
+    // Cross-origin iframes (e.g. the Calendly embed) are a separate browsing
+    // context — mousemove inside them never reaches this document, so our
+    // cursor would otherwise freeze mid-screen while the real system cursor
+    // (visible inside the iframe, since our `cursor: none` can't reach it)
+    // shows up on top. Hide ours for as long as the pointer is over one.
     const handleOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement
+      if (target.tagName === "IFRAME") {
+        setOverIframe(true)
+        return
+      }
+      setOverIframe(false)
       if (target.closest("a, button, [data-cursor]")) setHovering(true)
     }
     const handleOut = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (target.tagName === "IFRAME") setOverIframe(false)
       const related = e.relatedTarget as HTMLElement | null
       if (!related || !related.closest("a, button, [data-cursor]")) setHovering(false)
     }
@@ -50,6 +63,8 @@ export default function ClockCursor() {
   }, [])
 
   const isDark = theme === "dark"
+
+  if (overIframe) return null
 
   if (!isDark) {
     // ---------------- LIGHT THEME: blend-difference circle ----------------
