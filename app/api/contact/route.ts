@@ -25,12 +25,8 @@ export async function POST(req: NextRequest) {
     const { Resend } = await import("resend")
     const resend = new Resend(process.env.RESEND_API_KEY)
 
-    await resend.emails.send({
-      // Using Resend's shared sandbox sender for now. Once poleni.dk is
-      // verified in the Resend dashboard (Domains → Add Domain → add the
-      // DNS records they give you), switch this to something like
-      // "Poleni Kontakt <kontakt@poleni.dk>" for better deliverability.
-      from:     "Poleni Contact <onboarding@resend.dev>",
+    const { error: sendError } = await resend.emails.send({
+      from:     "Poleni Kontakt <kontakt@poleni.dk>",
       to:       "kontakt@poleni.dk",
       replyTo: email, // hitting "reply" on the notification goes straight to the customer
       subject:  `New message from ${name}`,
@@ -43,6 +39,18 @@ export async function POST(req: NextRequest) {
         <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
       `,
     })
+
+    // resend's SDK resolves { data, error } instead of throwing on API-level
+    // failures (e.g. sandbox sender restrictions) — without this check a
+    // rejected send still falls through as a false "success".
+    if (sendError) {
+      console.error("Resend API error:", sendError)
+      // TEMP: surfacing the real Resend error for debugging — remove before shipping
+      return NextResponse.json(
+        { error: "Failed to send message", debug: sendError },
+        { status: 500 }
+      )
+    }
 
     return NextResponse.json({ success: true })
 
