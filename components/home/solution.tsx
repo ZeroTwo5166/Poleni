@@ -3,10 +3,81 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { Monitor, Target, DeviceMobile, Check } from "@phosphor-icons/react/dist/ssr"
+import type { Icon as PhosphorIcon } from "@phosphor-icons/react/dist/lib/types"
 import { fadeUp, staggerContainer, viewport } from "@/lib/animationVariants"
 import { useT } from "@/lib/i18n/useT"
 
 const icons = [Monitor, Target, DeviceMobile]
+
+interface ServiceCopy {
+  title: string
+  desc: string
+  detail: string
+  features: string[]
+  icon: PhosphorIcon
+  href: string
+}
+
+// Each row drifts in from an alternating side once it enters the viewport,
+// settling flat — a one-shot reveal rather than a continuous scroll-linked one.
+function ServiceRow({ service, index, isFirst }: { service: ServiceCopy; index: number; isFirst: boolean }) {
+  const t = useT()
+  const dir = index % 2 === 0 ? -1 : 1
+  const Icon = service.icon
+
+  return (
+    <motion.div
+      initial={{ x: dir * 48, rotate: dir * 1.5, opacity: 0 }}
+      whileInView={{ x: 0, rotate: 0, opacity: 1 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      whileHover="hover"
+      className={`group grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 py-10 ${isFirst ? "" : "rule-top"}`}
+    >
+      <div className="lg:col-span-4 flex items-start gap-4">
+        <motion.span
+          variants={{ hover: { rotate: 8, scale: 1.12 } }}
+          transition={{ type: "spring", stiffness: 300, damping: 15 }}
+          className="shrink-0 mt-1 inline-flex"
+        >
+          <Icon size={28} weight="light" style={{ color: "var(--accent)" }} />
+        </motion.span>
+        <div>
+          <h3 className="text-2xl font-semibold" style={{ color: "var(--text-primary)" }}>
+            {service.title}
+          </h3>
+          <p className="text-sm font-medium mt-1" style={{ color: "var(--accent)" }}>
+            {service.desc}
+          </p>
+        </div>
+      </div>
+
+      <div className="lg:col-span-5">
+        <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+          {service.detail}
+        </p>
+      </div>
+
+      <div className="lg:col-span-3 flex flex-col justify-between gap-4">
+        <ul className="flex flex-col gap-2">
+          {service.features.map((feature) => (
+            <li key={feature} className="flex items-start gap-2 text-sm" style={{ color: "var(--text-secondary)" }}>
+              <Check size={14} weight="bold" className="shrink-0 mt-1" style={{ color: "var(--accent)" }} />
+              {feature}
+            </li>
+          ))}
+        </ul>
+        <Link
+          href={service.href}
+          className="text-sm font-semibold w-fit"
+          style={{ color: "var(--text-primary)" }}
+        >
+          {t.solution.learnMore}
+        </Link>
+      </div>
+    </motion.div>
+  )
+}
 
 export default function Solution() {
   const t = useT()
@@ -50,66 +121,11 @@ export default function Solution() {
         </motion.div>
 
         {/* Full-width editorial rows — not equal cards */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewport}
-        >
-          {services.map((service, i) => {
-            const Icon = service.icon
-            return (
-              <motion.div
-                key={service.title}
-                variants={fadeUp}
-                whileHover="hover"
-                className={`group grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 py-10 ${i !== 0 ? "rule-top" : ""}`}
-              >
-                <div className="lg:col-span-4 flex items-start gap-4">
-                  <motion.span
-                    variants={{ hover: { rotate: 8, scale: 1.12 } }}
-                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                    className="shrink-0 mt-1 inline-flex"
-                  >
-                    <Icon size={28} weight="light" style={{ color: "var(--accent)" }} />
-                  </motion.span>
-                  <div>
-                    <h3 className="text-2xl font-semibold" style={{ color: "var(--text-primary)" }}>
-                      {service.title}
-                    </h3>
-                    <p className="text-sm font-medium mt-1" style={{ color: "var(--accent)" }}>
-                      {service.desc}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="lg:col-span-5">
-                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
-                    {service.detail}
-                  </p>
-                </div>
-
-                <div className="lg:col-span-3 flex flex-col justify-between gap-4">
-                  <ul className="flex flex-col gap-2">
-                    {service.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2 text-sm" style={{ color: "var(--text-secondary)" }}>
-                        <Check size={14} weight="bold" className="shrink-0 mt-1" style={{ color: "var(--accent)" }} />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href={service.href}
-                    className="text-sm font-semibold w-fit"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    {t.solution.learnMore}
-                  </Link>
-                </div>
-              </motion.div>
-            )
-          })}
-        </motion.div>
+        <div>
+          {services.map((service, i) => (
+            <ServiceRow key={service.title} service={service} index={i} isFirst={i === 0} />
+          ))}
+        </div>
 
         {/* CTA */}
         <motion.div
