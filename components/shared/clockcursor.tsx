@@ -67,13 +67,15 @@ export default function ClockCursor() {
   if (overIframe) return null
 
   if (!isDark) {
-    // ---------------- LIGHT THEME: blend-difference circle ----------------
-    const base = isCompact ? 64 : 100
-    const hoverSize = isCompact ? 18 : 28
+    // ---------------- LIGHT THEME: orbit ring — accent halo + core dot ----------------
+    const ringBase  = isCompact ? 20 : 30
+    const ringHover = isCompact ? 34 : 48
+    const dotBase   = isCompact ? 5  : 6
+    const dotHover  = isCompact ? 2  : 2
 
     return (
       <motion.div
-        className="fixed top-0 left-0 z-[99999] pointer-events-none rounded-full bg-white mix-blend-difference"
+        className="fixed top-0 left-0 z-[99999] pointer-events-none"
         style={{
           x,
           y,
@@ -81,12 +83,43 @@ export default function ClockCursor() {
           translateY: "-50%",
           willChange: "transform",
         }}
-        animate={{
-          width: hovering ? hoverSize : base,
-          height: hovering ? hoverSize : base,
-        }}
-        transition={{ type: "spring", stiffness: 300, damping: 25 }}
-      />
+      >
+        {/* Halo ring */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 rounded-full"
+          style={{
+            translateX: "-50%",
+            translateY: "-50%",
+            border: "1.5px solid var(--accent)",
+          }}
+          animate={{
+            width: hovering ? ringHover : ringBase,
+            height: hovering ? ringHover : ringBase,
+            background: hovering ? "var(--accent-soft)" : "rgba(0,0,0,0)",
+            boxShadow: hovering
+              ? "0 0 18px 2px var(--accent-soft)"
+              : "0 0 8px 0px rgba(0,0,0,0)",
+            opacity: hovering ? 1 : 0.85,
+          }}
+          transition={{ type: "spring", stiffness: 300, damping: 24 }}
+        />
+
+        {/* Core dot */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 rounded-full"
+          style={{
+            translateX: "-50%",
+            translateY: "-50%",
+            background: "var(--accent)",
+          }}
+          animate={{
+            width: hovering ? dotHover : dotBase,
+            height: hovering ? dotHover : dotBase,
+            opacity: hovering ? 0 : 1,
+          }}
+          transition={{ type: "spring", stiffness: 320, damping: 24 }}
+        />
+      </motion.div>
     )
   }
 

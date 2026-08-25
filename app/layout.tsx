@@ -1,22 +1,33 @@
-// layout.tsx - remove the HorizontalScrollHandler import and usage
 import type { Metadata } from "next"
-import { Geist } from "next/font/google"
+import { Space_Grotesk, Public_Sans, JetBrains_Mono } from "next/font/google"
 import Script from "next/script"
 import "./globals.css"
 import Navbar from "@/components/shared/navbar"
 import Footer from "@/components/shared/footer"
 import ThemeProvider from "@/components/shared/themeProvider"
+import LocaleProvider from "@/components/shared/localeProvider"
 import Preloader from "@/components/shared/preloader"
-import GalaxyBackground from "@/components/shared/galaxyBackground"
+import AmbientBackground from "@/components/shared/ambientBackground"
 import ClockCursor from "@/components/shared/clockcursor"
-import MeshBackground from "@/components/shared/meshBackground"
 import ScrollToTop from "@/components/shared/scrollToTop"
 import LegalBar from "@/components/shared/legalBar"
-// REMOVE: import HorizontalScrollHandler from "@/components/shared/HorizontalScrollHandler"
 
-const geist = Geist({
+const display = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-geist",
+  variable: "--font-display",
+  weight: ["500", "700"],
+})
+
+const body = Public_Sans({
+  subsets: ["latin"],
+  variable: "--font-body",
+  weight: ["400", "500", "600", "700"],
+})
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["400", "500", "600"],
 })
 
 export const metadata: Metadata = {
@@ -32,7 +43,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="da" suppressHydrationWarning data-scroll-behavior="smooth">
-      <body className={`${geist.variable} font-sans antialiased`}>
+      <body className={`${display.variable} ${body.variable} ${mono.variable} font-sans antialiased`}>
         {/* Calendly assets — loaded right after hydration (not on click) so
             the booking widget (guarantee section, contact page) is already
             initializing well before the user scrolls to it. `beforeInteractive`
@@ -51,15 +62,13 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
 
+        <LocaleProvider>
         <ThemeProvider>
           <Preloader />
-          
-          {/* Background effects - lowest layer */}
-          <div style={{ position: "fixed", inset: 0, zIndex: 0 }}>
-            <GalaxyBackground />
-            <MeshBackground />
-          </div>
-          
+
+          {/* Background — lowest layer */}
+          <AmbientBackground />
+
           <ClockCursor />
 
           {/* Content wrapper */}
@@ -73,6 +82,7 @@ export default function RootLayout({
           </div>
           <LegalBar />
         </ThemeProvider>
+        </LocaleProvider>
       </body>
     </html>
   )

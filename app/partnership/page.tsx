@@ -2,26 +2,14 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { useTheme } from "@/components/shared/themeProvider"
+import { CurrencyDollar, CheckCircle, ChartBar, Confetti } from "@phosphor-icons/react"
+import { useT } from "@/lib/i18n/useT"
 
-const requirements = [
-  { icon: "💰", text: "20,000 – 30,000 DKK monthly revenue minimum" },
-  { icon: "✅", text: "Product or service ready to sell" },
-  { icon: "📊", text: "Able to track sales (booking system, invoices, or accounting)" },
-]
-
-const steps = [
-  { step: "01", title: "We screen your business", desc: "Quick call to understand your revenue, product, and tracking setup." },
-  { step: "02", title: "We build your website", desc: "If needed — you pay only for domain and hosting. Our work is free." },
-  { step: "03", title: "We run your ads", desc: "You pay for the ad clicks directly to Google or Meta. We manage everything." },
-  { step: "04", title: "We measure extra revenue", desc: "Based on your actual data — booking system, sales figures, or accounting reports." },
-  { step: "05", title: "Poleni takes 15%", desc: "Only on the extra revenue we help generate. If we don't grow you, we earn nothing." },
-  { step: "06", title: "After 3 months", desc: "Continue the partnership or stop. No lock-in, no penalty." },
-]
+const requirementIcons = [CurrencyDollar, CheckCircle, ChartBar]
 
 export default function PartnershipPage() {
-  const { theme } = useTheme()
-  const isDark    = theme === "dark"
+  const t = useT()
+  const requirements = t.partnership.requirements.map((text, i) => ({ text, icon: requirementIcons[i] }))
 
   const [form, setForm]       = useState({
     business: "",
@@ -47,45 +35,35 @@ export default function PartnershipPage() {
   }
 
   const inputClass = `
-    w-full px-4 py-3 rounded-xl border text-sm outline-none
+    w-full px-4 py-3 border text-sm outline-none
     transition-colors duration-200
-    ${isDark
-      ? "bg-white/[0.04] border-white/[0.08] text-white placeholder-gray-600 focus:border-indigo-500/50"
-      : "bg-black/[0.04] border-black/[0.08] text-gray-900 placeholder-gray-400 focus:border-indigo-500/50"}
   `
+  const inputStyle = { background: "var(--bg-elevated)", borderColor: "var(--border)", color: "var(--text-primary)" }
 
   return (
     <main className="min-h-screen pt-32 pb-24 px-6">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-page mx-auto">
 
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          className="max-w-3xl mb-20"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-                           border border-indigo-500/20 bg-indigo-500/5
-                           text-indigo-400 text-xs font-medium mb-6">
-            <span className="w-1 h-1 rounded-full bg-indigo-400" />
-            Partnership model
+          <span className="text-xs uppercase tracking-widest font-semibold" style={{ color: "var(--text-muted)" }}>
+            {t.partnership.eyebrow}
           </span>
           <h1
-            className="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-6"
+            className="font-display font-medium tracking-tightest leading-[1.02] text-5xl md:text-7xl mt-5"
             style={{ color: "var(--text-primary)" }}
           >
-            Already have a business
+            {t.partnership.headline1}
             <br />
-            <span className="gradient-text">with revenue?</span>
+            <span style={{ color: "var(--accent)" }}>{t.partnership.headlineAccent}</span>
           </h1>
-          <p
-            className="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            We help you scale. You pay only for ad clicks and hosting.
-            Our work is free. In return, we take 15% of the extra revenue
-            we help generate.
+          <p className="text-lg md:text-xl mt-6 leading-relaxed max-w-2xl" style={{ color: "var(--text-secondary)" }}>
+            {t.partnership.subtext}
           </p>
         </motion.div>
 
@@ -94,21 +72,21 @@ export default function PartnershipPage() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="glass rounded-2xl p-8 mb-8"
+          className="panel p-8 mb-8"
         >
-          <p
-            className="text-sm font-semibold uppercase tracking-widest mb-6"
-            style={{ color: "var(--text-muted)" }}
-          >
-            Requirements
+          <p className="text-xs font-semibold uppercase tracking-widest mb-6" style={{ color: "var(--text-muted)" }}>
+            {t.partnership.requirementsLabel}
           </p>
           <div className="flex flex-col gap-4">
-            {requirements.map((r, i) => (
-              <div key={i} className="flex items-center gap-4">
-                <span className="text-2xl shrink-0">{r.icon}</span>
-                <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{r.text}</p>
-              </div>
-            ))}
+            {requirements.map((r) => {
+              const Icon = r.icon
+              return (
+                <div key={r.text} className="flex items-center gap-4">
+                  <Icon size={22} weight="light" style={{ color: "var(--accent)" }} className="shrink-0" />
+                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{r.text}</p>
+                </div>
+              )
+            })}
           </div>
         </motion.div>
 
@@ -119,43 +97,25 @@ export default function PartnershipPage() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mb-16"
         >
-          <h2
-            className="text-2xl font-bold mb-8"
-            style={{ color: "var(--text-primary)" }}
-          >
-            How it works
+          <h2 className="font-display font-medium tracking-tightest text-2xl mb-8" style={{ color: "var(--text-primary)" }}>
+            {t.partnership.howItWorksHeading}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {steps.map((s, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ background: "var(--border)" }}>
+            {t.partnership.steps.map((s, i) => (
               <motion.div
-                key={i}
+                key={s.step}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 + i * 0.07 }}
-                className={`
-                  flex items-start gap-4 p-6 rounded-2xl border
-                  ${isDark ? "border-white/[0.06] bg-white/[0.02]" : "border-black/[0.06] bg-black/[0.02]"}
-                `}
+                transition={{ delay: 0.2 + i * 0.05 }}
+                className="flex items-start gap-4 p-6"
+                style={{ background: "var(--bg)" }}
               >
-                <span
-                  className="text-xs font-bold text-indigo-400 bg-indigo-500/10
-                             border border-indigo-500/20 rounded-lg px-2 py-1 shrink-0 mt-0.5"
-                >
+                <span className="tabular text-xs font-bold shrink-0 mt-0.5" style={{ color: "var(--accent)" }}>
                   {s.step}
                 </span>
                 <div>
-                  <p
-                    className="text-sm font-semibold mb-1"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    {s.title}
-                  </p>
-                  <p
-                    className="text-xs leading-relaxed"
-                    style={{ color: "var(--text-muted)" }}
-                  >
-                    {s.desc}
-                  </p>
+                  <p className="text-sm font-semibold mb-1" style={{ color: "var(--text-primary)" }}>{s.title}</p>
+                  <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>{s.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -167,19 +127,13 @@ export default function PartnershipPage() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="glass rounded-2xl p-8 md:p-12"
+          className="panel p-8 md:p-12"
         >
-          <h2
-            className="text-2xl font-bold mb-2"
-            style={{ color: "var(--text-primary)" }}
-          >
-            Apply for partnership
+          <h2 className="font-display font-medium tracking-tightest text-2xl mb-2" style={{ color: "var(--text-primary)" }}>
+            {t.partnership.applyHeading}
           </h2>
-          <p
-            className="text-sm mb-8"
-            style={{ color: "var(--text-muted)" }}
-          >
-            We'll review your application and get back to you within 24 hours.
+          <p className="text-sm mb-8" style={{ color: "var(--text-muted)" }}>
+            {t.partnership.applySub}
           </p>
 
           <AnimatePresence mode="wait">
@@ -190,17 +144,14 @@ export default function PartnershipPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center py-12"
               >
-                <div className="text-5xl mb-4">🎉</div>
-                <h3
-                  className="text-xl font-bold mb-2"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  Application received!
+                <Confetti size={44} weight="light" style={{ color: "var(--accent)" }} className="mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>
+                  {t.partnership.successTitle}
                 </h3>
                 <p style={{ color: "var(--text-secondary)" }} className="text-sm">
-                  We'll review it and reply to{" "}
+                  {t.partnership.successTextPre}{" "}
                   <span style={{ color: "var(--text-primary)" }}>{form.email}</span>{" "}
-                  within 24 hours.
+                  {t.partnership.successTextPost}
                 </p>
               </motion.div>
             ) : (
@@ -208,113 +159,64 @@ export default function PartnershipPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="flex flex-col gap-2">
-                    <label
-                      className="text-xs font-medium"
-                      style={{ color: "var(--text-muted)" }}
-                    >
-                      Business name *
-                    </label>
+                    <label className="text-xs font-medium" style={{ color: "var(--text-muted)" }}>{t.partnership.businessNameLabel}</label>
                     <input
-                      name="business"
-                      value={form.business}
-                      onChange={handleChange}
-                      placeholder="Your company name"
-                      className={inputClass}
+                      name="business" value={form.business} onChange={handleChange}
+                      placeholder={t.partnership.businessNamePlaceholder} className={inputClass} style={inputStyle}
                     />
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label
-                      className="text-xs font-medium"
-                      style={{ color: "var(--text-muted)" }}
+                    <label className="text-xs font-medium" style={{ color: "var(--text-muted)" }}>{t.partnership.revenueLabel}</label>
+                    <select
+                      name="revenue" value={form.revenue} onChange={handleChange}
+                      className={inputClass} style={inputStyle}
                     >
-                      Monthly revenue *
-                    </label>
-<select
-  name="revenue"
-  value={form.revenue}
-  onChange={handleChange}
-  className={inputClass}
-  style={{
-    backgroundColor: isDark ? "#111111" : "#ffffff",
-    color: isDark ? "#ffffff" : "#0a0a0a",
-  }}
->
-  <option value="">Select range</option>
-                      <option value="20-30k">20,000 – 30,000 DKK</option>
-                      <option value="30-50k">30,000 – 50,000 DKK</option>
-                      <option value="50-100k">50,000 – 100,000 DKK</option>
-                      <option value="100k+">100,000+ DKK</option>
+                      <option value="">{t.partnership.revenueSelectPlaceholder}</option>
+                      <option value="20-30k">{t.partnership.revenueOptions[0]}</option>
+                      <option value="30-50k">{t.partnership.revenueOptions[1]}</option>
+                      <option value="50-100k">{t.partnership.revenueOptions[2]}</option>
+                      <option value="100k+">{t.partnership.revenueOptions[3]}</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label
-                    className="text-xs font-medium"
-                    style={{ color: "var(--text-muted)" }}
-                  >
-                    What do you sell? *
-                  </label>
+                  <label className="text-xs font-medium" style={{ color: "var(--text-muted)" }}>{t.partnership.productLabel}</label>
                   <input
-                    name="product"
-                    value={form.product}
-                    onChange={handleChange}
-                    placeholder="Describe your product or service"
-                    className={inputClass}
+                    name="product" value={form.product} onChange={handleChange}
+                    placeholder={t.partnership.productPlaceholder} className={inputClass} style={inputStyle}
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label
-                    className="text-xs font-medium"
-                    style={{ color: "var(--text-muted)" }}
-                  >
-                    How do you track sales? *
-                  </label>
+                  <label className="text-xs font-medium" style={{ color: "var(--text-muted)" }}>{t.partnership.trackingLabel}</label>
                   <textarea
-                    name="tracking"
-                    value={form.tracking}
-                    onChange={handleChange}
-                    placeholder="e.g. booking system, Shopify, accountant reports, invoices..."
-                    rows={3}
-                    className={inputClass}
+                    name="tracking" value={form.tracking} onChange={handleChange}
+                    placeholder={t.partnership.trackingPlaceholder}
+                    rows={3} className={inputClass} style={inputStyle}
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label
-                    className="text-xs font-medium"
-                    style={{ color: "var(--text-muted)" }}
-                  >
-                    Your email *
-                  </label>
+                  <label className="text-xs font-medium" style={{ color: "var(--text-muted)" }}>{t.partnership.emailLabel}</label>
                   <input
-                    name="email"
-                    type="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="you@company.dk"
-                    className={inputClass}
+                    name="email" type="email" value={form.email} onChange={handleChange}
+                    placeholder={t.partnership.emailPlaceholder} className={inputClass} style={inputStyle}
                   />
                 </div>
 
                 <button
                   onClick={handleSubmit}
                   disabled={loading || !form.business || !form.revenue || !form.product || !form.tracking || !form.email}
-                  className="shimmer w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400
-                             disabled:opacity-40 disabled:cursor-not-allowed
-                             text-white font-semibold rounded-xl
-                             transition-colors duration-200 mt-2"
+                  className="w-full py-4 font-semibold mt-2 transition-opacity duration-200 hover:opacity-85 disabled:opacity-40 disabled:cursor-not-allowed"
+                  style={{ background: "var(--accent)", color: "var(--bg)" }}
                 >
-                  {loading ? "Sending..." : "Send application →"}
+                  {loading ? t.partnership.sending : t.partnership.submit}
                 </button>
 
-                <p
-                  className="text-xs text-center"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  Sent to kontakt@poleni.dk · We reply within 24 hours
+                <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
+                  {t.partnership.footNote}
                 </p>
 
               </motion.div>

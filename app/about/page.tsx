@@ -1,246 +1,172 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useTheme } from "@/components/shared/themeProvider"
 import Link from "next/link"
+import { Diamond, Hexagon, Circle, MapPin, Code, Certificate } from "@phosphor-icons/react"
+import CountUp from "@/components/shared/countUp"
+import { useT } from "@/lib/i18n/useT"
 
-const values = [
-  {
-    icon: "◈",
-    title: "Gennemsigtighed",
-    desc: "Du ser prisen, før du skriver under. Ingen uklare tilbud, ingen overraskelsesfakturaer.",
-    color: "text-indigo-400",
-    border: "border-indigo-500/20",
-    bg: "bg-indigo-500/5",
-  },
-  {
-    icon: "⬡",
-    title: "Ærlighed",
-    desc: "Vi fortæller dig, hvad du har brug for — ikke hvad der giver os mest penge.",
-    color: "text-purple-400",
-    border: "border-purple-500/20",
-    bg: "bg-purple-500/5",
-  },
-  {
-    icon: "○",
-    title: "Intet bullshit",
-    desc: "Ingen 12-måneders binding. Ingen skjulte gebyrer. Ingen corporate nonsens.",
-    color: "text-pink-400",
-    border: "border-pink-500/20",
-    bg: "bg-pink-500/5",
-  },
-]
-
-const stats = [
-  { value: "6+", label: "Kunder hjulpet" },
-  { value: "100%", label: "Gennemsigtig prissætning" },
-  { value: "24h", label: "Svartid" },
-  { value: "0", label: "Bindingsaftaler" },
+const valueIcons = [Diamond, Hexagon, Circle]
+const credentialIcons = [MapPin, Code, Certificate]
+const statValues = [
+  { value: 6, suffix: "+" },
+  { value: 100, suffix: "%" },
+  { value: 24, suffix: "h" },
+  { value: 0, suffix: "" },
 ]
 
 export default function AboutPage() {
-  const { theme } = useTheme()
-  const isDark = theme === "dark"
+  const t = useT()
+  const values = t.about.values.map((v, i) => ({ ...v, icon: valueIcons[i] }))
+  const credentials = t.about.credentials.map((text, i) => ({ text, icon: credentialIcons[i] }))
+  const stats = statValues.map((v, i) => ({ ...v, label: t.about.stats[i].label }))
 
   return (
-    <main className="relative min-h-screen pt-32 pb-24 px-6 overflow-x-hidden">
-      {!isDark && (
-        <div
-          className="absolute inset-0 pointer-events-none -z-10"
-          style={{
-            background: `
-              radial-gradient(900px circle at 10% 10%, rgba(99,102,241,0.07), transparent 55%),
-              radial-gradient(800px circle at 90% 25%, rgba(168,85,247,0.06), transparent 55%),
-              radial-gradient(700px circle at 50% 100%, rgba(236,72,153,0.05), transparent 60%)
-            `,
-          }}
-        />
-      )}
-      <div className="max-w-5xl mx-auto">
+    <main className="relative min-h-screen pt-32 pb-24 px-6">
+      <div className="max-w-page mx-auto">
 
-        {/* Header Section */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-24"
+          className="max-w-2xl mb-24"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-                           border border-indigo-500/20 bg-indigo-500/5
-                           text-indigo-400 text-xs font-medium mb-6">
-            <span className="w-1 h-1 rounded-full bg-indigo-400" />
-            Om Poleni
+          <span className="text-xs uppercase tracking-widest font-semibold" style={{ color: "var(--text-muted)" }}>
+            {t.about.eyebrow}
           </span>
           <h1
-            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-8 leading-[1.1] tracking-tight"
+            className="font-display font-medium tracking-tightest leading-[1.02] text-5xl md:text-7xl mt-5"
             style={{ color: "var(--text-primary)" }}
           >
-            Bygget til virksomheder
+            {t.about.headline1}
             <br />
-            <span className="gradient-text">trætte af at blive overopkrævet</span>
+            <span style={{ color: "var(--accent)" }}>{t.about.headlineAccent}</span>
           </h1>
-          <p
-            className="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
-            style={{ color: "var(--text-secondary)", opacity: isDark ? 1 : 0.8 }}
-          >
-            Vi startede Poleni, fordi små virksomheder fortjener ærlig prissætning
-            og reelle resultater — ikke 12-måneders fælder og vage løfter.
+          <p className="text-lg md:text-xl mt-6 leading-relaxed max-w-xl" style={{ color: "var(--text-secondary)" }}>
+            {t.about.subtext}
           </p>
         </motion.div>
 
-        {/* Founder Story Card */}
+        {/* Founder story */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="glass rounded-3xl p-8 md:p-16 mb-12 border border-white/5"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-28 pb-16 rule-bottom"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-            {/* Story Text */}
-            <div className="space-y-6">
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-                               border border-purple-500/20 bg-purple-500/5
-                               text-purple-400 text-xs font-medium">
-                <span className="w-1 h-1 rounded-full bg-purple-400" />
-                Grundlæggerhistorie
-              </span>
-              <h2
-                className="text-3xl md:text-4xl font-bold"
-                style={{ color: "var(--text-primary)" }}
-              >
-                Hvorfor vi byggede Poleni
-              </h2>
-              <div className="space-y-4 text-base md:text-lg" style={{ color: "var(--text-secondary)", opacity: isDark ? 1 : 0.8 }}>
-                <p>
-                  Jeg så hele tiden små virksomhedsejere blive udnyttet af bureauer —
-                  låst i 12-måneders kontrakter, betale månedlige retainers for
-                  arbejde de ikke kunne måle, og aldrig vide hvad de faktisk fik.
-                </p>
-                <p>
-                  Så jeg byggede Poleni anderledes. Faste priser. Gennemsigtige tidslinjer.
-                  Ingen binding. Du ser præcis hvad du betaler for, før du
-                  betaler en eneste krone.
-                </p>
-                <p>
-                  Vores udviklere og annonce-specialister er baseret i København.
-                  Erfarne, pålidelige og hurtige.
-                </p>
-              </div>
+          <div className="lg:col-span-7 flex flex-col gap-5">
+            <span className="text-xs uppercase tracking-widest font-semibold" style={{ color: "var(--text-muted)" }}>
+              {t.about.founderEyebrow}
+            </span>
+            <h2 className="font-display font-medium tracking-tightest text-3xl md:text-4xl" style={{ color: "var(--text-primary)" }}>
+              {t.about.founderHeading}
+            </h2>
+            <div className="flex flex-col gap-4 text-base md:text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+              {t.about.founderParas.map((para) => (
+                <p key={para}>{para}</p>
+              ))}
             </div>
+          </div>
 
-            {/* Visual Profile Card */}
-            <div className="relative group">
-              <div className="absolute -inset-4 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 blur-2xl rounded-full opacity-50 group-hover:opacity-80 transition-opacity" />
-              <div className="relative glass p-8 rounded-2xl text-center border border-white/10">
-                <div className="w-24 h-24 rounded-2xl bg-indigo-500 flex items-center
-                                justify-center mx-auto mb-6 text-white text-3xl font-bold shadow-xl shadow-indigo-500/20">
-                  P
-                </div>
-                <h3 className="font-bold text-xl mb-1" style={{ color: "var(--text-primary)" }}>Poleni Grundlægger</h3>
-                <p className="text-sm mb-8" style={{ color: "var(--text-muted)", opacity: isDark ? 1 : 0.6 }}>Stifter & CEO</p>
+          <div className="lg:col-span-5 panel p-8">
+            <div className="w-16 h-16 flex items-center justify-center mb-6 font-display font-medium text-2xl"
+              style={{ background: "var(--accent)", color: "var(--bg)" }}
+            >
+              P
+            </div>
+            <h3 className="font-semibold text-xl mb-1" style={{ color: "var(--text-primary)" }}>{t.about.founderCardTitle}</h3>
+            <p className="text-sm mb-8" style={{ color: "var(--text-muted)" }}>{t.about.founderCardRole}</p>
 
-                <div className="space-y-3">
-                  {[
-                    { dot: "bg-green-400", text: "Baseret i København", pulse: true },
-                    { dot: "bg-indigo-400", text: "Full-stack udvikler", pulse: false },
-                    { dot: "bg-purple-400", text: "Google & Meta Ads certificeret", pulse: false },
-                  ].map((item) => (
-                    <div
-                      key={item.text}
-                      className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors"
-                      style={{
-                        background: isDark ? "rgba(255,255,255,0.03)" : "rgba(99,102,241,0.05)",
-                        border: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(99,102,241,0.12)"}`,
-                      }}
-                    >
-                      <div className={`w-2 h-2 rounded-full shrink-0 ${item.dot} ${item.pulse ? "animate-pulse" : ""}`} />
-                      <span className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>{item.text}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <div className="flex flex-col gap-3">
+              {credentials.map((item) => {
+                const Icon = item.icon
+                return (
+                  <div key={item.text} className="flex items-center gap-3 py-3 rule-top">
+                    <Icon size={18} weight="light" style={{ color: "var(--accent)" }} className="shrink-0" />
+                    <span className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>{item.text}</span>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </motion.div>
 
-        {/* Values Section */}
-        <div className="mb-24">
-          <h2 className="text-3xl font-bold mb-12 text-center" style={{ color: "var(--text-primary)" }}>
-            Hvad vi står for
+        {/* Values */}
+        <div className="mb-28">
+          <h2 className="font-display font-medium tracking-tightest text-3xl mb-12" style={{ color: "var(--text-primary)" }}>
+            {t.about.valuesHeading}
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {values.map((value, i) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -5 }}
-                className={`p-8 rounded-3xl border ${value.border} ${value.bg} backdrop-blur-sm`}
-              >
-                <span className={`text-4xl ${value.color} mb-6 block`}>{value.icon}</span>
-                <h3 className="text-xl font-bold mb-3" style={{ color: "var(--text-primary)" }}>{value.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)", opacity: isDark ? 1 : 0.7 }}>{value.desc}</p>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: "var(--border)" }}>
+            {values.map((value, i) => {
+              const Icon = value.icon
+              return (
+                <motion.div
+                  key={value.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="p-8 flex flex-col gap-4"
+                  style={{ background: "var(--bg)" }}
+                >
+                  <Icon size={28} weight="light" style={{ color: "var(--accent)" }} />
+                  <h3 className="text-xl font-semibold" style={{ color: "var(--text-primary)" }}>{value.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>{value.desc}</p>
+                </motion.div>
+              )
+            })}
           </div>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-24">
+        {/* Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px mb-28" style={{ background: "var(--border)" }}>
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              whileHover={{ scale: 1.04, y: -3 }}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="glass rounded-2xl p-8 text-center"
+              className="p-8 text-center"
+              style={{ background: "var(--bg)" }}
             >
-              <p className="text-4xl font-bold mb-2 tracking-tighter" style={{ color: "var(--text-primary)" }}>{stat.value}</p>
-              <p className="text-xs uppercase tracking-widest font-bold" style={{ color: "var(--text-muted)", opacity: isDark ? 1 : 0.5 }}>{stat.label}</p>
+              <p className="tabular text-4xl font-semibold mb-2 tracking-tight" style={{ color: "var(--text-primary)" }}><CountUp value={stat.value} suffix={stat.suffix} /></p>
+              <p className="text-xs uppercase tracking-widest font-semibold" style={{ color: "var(--text-muted)" }}>{stat.label}</p>
             </motion.div>
           ))}
         </div>
 
-        {/* Refined CTA Section */}
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass rounded-[2.5rem] p-12 md:p-20 text-center relative overflow-hidden"
+          className="panel p-12 md:p-20 text-center"
         >
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
-
-          <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: "var(--text-primary)" }}>
-            Klar til at arbejde sammen?
+          <h2 className="font-display font-medium tracking-tightest text-4xl md:text-5xl mb-6" style={{ color: "var(--text-primary)" }}>
+            {t.about.ctaHeading}
           </h2>
-          <p className="mb-10 max-w-md mx-auto text-lg" style={{ color: "var(--text-secondary)", opacity: isDark ? 1 : 0.7 }}>
-            Gratis konsultation. Ingen pres. Vi fortæller dig præcis hvad du har brug for og hvad det koster.
+          <p className="mb-10 max-w-md mx-auto text-lg" style={{ color: "var(--text-secondary)" }}>
+            {t.about.ctaText}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               href="/contact"
-              className="shimmer w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 text-white font-bold rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-lg shadow-indigo-500/20"
+              className="w-full sm:w-auto px-10 py-5 font-semibold transition-all duration-200 hover:opacity-85 hover:scale-[1.02] active:scale-[0.97]"
+              style={{ background: "var(--accent)", color: "var(--bg)" }}
             >
-              Book gratis konsultation →
+              {t.about.ctaPrimary}
             </Link>
 
             <Link
               href="/services"
-              className={`
-                w-full sm:w-auto px-10 py-5 rounded-2xl font-bold transition-all border hover:scale-105 active:scale-95
-                ${isDark
-                  ? "border-white/10 hover:border-white/20 text-white bg-white/5"
-                  : "border-black/10 hover:border-black/20 text-gray-900 bg-black/5"}
-              `}
+              className="w-full sm:w-auto px-10 py-5 font-semibold border transition-colors duration-200"
+              style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)" }}
             >
-              Se vores services
+              {t.about.ctaSecondary}
             </Link>
           </div>
         </motion.div>

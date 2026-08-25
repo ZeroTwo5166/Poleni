@@ -2,25 +2,30 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useState } from "react"
+import { useLocale } from "./localeProvider"
+import { useT } from "@/lib/i18n/useT"
 
 export default function LegalBar() {
   const pathname = usePathname()
-  const [lang, setLang] = useState<"en" | "da">("da")
+  const { locale, setLocale } = useLocale()
+  const t = useT()
 
   const linkClass =
-    "px-3 py-1.5 rounded-full text-xs font-medium transition-colors duration-150 whitespace-nowrap"
+    "px-3 py-1.5 text-xs font-medium transition-colors duration-150 whitespace-nowrap"
 
   const isActive = (href: string) => pathname === href
 
   return (
     <div className="fixed bottom-5 left-5 z-40">
-      <div className="glass rounded-full flex items-center gap-0.5 px-1.5 py-1.5 shadow-lg">
+      <div
+        className="flex items-center gap-0.5 px-1 py-1"
+        style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}
+      >
 
-        {/* Terms */}
+        {/* Terms — hidden on mobile, footer already links to it */}
         <Link
           href="/handelsbetingelser"
-          className={linkClass}
+          className={`hidden sm:inline-block ${linkClass}`}
           style={{
             color: isActive("/handelsbetingelser")
               ? "var(--text-primary)"
@@ -30,16 +35,16 @@ export default function LegalBar() {
               : "transparent",
           }}
         >
-          Handelsbetingelser
+          {t.legalBar.terms}
         </Link>
 
         {/* Divider */}
-        <span className="w-px h-3" style={{ background: "var(--border)" }} />
+        <span className="hidden sm:block w-px h-3" style={{ background: "var(--border)" }} />
 
-        {/* Privacy */}
+        {/* Privacy — hidden on mobile, footer already links to it */}
         <Link
           href="/privatliv"
-          className={linkClass}
+          className={`hidden sm:inline-block ${linkClass}`}
           style={{
             color: isActive("/privatliv")
               ? "var(--text-primary)"
@@ -49,38 +54,40 @@ export default function LegalBar() {
               : "transparent",
           }}
         >
-          Privatliv
+          {t.legalBar.privacy}
         </Link>
 
         {/* Divider */}
-        <span className="w-px h-3" style={{ background: "var(--border)" }} />
+        <span className="hidden sm:block w-px h-3" style={{ background: "var(--border)" }} />
 
-        {/* Language switch */}
+        {/* Language switch — active language gets a filled chip, not just a
+            color change, since text-color-only contrast was too weak to
+            read at a glance in light mode. */}
         <div className="flex items-center gap-0.5 px-0.5">
-           <button
-            onClick={() => setLang("da")}
-            className="px-2 py-1.5 rounded-full text-xs font-semibold transition-colors duration-150"
+          <button
+            onClick={() => setLocale("da")}
+            aria-pressed={locale === "da"}
+            aria-label="Dansk"
+            className="px-2 py-1.5 text-xs font-semibold transition-colors duration-150"
             style={{
-              color: lang === "da" ? "#6366f1" : "var(--text-muted)",
-              background:
-                lang === "da" ? "rgba(99,102,241,0.1)" : "transparent",
+              color: locale === "da" ? "var(--bg)" : "var(--text-muted)",
+              background: locale === "da" ? "var(--accent)" : "transparent",
             }}
           >
             DA
           </button>
-          {/* <button
-            onClick={() => setLang("en")}
-            className="px-2 py-1.5 rounded-full text-xs font-semibold transition-colors duration-150"
+          <button
+            onClick={() => setLocale("en")}
+            aria-pressed={locale === "en"}
+            aria-label="English"
+            className="px-2 py-1.5 text-xs font-semibold transition-colors duration-150"
             style={{
-              color: lang === "en" ? "#6366f1" : "var(--text-muted)",
-              background:
-                lang === "en" ? "rgba(99,102,241,0.1)" : "transparent",
+              color: locale === "en" ? "var(--bg)" : "var(--text-muted)",
+              background: locale === "en" ? "var(--accent)" : "transparent",
             }}
           >
             EN
-          </button> */}
-
-         
+          </button>
         </div>
 
       </div>

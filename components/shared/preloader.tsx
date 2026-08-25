@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-
-const words = ["Strategi.", "Handling.", "Resultater."]
+import { useT } from "@/lib/i18n/useT"
 
 export default function Preloader() {
+  const t = useT()
+  const words = t.preloader.words
   const [index, setIndex]     = useState(0)
   const [visible, setVisible] = useState(true)
   const pathname              = usePathname()
@@ -21,7 +22,7 @@ export default function Preloader() {
       const t = setTimeout(() => setVisible(false), 500)
       return () => clearTimeout(t)
     }
-  }, [index, isHome])
+  }, [index, isHome, words.length])
 
   if (!isHome || !visible) return null
 
@@ -32,7 +33,7 @@ export default function Preloader() {
         initial={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.2, ease: "easeOut" }}
-        className="fixed inset-0 z-[9999] bg-[#080808] flex items-center justify-center"
+        className="fixed inset-0 z-[9999] bg-[#0a0b09] flex items-center justify-center"
       >
         <AnimatePresence mode="popLayout">
           <motion.span
@@ -41,8 +42,8 @@ export default function Preloader() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, transition: { duration: 0 } }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            className="text-white font-bold text-6xl md:text-8xl lg:text-9xl
-                       tracking-tight select-none"
+            className="font-display text-[#f3f4ef] font-medium text-6xl md:text-8xl lg:text-9xl
+                       tracking-tightest select-none"
           >
             {words[index]}
           </motion.span>

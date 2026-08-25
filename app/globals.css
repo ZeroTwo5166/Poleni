@@ -6,96 +6,84 @@
   cursor: none !important;
 }
 
+@media (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────────────
+   Design tokens — one accent (forest green), warm-neutral ink/bone base.
+   Both themes are hand-tuned, not a background inversion of each other.
+   ──────────────────────────────────────────────────────────────────── */
+
 :root,
 [data-theme="dark"] {
-  --bg:             #080808;
-  --bg-card:        rgba(139, 92, 246, 0.07);
-  --bg-hover:       rgba(139, 92, 246, 0.12);
-  --border:         rgba(255, 255, 255, 0.13);
-  --border-hover:   rgba(167, 139, 250, 0.4);
+  --bg:             #0a0b09;
+  --bg-elevated:    #131511;
+  --bg-hover:       #191c15;
 
-  /* REFINED TEXT COLORS (DARK) */
-  --text-primary:   #f9fafb;
-  --text-secondary: #d1d5db;
-  --text-muted:     #808080;
+  --border:         rgba(255, 255, 255, 0.10);
+  --border-strong:  rgba(255, 255, 255, 0.20);
 
-  --navbar-bg:      rgba(8, 8, 8, 0.8);
-  --grid-line:      rgba(255, 255, 255, 0.025);
-  --shadow-color:   rgba(99, 102, 241, 0.25);
+  --text-primary:   #f3f4ef;
+  --text-secondary: #b3b8ab;
+  --text-muted:     #75796c;
+
+  --accent:         #46b47e;
+  --accent-strong:  #6cd39c;
+  --accent-soft:    rgba(70, 180, 126, 0.14);
+  --accent-line:    rgba(70, 180, 126, 0.35);
+
+  --amber:          #e0aa4c;
+  --amber-soft:     rgba(224, 170, 76, 0.14);
+
+  --danger:         #e2685c;
+  --danger-soft:    rgba(226, 104, 92, 0.12);
+
+  --shadow-color:   rgba(0, 0, 0, 0.45);
+  --navbar-bg:      rgba(10, 11, 9, 0.82);
 }
 
 [data-theme="light"] {
-  /* A soft, warm lavender-tinted white - feels alive, not clinical */
-  --bg:             #f8f9ff; 
-  
-  /* Glass cards have a slight blue-ish tint to distinguish from the warm bg */
-  --bg-card:        rgba(255, 255, 255, 0.72);
-  --bg-hover:       rgba(255, 255, 255, 0.92);
+  --bg:             #f5f6f2;
+  --bg-elevated:    #ffffff;
+  --bg-hover:       #eceee8;
 
-  /* Border colors now use a faint Indigo/Violet tint */
-  --border:         rgba(99, 102, 241, 0.16);
-  --border-hover:   rgba(99, 102, 241, 0.4);
+  --border:         rgba(10, 14, 8, 0.10);
+  --border-strong:  rgba(10, 14, 8, 0.20);
 
-  /* Text: Deep Navy instead of Black for a premium "ink" look */
-  --text-primary:   #0f172a;
-  --text-secondary: #334155;
-  --text-muted:     #64748b;
+  --text-primary:   #10120d;
+  --text-secondary: #40453a;
+  --text-muted:     #74786c;
 
-  /* Navbar with a more saturated blur effect */
-  --navbar-bg:      rgba(248, 249, 255, 0.8);
-  --grid-line:      rgba(99, 102, 241, 0.07);
+  --accent:         #1b6e45;
+  --accent-strong:  #145534;
+  --accent-soft:    rgba(27, 110, 69, 0.08);
+  --accent-line:    rgba(27, 110, 69, 0.28);
 
-  /* Colorful shadows! This adds a subtle indigo glow to cards */
-  --shadow-color:   rgba(99, 102, 241, 0.14);
+  --amber:          #a5761f;
+  --amber-soft:     rgba(165, 118, 31, 0.10);
+
+  --danger:         #b8352a;
+  --danger-soft:    rgba(184, 53, 42, 0.08);
+
+  --shadow-color:   rgba(16, 18, 13, 0.10);
+  --navbar-bg:      rgba(245, 246, 242, 0.82);
 }
-
-/* Force cursor effect element above everything */
-[data-cursor-fx],
-.cursor-effects-canvas,
-canvas[style*="cursor"] {
-  z-index: 99999 !important;
-  pointer-events: none !important;
-}
-
-
-
 
 html {
   scroll-behavior: smooth;
-
 }
 
-
 html, body {
-  background-color: var(--bg) !important;
+  background-color: var(--bg);
   color: var(--text-primary);
-  font-family: var(--font-geist), sans-serif;
+  font-family: var(--font-body), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: clip;
   transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-body.cursor-light,
-body.cursor-light * {
-  cursor: none !important;
-}
-
-
-
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.4);
-  border-radius: 2px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.7);
-}
-
-::selection {
-  background: rgba(99, 102, 241, 0.3);
-  color: white;
 }
 
 *, ::before, ::after {
@@ -104,91 +92,64 @@ body.cursor-light * {
   padding: 0;
 }
 
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--text-primary);
+}
+
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-.gradient-text {
-  background: linear-gradient(135deg, #6366f1 0%, #a78bfa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Numeric / data typography — tabular figures for prices, stats, calculators */
+.tabular {
+  font-family: var(--font-mono), monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
 }
 
-.glow-indigo    { box-shadow: 0 0 40px rgba(99, 102, 241, 0.15); }
-.glow-indigo-sm { box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);  }
+/* Hairline rule — the section-divider workhorse, replaces boxed cards */
+.rule-top    { border-top: 1px solid var(--border); }
+.rule-bottom { border-bottom: 1px solid var(--border); }
 
-.glass {
-  background:      var(--bg-card) !important;
-  border:          1px solid var(--border) !important;
-  backdrop-filter: blur(16px);
-  box-shadow:      0 8px 32px -8px var(--shadow-color), inset 0 1px 0 0 rgba(255,255,255,0.04);
-  transition:      background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+/* Flat editorial panel — replaces the old .glass treatment. No blur, no glow. */
+.panel {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  transition: border-color 0.25s ease, background-color 0.25s ease;
 }
+.panel:hover { border-color: var(--border-strong); }
 
-.glass:hover {
-  border-color: var(--border-hover) !important;
-  box-shadow:   0 16px 48px -12px var(--shadow-color), inset 0 1px 0 0 rgba(255,255,255,0.06);
-}
-
-/* ── Interactive spotlight: a radial glow that follows the cursor. ──
-   Pair with the useSpotlight() hook (sets --spot-x / --spot-y via JS).
-   Override --spot-color (as "r,g,b") per-section to match its accent. */
-.spotlight {
-  position: relative;
-  overflow: hidden;
-}
-.spotlight::before {
+/* Fine noise texture, fixed + pointer-events:none only — never on a scrolling container */
+.grain::before {
   content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: radial-gradient(
-    280px circle at var(--spot-x, 50%) var(--spot-y, 50%),
-    rgba(var(--spot-color, 99, 102, 241), 0.22),
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-.spotlight:hover::before {
-  opacity: 1;
-}
-.spotlight > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* ── Shimmer sweep: a diagonal highlight that sweeps across on hover. ── */
-.shimmer {
-  position: relative;
-  overflow: hidden;
-}
-.shimmer::after {
-  content: "";
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%);
-  transform: translateX(-120%);
-  transition: transform 0.7s ease;
-}
-.shimmer:hover::after {
-  transform: translateX(120%);
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(24px); }
+  from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0);    }
 }
-.animate-fade-up { animation: fade-up 0.6s ease forwards; }
+.animate-fade-up { animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
 
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; }
-  50%       { opacity: 0.8; }
+@keyframes soft-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1;   }
 }
-.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+.animate-soft-pulse { animation: soft-pulse 2.4s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
@@ -196,15 +157,3 @@ body.cursor-light * {
     transition-duration: 0.01ms !important;
   }
 }
-/* Add to the end of globals.css */
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
-}
-
-.animate-bounce {
-  animation: bounce 1.5s infinite;
-}
-
-
-

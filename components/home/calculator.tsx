@@ -2,24 +2,30 @@
 
 import { useState, useCallback, useMemo } from "react"
 import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
+import { Monitor, FileText, ShoppingCart, Lightning, Check } from "@phosphor-icons/react/dist/ssr"
 import {
   WEBSITE_TYPES,
   ADDONS,
-  GROWTH_MESSAGES,
   type WebsiteTypeId,
   type AddonId,
 } from "@/lib/pricing"
 import DeviceMockup from "./deviceMockup"
 import GrowthMeter from "./growthMeter"
-import { useTheme } from "@/components/shared/themeProvider"
 import { fadeUp, fadeLeft, fadeRight, viewport } from "@/lib/animationVariants"
+import { useT } from "@/lib/i18n/useT"
+
+const TYPE_ICONS: Record<WebsiteTypeId, typeof Monitor> = {
+  static: Monitor,
+  dynamic: FileText,
+  ecommerce: ShoppingCart,
+  custom: Lightning,
+}
 
 export default function Calculator() {
+  const t = useT()
   const [websiteType, setWebsiteType] = useState<WebsiteTypeId | null>(null)
   const [activeAddons, setActiveAddons] = useState<Set<AddonId>>(new Set())
-  const { theme } = useTheme()
-  const isDark = theme === "dark"
 
   const selectedSite = websiteType
     ? WEBSITE_TYPES.find((t) => t.id === websiteType) ?? null
@@ -36,7 +42,7 @@ export default function Calculator() {
 
   const growthCount = activeAddons.size
   const growthPct = Math.round((growthCount / 3) * 100)
-  const growthMessage = GROWTH_MESSAGES[growthCount]
+  const growthMessage = t.pricing.growthMessages[growthCount as 0 | 1 | 2 | 3]
 
   const toggleAddon = useCallback((id: AddonId) => {
     setActiveAddons((prev) => {
@@ -51,70 +57,30 @@ export default function Calculator() {
   }, [])
 
   return (
-    <section
-      id="calculator"
-      className="relative py-32 px-6 overflow-hidden will-change-transform"
-    >
-      {/* Removed middle glow — only keep it in light theme via the non-dark block */}
-      {!isDark && (
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                     w-[800px] h-[400px] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse, rgba(99,102,241,0.06) 0%, transparent 70%)",
-          }}
-        />
-      )}
-
-      {isDark && (
-        <>
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent, rgba(16,185,129,0.4), transparent)",
-            }}
-          />
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse at top, rgba(16,185,129,0.12) 0%, transparent 70%)",
-            }}
-          />
-        </>
-      )}
-
-      <div className="relative z-10 max-w-6xl mx-auto">
+    <section id="calculator" className="relative py-28 lg:py-36 px-6">
+      <div className="max-w-page mx-auto">
         {/* HEADER */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          className="text-center mb-16"
+          className="max-w-2xl mb-16"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-                           border border-emerald-500/20 bg-emerald-500/10
-                           text-emerald-500 text-xs font-medium mb-4">
-            <span className="w-1 h-1 rounded-full bg-emerald-500" />
-            Gennemsigtigt prissætningsværktøj
+          <span className="text-xs uppercase tracking-widest font-semibold" style={{ color: "var(--text-muted)" }}>
+            {t.calculator.eyebrow}
           </span>
 
           <h2
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="font-display font-medium tracking-tightest leading-[1.05] text-4xl md:text-5xl mt-5"
             style={{ color: "var(--text-primary)" }}
           >
-            Hvad koster det at{" "}
-            <span className="text-emerald-500">vokse?</span>
+            {t.calculator.headline1}{" "}
+            <span style={{ color: "var(--accent)" }}>{t.calculator.headlineAccent}</span>
           </h2>
 
-          <p
-            className="text-lg max-w-xl mx-auto"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            Byg din pakke og se prisen med det samme. Ingen skjulte gebyrer.
+          <p className="text-lg mt-5 leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+            {t.calculator.subtext}
           </p>
         </motion.div>
 
@@ -130,159 +96,99 @@ export default function Calculator() {
             <div className="flex flex-col gap-6">
 
               {/* WEBSITE TYPE */}
-              <div
-                className="glass rounded-2xl p-6 border"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <p
-                    className="text-sm font-semibold"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    1. Vælg din hjemmeside-type
+              <div className="panel p-6">
+                <div className="flex items-center justify-between mb-5">
+                  <p className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+                    {t.calculator.step1Title}
                   </p>
-                  <span
-                    className="text-xs"
-                    style={{ color: "var(--text-muted)" }}
-                  >
-                    Valgfri
+                  <span className="text-xs" style={{ color: "var(--text-muted)" }}>
+                    {t.calculator.optional}
                   </span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   {WEBSITE_TYPES.map((type) => {
                     const isActive = websiteType === type.id
+                    const Icon = TYPE_ICONS[type.id]
+                    const copy = t.pricing.websiteTypes[type.id]
 
                     return (
-                      <motion.button
+                      <button
                         key={type.id}
                         onClick={() => toggleWebsiteType(type.id)}
-                        whileHover={{ scale: 1.03, y: -2 }}
-                        whileTap={{ scale: 0.97 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                        className="relative p-4 rounded-xl border text-left"
-                        style={
-                          isActive
-                            ? {
-                                backgroundColor: "rgba(16,185,129,0.10)",
-                                borderColor: "rgba(16,185,129,0.6)",
-                              }
-                            : isDark
-                            ? {
-                                background: "linear-gradient(160deg,#0a0a0a 0%,rgba(16,185,129,0.06) 100%)",
-                                borderColor: "rgba(255,255,255,0.16)",
-                              }
-                            : {
-                                backgroundColor: "rgba(255,255,255,0.55)",
-                                borderColor: "rgba(16,185,129,0.20)",
-                              }
-                        }
+                        className="relative p-4 border text-left transition-colors duration-150"
+                        style={{
+                          borderColor: isActive ? "var(--accent-line)" : "var(--border)",
+                          background: isActive ? "var(--accent-soft)" : "transparent",
+                        }}
                       >
-                        <span className="flex flex-col gap-1">
-                          <span className="text-lg">{type.icon}</span>
+                        <span className="flex flex-col gap-2">
+                          <Icon size={20} weight="light" style={{ color: isActive ? "var(--accent)" : "var(--text-muted)" }} />
 
                           <span
                             className="text-sm font-semibold"
-                            style={{
-                              color: isActive
-                                ? "#10b981"
-                                : "var(--text-primary)",
-                            }}
+                            style={{ color: isActive ? "var(--accent)" : "var(--text-primary)" }}
                           >
-                            {type.label}
+                            {copy.label}
                           </span>
 
-                          <span
-                            className="text-xs"
-                            style={{ color: "var(--text-muted)" }}
-                          >
-                            {type.desc}
+                          <span className="text-xs" style={{ color: "var(--text-muted)" }}>
+                            {copy.desc}
                           </span>
                         </span>
-                      </motion.button>
+                      </button>
                     )
                   })}
                 </div>
               </div>
 
               {/* ADDONS */}
-              <div
-                className="glass rounded-2xl p-6 border"
-              >
-                <p
-                  className="text-sm font-semibold mb-4"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  2. Tilføj marketingydelser
+              <div className="panel p-6">
+                <p className="text-sm font-semibold mb-5" style={{ color: "var(--text-primary)" }}>
+                  {t.calculator.step2Title}
                 </p>
 
                 <div className="flex flex-col gap-3">
                   {ADDONS.map((addon) => {
                     const isActive = activeAddons.has(addon.id)
+                    const copy = t.pricing.addons[addon.id]
 
                     return (
-                      <motion.button
+                      <button
                         key={addon.id}
                         onClick={() => toggleAddon(addon.id)}
-                        whileHover={{ scale: 1.02, x: 2 }}
-                        whileTap={{ scale: 0.98 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                        className="flex items-center gap-3 p-4 rounded-xl border"
-                        style={
-                          isActive
-                            ? {
-                                backgroundColor: "rgba(99,102,241,0.12)",
-                                borderColor: "rgba(99,102,241,0.6)",
-                              }
-                            : isDark
-                            ? {
-                                background: "linear-gradient(160deg,#0a0a0a 0%,rgba(99,102,241,0.08) 100%)",
-                                borderColor: "rgba(255,255,255,0.16)",
-                              }
-                            : {
-                                backgroundColor: "rgba(255,255,255,0.55)",
-                                borderColor: "rgba(99,102,241,0.20)",
-                              }
-                        }
+                        className="flex items-center gap-3 p-4 border transition-colors duration-150"
+                        style={{
+                          borderColor: isActive ? "var(--accent-line)" : "var(--border)",
+                          background: isActive ? "var(--accent-soft)" : "transparent",
+                        }}
                       >
-                        {/* Radio indicator */}
+                        {/* Check indicator */}
                         <div
-                          className="shrink-0 w-5 h-5 rounded-full border flex items-center justify-center"
+                          className="shrink-0 w-5 h-5 border flex items-center justify-center"
                           style={{
-                            borderColor: isActive
-                              ? "#6366f1"
-                              : isDark
-                              ? "rgba(255,255,255,0.25)"
-                              : "rgba(99,102,241,0.3)",
-                            backgroundColor: isActive
-                              ? "#6366f1"
-                              : "transparent",
+                            borderColor: isActive ? "var(--accent)" : "var(--border-strong)",
+                            backgroundColor: isActive ? "var(--accent)" : "transparent",
                           }}
-                        />
+                        >
+                          {isActive && <Check size={12} weight="bold" style={{ color: "var(--bg)" }} />}
+                        </div>
 
                         {/* Label + desc */}
                         <div className="flex-1 text-left">
-                          <p
-                            className="text-sm font-semibold"
-                            style={{ color: "var(--text-primary)" }}
-                          >
-                            {addon.label}
+                          <p className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+                            {copy.label}
                           </p>
-                          <p
-                            className="text-xs"
-                            style={{ color: "var(--text-muted)" }}
-                          >
-                            {addon.desc}
+                          <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                            {copy.desc}
                           </p>
                         </div>
 
-                        {/* Price — pinned to the right */}
-                        <span
-                          className="shrink-0 text-sm font-semibold"
-                          style={{ color: "var(--text-secondary)" }}
-                        >
-                          {addon.price.toLocaleString("da-DK")} kr/md
+                        {/* Price */}
+                        <span className="tabular shrink-0 text-sm font-semibold" style={{ color: "var(--text-secondary)" }}>
+                          {addon.price.toLocaleString("da-DK")} {t.pricing.perMonth}
                         </span>
-                      </motion.button>
+                      </button>
                     )
                   })}
                 </div>
@@ -301,71 +207,50 @@ export default function Calculator() {
           >
             <div className="flex flex-col gap-6 lg:sticky lg:top-28">
 
-              <div
-                className="glass rounded-2xl p-6 border"
-              >
-                <p
-                  className="text-xs uppercase tracking-widest mb-4"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  Dit estimat
+              <div className="panel p-6">
+                <p className="text-xs uppercase tracking-widest font-semibold mb-5" style={{ color: "var(--text-muted)" }}>
+                  {t.calculator.estimateLabel}
                 </p>
 
-                <div className="flex justify-between mb-4 pb-4 border-b border-white/10">
+                <div className="flex justify-between mb-4 pb-4 rule-bottom">
                   <div>
-                    <p
-                      className="text-sm"
-                      style={{ color: "var(--text-secondary)" }}
-                    >
-                      Engangshjemmeside
+                    <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                      {t.calculator.onceLabel}
                     </p>
-                    <p
-                      className="text-xs"
-                      style={{ color: "var(--text-muted)" }}
-                    >
-                      {selectedSite
-                        ? selectedSite.label
-                        : "Ikke inkluderet"}
+                    <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                      {selectedSite ? t.pricing.websiteTypes[selectedSite.id].label : t.calculator.notIncluded}
                     </p>
                   </div>
 
-                  <p
-                    className="text-2xl font-bold"
-                    style={{ color: "var(--text-primary)" }}
-                  >
+                  <p className="tabular text-2xl font-semibold" style={{ color: "var(--text-primary)" }}>
                     {!selectedSite
                       ? "—"
                       : selectedSite.price
                       ? `${selectedSite.price.toLocaleString("da-DK")} kr`
-                      : "Kontakt os"}
+                      : t.calculator.contactUs}
                   </p>
                 </div>
 
                 <div className="flex justify-between mb-6">
                   <div>
-                    <p
-                      className="text-sm"
-                      style={{ color: "var(--text-secondary)" }}
-                    >
-                      Månedlig marketing
+                    <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                      {t.calculator.monthlyLabel}
                     </p>
                   </div>
 
-                  <p
-                    className="text-2xl font-bold"
-                    style={{ color: "var(--text-primary)" }}
-                  >
+                  <p className="tabular text-2xl font-semibold" style={{ color: "var(--text-primary)" }}>
                     {monthlyTotal > 0
-                      ? `${monthlyTotal.toLocaleString("da-DK")} kr/md`
-                      : "0 kr/md"}
+                      ? `${monthlyTotal.toLocaleString("da-DK")} ${t.pricing.perMonth}`
+                      : `0 ${t.pricing.perMonth}`}
                   </p>
                 </div>
 
                 <Link
                   href="/contact"
-                  className="shimmer block w-full py-3.5 text-center font-semibold rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 text-white"
+                  className="block w-full py-3.5 text-center font-semibold transition-opacity duration-200 hover:opacity-85"
+                  style={{ background: "var(--accent)", color: "var(--bg)" }}
                 >
-                  Få et præcist tilbud →
+                  {t.calculator.getQuote}
                 </Link>
               </div>
 

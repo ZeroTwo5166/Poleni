@@ -1,122 +1,39 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useTheme } from "@/components/shared/themeProvider"
 import Link from "next/link"
+import { Lightning, UsersThree, Phone } from "@phosphor-icons/react/dist/ssr"
 import { fadeUp, staggerContainer, viewport } from "@/lib/animationVariants"
+import { useT } from "@/lib/i18n/useT"
+
+const pillIcons = [Lightning, UsersThree, Phone]
 
 export default function TheStory() {
-  const { theme } = useTheme()
-  const isDark = theme === "dark"
+  const t = useT()
+  const pills = t.theStory.pills.map((label, i) => ({ label, icon: pillIcons[i] }))
 
   return (
-    <section
-      // Removed "flex items-center justify-center" and added "pt-32 pb-24" so it aligns at the top
-      className="relative min-h-screen pt-32 pb-24 px-6 overflow-hidden flex flex-col"
-      style={
-        !isDark
-          ? {
-              /* FIXED LIGHT BASE — no more pink wash */
-              backgroundColor: "#faf8ff",
-            }
-          : undefined
-      }
-    >
-      {/* DARK MODE TOP GLOW (UNCHANGED) */}
-      {isDark && (
-        <>
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent, rgba(244,63,94,0.4), transparent)",
-            }}
-          />
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse at top, rgba(244,63,94,0.14) 0%, transparent 70%)",
-            }}
-          />
-        </>
-      )}
-
-      {/* BACKGROUND */}
-      <div className="absolute inset-0 pointer-events-none">
-        {isDark ? (
-          /* DARK MODE BACKGROUND — UNTOUCHED */
-          <div
-            className="absolute left-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] opacity-60"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)",
-            }}
-          />
-        ) : (
-          /* FIXED LIGHT BACKGROUND (premium violet depth) */
-          <>
-            <div
-              className="absolute inset-0"
-              style={{
-                background: `
-                  radial-gradient(900px circle at 15% 20%, rgba(124,58,237,0.08), transparent 60%),
-                  radial-gradient(800px circle at 85% 30%, rgba(99,102,241,0.06), transparent 55%),
-                  radial-gradient(700px circle at 50% 100%, rgba(236,72,153,0.04), transparent 60%),
-                  linear-gradient(180deg, #ffffff 0%, #faf8ff 60%, #f6f5ff 100%)
-                `,
-              }}
-            />
-
-            {/* subtle noise */}
-            <div
-              className="absolute inset-0 opacity-[0.03] mix-blend-multiply"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-              }}
-            />
-          </>
-        )}
-      </div>
-
-      <div className="relative z-10 max-w-4xl mx-auto w-full">
+    <section className="relative py-28 lg:py-36 px-6">
+      <div className="max-w-3xl mx-auto">
         {/* Header */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="mb-12 text-center"
+          className="mb-14"
         >
-          <span
-            className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-bold mb-6
-            ${
-              isDark
-                ? "border-rose-500/20 bg-rose-500/5 text-rose-400"
-                : "border-rose-200 bg-white text-rose-600 shadow-sm"
-            }`}
-          >
-            <span className="w-1 h-1 rounded-full bg-rose-400" />
-            Hvad der adskiller Poleni
+          <span className="text-xs uppercase tracking-widest font-semibold" style={{ color: "var(--text-muted)" }}>
+            {t.theStory.eyebrow}
           </span>
 
           <h2
-            className="text-4xl md:text-6xl font-bold leading-tight"
+            className="font-display font-medium tracking-tightest leading-[1.05] text-4xl md:text-6xl mt-5"
             style={{ color: "var(--text-primary)" }}
           >
-            Du er ikke et nummer.
+            {t.theStory.headline1}
             <br />
-            <span
-              style={{
-                backgroundImage:
-                  "linear-gradient(135deg, #f43f5e, #fb7185)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Du er vores omdømme.
-            </span>
+            <span style={{ color: "var(--accent)" }}>{t.theStory.headlineAccent}</span>
           </h2>
         </motion.div>
 
@@ -126,121 +43,71 @@ export default function TheStory() {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className={`relative p-8 md:p-12 rounded-2xl border-2 mb-8 overflow-hidden
-            ${
-              isDark
-                ? "border-rose-500/20 bg-[linear-gradient(160deg,#0a0a0d_0%,rgba(244,63,94,0.10)_100%)]"
-                : "border-violet-300 bg-gradient-to-br from-white to-rose-50/60 shadow-[0_20px_60px_rgba(124,58,237,0.14)]"
-            }`}
+          className="mb-14"
         >
-          <span
-            className={`absolute -top-2 left-4 text-9xl font-serif leading-none pointer-events-none select-none
-            ${isDark ? "text-rose-500/40" : "text-violet-200"}`}
-          >
-            "
-          </span>
-
           <p
-            className="text-lg md:text-xl italic leading-relaxed mb-6 relative z-10 font-medium"
-            style={{ color: isDark ? "#fff" : "#0f172a" }}
+            className="font-display italic font-medium leading-[1.25] pb-1 text-2xl md:text-3xl mb-8"
+            style={{ color: "var(--text-primary)" }}
           >
-            "Store bureauer har 100+ kunder. Du er bare endnu en række i deres
-            regneark. De mister ikke søvn over noget. Vi mister søvn over dig."
+            &quot;{t.theStory.quote}&quot;
           </p>
 
-          <div
-            className="w-12 h-1 mb-6 rounded-full"
-            style={{
-              background: "linear-gradient(90deg, #f43f5e, #fb7185)",
-            }}
-          />
+          <div className="w-10 h-px mb-8" style={{ background: "var(--accent)" }} />
 
           <div className="flex flex-col gap-5">
-            <p
-              className="text-base leading-relaxed"
-              style={{
-                color: isDark ? "var(--text-secondary)" : "#334155",
-              }}
-            >
-              Vi har ikke 100 kunder. Vi har en lille gruppe virksomheder, vi
-              virkelig går op i.{" "}
-              <span className="font-bold text-rose-500">
-                Hvis du ikke vokser, vokser vi ikke.
+            <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+              {t.theStory.line1}{" "}
+              <span className="font-semibold" style={{ color: "var(--accent)" }}>
+                {t.theStory.line1Highlight}
               </span>
             </p>
 
-            <p
-              className="text-base leading-relaxed font-bold"
-              style={{
-                color: isDark ? "var(--text-primary)" : "#0f172a",
-              }}
-            >
-              Store bureauer taler om resultater. Vi leverer dem.
+            <p className="text-base leading-relaxed font-semibold" style={{ color: "var(--text-primary)" }}>
+              {t.theStory.line2}
             </p>
           </div>
         </motion.div>
 
         {/* Pills */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12"
+          className="flex flex-wrap gap-6 mb-16 pb-10 rule-bottom"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
         >
-          {[
-            { icon: "⚡", label: "Svar inden for få timer" },
-            { icon: "👥", label: "Små med vilje" },
-            { icon: "📞", label: "Direkte adgang til teamet" },
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              variants={fadeUp}
-              className={`flex items-center gap-3 p-4 rounded-xl border-2
-                ${
-                  isDark
-                    ? "border-rose-500/15 bg-rose-500/[0.04]"
-                    : "border-violet-300 bg-gradient-to-br from-white to-violet-50 shadow-sm"
-                }`}
-            >
-              <span className="text-xl">{item.icon}</span>
-              <span
-                className="text-sm font-bold"
-                style={{
-                  color: isDark ? "var(--text-secondary)" : "#6d28d9",
-                }}
-              >
-                {item.label}
-              </span>
-            </motion.div>
-          ))}
+          {pills.map((item) => {
+            const Icon = item.icon
+            return (
+              <motion.div key={item.label} variants={fadeUp} className="flex items-center gap-2.5">
+                <Icon size={18} weight="light" style={{ color: "var(--accent)" }} />
+                <span className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>
+                  {item.label}
+                </span>
+              </motion.div>
+            )
+          })}
         </motion.div>
 
-        {/* NEW CONTENT: Core Principles (Fills the page naturally without clutter) */}
+        {/* Principles */}
         <motion.div
-          variants={fadeUp}
+          variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16"
+          className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16"
         >
-          <div className={`p-8 rounded-2xl border ${isDark ? 'border-rose-500/15 bg-rose-500/[0.03]' : 'border-violet-500 bg-violet-50/50'}`}>
-            <h3 className="text-lg font-bold mb-3" style={{ color: isDark ? '#fff' : '#0f172a' }}>
-              1. Ærlighed frem for alt
-            </h3>
-            <p className="text-sm leading-relaxed" style={{ color: isDark ? 'var(--text-secondary)' : '#475569' }}>
-              Vi siger tingene som de er. Hvis vi ikke tror, vi kan skabe et positivt afkast for din forretning, siger vi pænt nej tak fra starten.
-            </p>
-          </div>
-          
-          <div className={`p-8 rounded-2xl border ${isDark ? 'border-rose-500/15 bg-rose-500/[0.03]' : 'border-violet-500 bg-violet-50/50'}`}>
-            <h3 className="text-lg font-bold mb-3" style={{ color: isDark ? '#fff' : '#0f172a' }}>
-              2. Bundlinje over forfængelighed
-            </h3>
-            <p className="text-sm leading-relaxed" style={{ color: isDark ? 'var(--text-secondary)' : '#475569' }}>
-              Likes og visninger betaler ikke dine regninger. Vi optimerer benhårdt efter de resultater og konverteringer, der skaber reel værdi.
-            </p>
-          </div>
+          {t.theStory.principles.map((p, i) => (
+            <motion.div key={p.title} variants={fadeUp}>
+              <span className="tabular text-sm" style={{ color: "var(--text-muted)" }}>0{i + 1}</span>
+              <h3 className="text-lg font-semibold mt-2 mb-2" style={{ color: "var(--text-primary)" }}>
+                {p.title}
+              </h3>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+                {p.text}
+              </p>
+            </motion.div>
+          ))}
         </motion.div>
 
         {/* CTA */}
@@ -249,18 +116,13 @@ export default function TheStory() {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="text-center"
         >
           <Link
             href="/contact"
-            className="shimmer inline-flex items-center gap-2 px-8 py-4 text-white font-bold rounded-xl
-                       transition-all duration-200 shadow-lg active:scale-95 hover:scale-105"
-            style={{
-              background: "linear-gradient(135deg, #f43f5e, #fb7185)",
-              boxShadow: "0 10px 30px rgba(244,63,94,0.25)",
-            }}
+            className="inline-flex items-center gap-2 px-7 py-3.5 font-medium text-sm transition-all duration-200 hover:opacity-85 hover:scale-[1.02] active:scale-[0.97]"
+            style={{ background: "var(--accent)", color: "var(--bg)" }}
           >
-            Tal med os →
+            {t.theStory.cta}
           </Link>
         </motion.div>
       </div>

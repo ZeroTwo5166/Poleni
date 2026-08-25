@@ -1,161 +1,74 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useTheme } from "@/components/shared/themeProvider"
 import Link from "next/link"
+import CountUp from "@/components/shared/countUp"
 import { fadeUp, staggerContainer, viewport } from "@/lib/animationVariants"
+import { useT } from "@/lib/i18n/useT"
 
-const testimonials = [
-  {
-    quote:
-      "Endelig et bureau der bare fortæller prisen. Ingen frem og tilbage, ingen overraskelser. Vores site var live på 4 dage.",
-    author: "Mads K.",
-    role: "Ejer, Maiya.dk",
-    initials: "MK",
-    color: "bg-emerald-500",
-  },
-  {
-    quote:
-      "Vi satte vores annoncer på pause over sommeren og startede igen i september. Ingen spørgsmål stillet. Den fleksibilitet er sjælden.",
-    author: "Sarah L.",
-    role: "Grundlægger, MightyLoyalty",
-    initials: "SL",
-    color: "bg-emerald-600",
-  },
-  {
-    quote:
-      "Kalkulatoren på deres hjemmeside solgte mig, før jeg overhovedet kontaktede dem. Jeg vidste præcis, hvad jeg betalte for.",
-    author: "Thomas B.",
-    role: "CEO, The Hideout Brunch",
-    initials: "TB",
-    color: "bg-emerald-700",
-  },
-]
-
-const trustStats = [
-  { value: "6+", label: "Kunder hjulpet" },
-  { value: "100%", label: "Gennemsigtig pris" },
-  { value: "24h", label: "Svartid" },
-  { value: "0", label: "Bindingsaftaler" },
+const statValues = [
+  { value: 6, suffix: "+" },
+  { value: 100, suffix: "%" },
+  { value: 24, suffix: "h" },
+  { value: 0, suffix: "" },
 ]
 
 export default function TrustSignals() {
-  const { theme } = useTheme()
-  const isDark = theme === "dark"
+  const t = useT()
+  const trustStats = statValues.map((v, i) => ({ ...v, label: t.trustSignals.stats[i].label }))
 
   return (
-    <section className="relative pt-32 pb-12 px-6 overflow-hidden">
-
-      {/* subtle green glow (dark only) */}
-      {isDark && (
-        <>
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent, rgba(16,185,129,0.25), transparent)",
-            }}
-          />
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse at top, rgba(16,185,129,0.10) 0%, transparent 70%)",
-            }}
-          />
-        </>
-      )}
-
-      <div className="relative z-10 max-w-6xl mx-auto">
+    <section className="relative py-28 lg:py-36 px-6">
+      <div className="max-w-page mx-auto">
 
         {/* Header */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          exit="exit"
           viewport={viewport}
-          className="text-center mb-12"
+          className="max-w-2xl mb-16"
         >
-          <span
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-                       border border-emerald-500/20 bg-emerald-500/10
-                       text-emerald-600 text-xs font-medium mb-4"
-          >
-            <span className="w-1 h-1 rounded-full bg-emerald-500" />
-            Hvad kunder siger
+          <span className="text-xs uppercase tracking-widest font-semibold" style={{ color: "var(--text-muted)" }}>
+            {t.trustSignals.eyebrow}
           </span>
 
           <h2
-            className="text-4xl md:text-5xl font-bold"
+            className="font-display font-medium tracking-tightest text-4xl md:text-5xl mt-5"
             style={{ color: "var(--text-primary)" }}
           >
-            Ægte feedback. Ingen fyld.
+            {t.trustSignals.heading}
           </h2>
         </motion.div>
 
-        {/* Cards */}
+        {/* Testimonials */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          className="grid grid-cols-1 lg:grid-cols-3 gap-px mb-16"
+          style={{ background: "var(--border)" }}
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          exit="exit"
           viewport={viewport}
         >
-          {testimonials.map((t) => (
-            <motion.div
-              key={t.author}
-              variants={fadeUp}
-              whileHover={{ scale: 1.02, y: -4 }}
-              className="shimmer relative p-6 rounded-2xl"
-              style={
-                isDark
-                  ? {
-                      background:
-                        "linear-gradient(160deg, #0a0f0c 0%, rgba(16,185,129,0.14) 100%)",
-                      border: "1px solid rgba(16,185,129,0.18)",
-                    }
-                  : {
-                      background:
-                        "linear-gradient(160deg, #ffffff 0%, #ecfdf5 100%)",
-                      border: "1px solid rgba(16,185,129,0.18)",
-                      boxShadow: "0 12px 32px rgba(16,185,129,0.06)",
-                    }
-              }
-            >
-              <span
-                className="text-4xl font-serif absolute top-4 right-5"
-                style={{ color: "var(--text-primary)", opacity: 0.05 }}
-              >
-                &quot;
-              </span>
-
-              <p
-                className="text-sm leading-relaxed mb-6 relative z-10"
-                style={{ color: "var(--text-secondary)" }}
-              >
-                &quot;{t.quote}&quot;
+          {t.trustSignals.testimonials.map((tm) => (
+            <motion.div key={tm.author} variants={fadeUp} className="p-7 flex flex-col justify-between gap-6" style={{ background: "var(--bg)" }}>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                &quot;{tm.quote}&quot;
               </p>
 
               <div className="flex items-center gap-3">
-                <div
-                  className={`w-9 h-9 rounded-full ${t.color} flex items-center justify-center shrink-0`}
-                >
-                  <span className="text-white text-xs font-bold">
-                    {t.initials}
+                <div className="w-9 h-9 flex items-center justify-center shrink-0" style={{ background: "var(--accent)" }}>
+                  <span className="text-xs font-bold" style={{ color: "var(--bg)" }}>
+                    {tm.author.split(" ").map((w) => w[0]).join("")}
                   </span>
                 </div>
 
                 <div>
-                  <p
-                    className="text-sm font-medium"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    {t.author}
+                  <p className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
+                    {tm.author}
                   </p>
                   <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                    {t.role}
+                    {tm.role}
                   </p>
                 </div>
               </div>
@@ -165,43 +78,19 @@ export default function TrustSignals() {
 
         {/* Trust stats */}
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12"
+          className="grid grid-cols-2 md:grid-cols-4 gap-px mb-16"
+          style={{ background: "var(--border)" }}
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          exit="exit"
           viewport={viewport}
         >
           {trustStats.map((stat) => (
-            <motion.div
-              key={stat.label}
-              variants={fadeUp}
-              whileHover={{ scale: 1.04, y: -3 }}
-              className="rounded-2xl p-6 text-center"
-              style={
-                isDark
-                  ? {
-                      background:
-                        "linear-gradient(160deg, #0a0f0c 0%, rgba(16,185,129,0.10) 100%)",
-                      border: "1px solid rgba(16,185,129,0.15)",
-                    }
-                  : {
-                      background:
-                        "linear-gradient(160deg, #ffffff 0%, #ecfdf5 100%)",
-                      border: "1px solid rgba(16,185,129,0.16)",
-                    }
-              }
-            >
-              <p
-                className="text-3xl font-bold mb-1 tracking-tight"
-                style={{ color: "var(--text-primary)" }}
-              >
-                {stat.value}
+            <motion.div key={stat.label} variants={fadeUp} className="p-6 text-center" style={{ background: "var(--bg)" }}>
+              <p className="tabular text-3xl font-semibold mb-1 tracking-tight" style={{ color: "var(--text-primary)" }}>
+                <CountUp value={stat.value} suffix={stat.suffix} />
               </p>
-              <p
-                className="text-xs uppercase tracking-widest font-semibold"
-                style={{ color: "var(--text-muted)", opacity: isDark ? 1 : 0.6 }}
-              >
+              <p className="text-xs uppercase tracking-widest font-semibold" style={{ color: "var(--text-muted)" }}>
                 {stat.label}
               </p>
             </motion.div>
@@ -213,21 +102,19 @@ export default function TrustSignals() {
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          exit="exit"
           viewport={viewport}
-          className="text-center mt-16"
+          className="text-center"
         >
           <p className="text-sm mb-6" style={{ color: "var(--text-muted)" }}>
-            Klar til at vækste din virksomhed?
+            {t.trustSignals.ctaText}
           </p>
 
           <Link
             href="/contact"
-            className="shimmer inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-400
-                       hover:from-emerald-400 hover:to-teal-300 text-black font-semibold rounded-xl
-                       transition-colors duration-200"
+            className="inline-flex items-center gap-2 px-8 py-4 font-semibold transition-all duration-200 hover:opacity-85 hover:scale-[1.02] active:scale-[0.97]"
+            style={{ background: "var(--accent)", color: "var(--bg)" }}
           >
-            Kom i gang gratis →
+            {t.trustSignals.ctaButton}
           </Link>
         </motion.div>
 

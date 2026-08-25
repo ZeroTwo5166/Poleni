@@ -1,96 +1,61 @@
-import Link from "next/link"
+"use client"
 
-const quickLinks = [
-  { label: "Services", href: "/services" },
-  { label: "Prisberegner", href: "/calculator" },
-  { label: "Om os", href: "/about" },
-  { label: "Privatlivspolitik", href: "/privatliv" },
-  { label: "Handelsbetingelser", href: "/handelsbetingelser" },
-]
+import Link from "next/link"
+import { LinkedinLogo, InstagramLogo, FacebookLogo } from "@phosphor-icons/react/dist/ssr"
+import { useT } from "@/lib/i18n/useT"
 
 const socials = [
-  {
-    label: "LinkedIn",
-    href: "#",
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" />
-        <circle cx="4" cy="4" r="2" />
-      </svg>
-    ),
-  },
-  {
-    label: "Instagram",
-    href: "#",
-    icon: (
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-        <circle cx="12" cy="12" r="4" />
-        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-      </svg>
-    ),
-  },
-  {
-    label: "Facebook",
-    href: "#",
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-      </svg>
-    ),
-  },
+  { label: "LinkedIn", href: "#", icon: LinkedinLogo },
+  { label: "Instagram", href: "#", icon: InstagramLogo },
+  { label: "Facebook", href: "#", icon: FacebookLogo },
 ]
 
 export default function Footer() {
+  const t = useT()
+
+  const quickLinks = [
+    { label: t.footer.quickLinks.services, href: "/services" },
+    { label: t.footer.quickLinks.calculator, href: "/calculator" },
+    { label: t.footer.quickLinks.about, href: "/about" },
+    { label: t.footer.quickLinks.privacy, href: "/privatliv" },
+    { label: t.footer.quickLinks.terms, href: "/handelsbetingelser" },
+  ]
+
   return (
     <>
       <style>{`
         .footer-link { color: var(--text-muted); transition: color 0.2s; }
         .footer-link:hover { color: var(--text-primary); }
         .footer-social { color: var(--text-muted); border: 1px solid var(--border); transition: color 0.2s, border-color 0.2s; }
-        .footer-social:hover { color: var(--text-primary); border-color: var(--border-hover); }
+        .footer-social:hover { color: var(--text-primary); border-color: var(--border-strong); }
       `}</style>
 
       <footer
-        className="mt-24 border-t"
-        style={{ background: "transparent", borderColor: "var(--border)" }}
+        className="mt-32 rule-top"
+        style={{ background: "transparent" }}
       >
-        <div className="max-w-6xl mx-auto px-6 py-16">
+        <div className="max-w-page mx-auto px-6 py-16">
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1fr] gap-12">
 
             {/* Brand col */}
             <div className="flex flex-col gap-4">
-              <Link href="/" className="flex items-center gap-2 w-fit">
-                <div className="w-7 h-7 rounded-lg bg-indigo-500 flex items-center justify-center">
-                  <span className="text-white text-xs font-bold">P</span>
-                </div>
-                <span
-                  className="text-sm font-semibold"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  Poleni
-                </span>
+              <Link
+                href="/"
+                className="font-display font-medium text-xl tracking-tightest w-fit"
+                style={{ color: "var(--text-primary)" }}
+              >
+                Poleni
               </Link>
 
               <p
                 className="text-sm leading-relaxed max-w-xs"
                 style={{ color: "var(--text-muted)" }}
               >
-                Gennemsigtig prissætning. Ingen bindinger. En klar plan og et
-                team der leverer resultater.
+                {t.footer.tagline}
               </p>
 
-              <div className="flex items-center gap-3 mt-2">
+              <div className="flex items-center gap-2 mt-2">
                 {socials.map((s) => (
                   <a
                     key={s.label}
@@ -98,9 +63,9 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={s.label}
-                    className="footer-social w-8 h-8 rounded-lg flex items-center justify-center"
+                    className="footer-social w-9 h-9 flex items-center justify-center"
                   >
-                    {s.icon}
+                    <s.icon size={16} weight="light" />
                   </a>
                 ))}
               </div>
@@ -109,13 +74,13 @@ export default function Footer() {
             {/* Quick links col */}
             <div className="flex flex-col gap-4">
               <p
-                className="text-sm font-medium"
-                style={{ color: "var(--text-primary)" }}
+                className="text-xs uppercase tracking-widest font-semibold"
+                style={{ color: "var(--text-muted)" }}
               >
-                Hurtige links
+                {t.footer.quickLinksHeading}
               </p>
 
-              <nav className="flex flex-col gap-2">
+              <nav className="flex flex-col gap-3">
                 {quickLinks.map((link) => (
                   <Link
                     key={link.href}
@@ -131,13 +96,13 @@ export default function Footer() {
             {/* Contact col */}
             <div className="flex flex-col gap-4">
               <p
-                className="text-sm font-medium"
-                style={{ color: "var(--text-primary)" }}
+                className="text-xs uppercase tracking-widest font-semibold"
+                style={{ color: "var(--text-muted)" }}
               >
-                Kontakt
+                {t.footer.contactHeading}
               </p>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-3">
                 <a
                   href="mailto:kontakt@poleni.dk"
                   className="footer-link text-sm w-fit"
@@ -153,15 +118,14 @@ export default function Footer() {
               </div>
 
               <div
-                className="mt-4 inline-flex items-center gap-2 px-3 py-2 rounded-lg w-fit"
+                className="mt-4 inline-flex items-center gap-2 px-3 py-2 w-fit"
                 style={{
                   border: "1px solid var(--border)",
-                  background: "var(--bg-card)",
                 }}
               >
-                <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                <div className="w-1.5 h-1.5 rounded-full animate-soft-pulse" style={{ background: "var(--accent)" }} />
                 <span className="text-xs" style={{ color: "var(--text-muted)" }}>
-                  Ingen binding
+                  {t.footer.noLockIn}
                 </span>
               </div>
             </div>
@@ -170,11 +134,10 @@ export default function Footer() {
 
           {/* Bottom bar */}
           <div
-            className="mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 border-t"
-            style={{ borderColor: "var(--border)" }}
+            className="mt-16 pt-8 rule-top flex flex-col md:flex-row items-center justify-between gap-4"
           >
             <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-              © {new Date().getFullYear()} Poleni. Alle rettigheder forbeholdes.
+              © {new Date().getFullYear()} Poleni. {t.footer.rights}
             </p>
 
             <p className="text-xs" style={{ color: "var(--text-muted)" }}>

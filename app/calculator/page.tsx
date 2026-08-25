@@ -4,57 +4,28 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { useTheme } from "@/components/shared/themeProvider"
+import { Monitor, FileText, ShoppingCart, Lightning, Check, Plus } from "@phosphor-icons/react"
 import {
   WEBSITE_TYPES,
   ADDONS,
-  GROWTH_MESSAGES,
   type WebsiteTypeId,
   type AddonId,
 } from "@/lib/pricing"
 import DeviceMockup from "@/components/home/deviceMockup"
+import { useT } from "@/lib/i18n/useT"
 
-const faqs = [
-  {
-    q: "Er annoncebudgettet inkluderet i prisen?",
-    a: "Nej. Den månedlige pris dækker kun vores management-honorar. Dit annoncebudget (hvad du bruger på Google eller Meta) er separat og går direkte til platformen.",
-  },
-  {
-    q: "Kan jeg sætte på pause eller opsige når som helst?",
-    a: "Ja. Alle marketingydelser er måned-til-måned. Ingen bindingsperiode. Sæt på pause eller opsig med 30 dages varsel.",
-  },
-  {
-    q: "Er hjemmesideprisen virkelig en engangsbetaling?",
-    a: "Ja. Du betaler én gang og ejer den for evigt. Ingen månedlige platformsgebyrer, ingen skjulte opkrævninger. Hosting er ekstra, men vi hjælper dig med at sætte det op billigt.",
-  },
-  {
-    q: "Hvor præcist er dette estimat?",
-    a: "Meget præcist for standardprojekter. Tilpassede projekter kan variere. Book en gratis konsultation, så giver vi dig et nøjagtigt tilbud.",
-  },
-]
-
-const colors = [
-  "from-gray-600 to-gray-500",
-  "from-blue-600 to-blue-400",
-  "from-indigo-600 to-purple-400",
-  "from-indigo-500 via-purple-500 to-pink-400",
-]
-
-const included = [
-  "Fast pris — ingen overraskende fakturaer",
-  "Du ejer hjemmesiden for evigt",
-  "Ingen binding på marketingydelser",
-  "Månedlige rapporter på alle ydelser",
-  "Direkte adgang til dit team",
-  "Svar inden for 24 timer",
-]
+const TYPE_ICONS: Record<WebsiteTypeId, typeof Monitor> = {
+  static: Monitor,
+  dynamic: FileText,
+  ecommerce: ShoppingCart,
+  custom: Lightning,
+}
 
 export default function CalculatorPage() {
+  const t = useT()
   const [websiteType, setWebsiteType] = useState<WebsiteTypeId | null>(null)
   const [activeAddons, setActiveAddons] = useState<Set<AddonId>>(new Set())
   const [openFaq, setOpenFaq]           = useState<number | null>(null)
-  const { theme }                       = useTheme()
-  const isDark                          = theme === "dark"
 
   const selectedSite = WEBSITE_TYPES.find((t) => t.id === websiteType) ?? null
   const monthlyTotal  = ADDONS
@@ -62,8 +33,7 @@ export default function CalculatorPage() {
     .reduce((sum, a) => sum + a.price, 0)
   const growthCount   = activeAddons.size
   const growthPct     = Math.round((growthCount / 3) * 100)
-  const growthMessage = GROWTH_MESSAGES[growthCount]
-  const gradientClass = colors[Math.round((growthPct / 100) * 3)]
+  const growthMessage = t.pricing.growthMessages[growthCount as 0 | 1 | 2 | 3]
 
   function toggleAddon(id: AddonId) {
     setActiveAddons((prev) => {
@@ -73,49 +43,28 @@ export default function CalculatorPage() {
     })
   }
 
-  const inactiveCard = isDark ? {
-    borderColor: "rgba(255,255,255,0.15)",
-    backgroundColor: "rgba(255,255,255,0.08)",
-  } : {
-    borderColor: "rgba(99,102,241,0.18)",
-    backgroundColor: "rgba(255,255,255,0.6)",
-  }
-
-  const inactiveAddon = isDark ? {
-    borderColor: "rgba(255,255,255,0.15)",
-    backgroundColor: "rgba(255,255,255,0.08)",
-  } : {
-    borderColor: "rgba(99,102,241,0.18)",
-    backgroundColor: "rgba(255,255,255,0.6)",
-  }
-
   return (
     <main className="min-h-screen pt-32 pb-24 px-6">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-page mx-auto">
 
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="max-w-2xl mb-16"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-                           border border-indigo-500/20 bg-indigo-500/5
-                           text-indigo-400 text-xs font-medium mb-6">
-            <span className="w-1 h-1 rounded-full bg-indigo-400" />
-            Vækstberegner
+          <span className="text-xs uppercase tracking-widest font-semibold" style={{ color: "var(--text-muted)" }}>
+            {t.calculatorPage.eyebrow}
           </span>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight"
+          <h1 className="font-display font-medium tracking-tightest leading-[1.05] text-5xl md:text-6xl mt-5"
             style={{ color: "var(--text-primary)" }}>
-            Hvad koster det
+            {t.calculatorPage.headline1}
             <br />
-            <span className="gradient-text">at vækste din virksomhed?</span>
+            <span style={{ color: "var(--accent)" }}>{t.calculatorPage.headlineAccent}</span>
           </h1>
-          <p className="text-lg max-w-2xl mx-auto leading-relaxed"
-            style={{ color: "var(--text-secondary)" }}>
-            Sammensæt din pakke og se den præcise pris med det samme.
-            Ingen skjulte gebyrer. Ingen overraskelser. Ingen salgstelefonopkald.
+          <p className="text-lg mt-6 leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+            {t.calculatorPage.subtext}
           </p>
         </motion.div>
 
@@ -130,133 +79,112 @@ export default function CalculatorPage() {
             className="flex flex-col gap-6"
           >
             {/* Website type */}
-            <div className="glass rounded-2xl p-6">
+            <div className="panel p-6">
               <p className="text-sm font-medium mb-1" style={{ color: "var(--text-primary)" }}>
-                1. Vælg din hjemmesidetype
+                {t.calculatorPage.step1Title}
               </p>
               <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>
-                Fast engangspris — du ejer den for evigt
+                {t.calculatorPage.step1Sub}
               </p>
               <div className="grid grid-cols-2 gap-3">
-                {WEBSITE_TYPES.map((type) => (
-                  <motion.button
-                    key={type.id}
-                    onClick={() =>
-  setWebsiteType((prev) => (prev === type.id ? null : type.id))
-}
-                    whileHover={{ scale: 1.03, y: -2 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="relative p-4 rounded-xl border text-left transition-colors duration-200"
-                    style={websiteType === type.id ? {
-                      borderColor: "rgba(99,102,241,0.6)",
-                      backgroundColor: "rgba(99,102,241,0.12)",
-                      boxShadow: "0 0 0 1px rgba(99,102,241,0.2)",
-                    } : inactiveCard}
-                  >
-                    {websiteType === type.id && (
-                      <motion.div
-                        layoutId="calc-page-site-bg"
-                        className="absolute inset-0 rounded-xl bg-indigo-500/5"
-                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      />
-                    )}
-                    <span className="relative z-10 flex flex-col gap-1">
-                      <span className="text-xl">{type.icon}</span>
-                      <span className="text-sm font-medium" style={{
-                        color: websiteType === type.id ? "#818cf8" : "var(--text-primary)",
-                      }}>
-                        {type.label}
+                {WEBSITE_TYPES.map((type) => {
+                  const isActive = websiteType === type.id
+                  const Icon = TYPE_ICONS[type.id]
+                  const copy = t.pricing.websiteTypes[type.id]
+                  return (
+                    <button
+                      key={type.id}
+                      onClick={() => setWebsiteType((prev) => (prev === type.id ? null : type.id))}
+                      className="relative p-4 border text-left transition-colors duration-150"
+                      style={{
+                        borderColor: isActive ? "var(--accent-line)" : "var(--border)",
+                        background: isActive ? "var(--accent-soft)" : "transparent",
+                      }}
+                    >
+                      <span className="relative z-10 flex flex-col gap-2">
+                        <Icon size={18} weight="light" style={{ color: isActive ? "var(--accent)" : "var(--text-muted)" }} />
+                        <span className="text-sm font-medium" style={{
+                          color: isActive ? "var(--accent)" : "var(--text-primary)",
+                        }}>
+                          {copy.label}
+                        </span>
+                        <span className="text-xs" style={{ color: "var(--text-muted)" }}>
+                          {copy.desc}
+                        </span>
+                        <span className="tabular text-sm font-semibold mt-1" style={{
+                          color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
+                        }}>
+                          {type.price ? `${type.price.toLocaleString("da-DK")} kr` : t.calculator.contactUs}
+                        </span>
                       </span>
-                      <span className="text-xs" style={{ color: "var(--text-muted)" }}>
-                        {type.desc}
-                      </span>
-                      <span className="text-sm font-bold mt-1" style={{
-                        color: websiteType === type.id ? "var(--text-primary)" : "var(--text-secondary)",
-                      }}>
-                        {type.price ? `${type.price.toLocaleString("da-DK")} kr` : "Kontakt os"}
-                      </span>
-                    </span>
-                  </motion.button>
-                ))}
+                    </button>
+                  )
+                })}
               </div>
             </div>
 
             {/* Addons */}
-            <div className="glass rounded-2xl p-6">
+            <div className="panel p-6">
               <p className="text-sm font-medium mb-1" style={{ color: "var(--text-primary)" }}>
-                2. Tilføj marketingydelser
+                {t.calculatorPage.step2Title}
               </p>
               <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>
-                Måned-til-måned — opsig når som helst
+                {t.calculatorPage.step2Sub}
               </p>
               <div className="flex flex-col gap-3">
                 {ADDONS.map((addon) => {
                   const isActive = activeAddons.has(addon.id)
+                  const copy = t.pricing.addons[addon.id]
                   return (
-                    <motion.button
+                    <button
                       key={addon.id}
                       onClick={() => toggleAddon(addon.id)}
-                      whileHover={{ scale: 1.02, x: 2 }}
-                      whileTap={{ scale: 0.98 }}
-                      className={`flex items-center justify-between p-4 rounded-xl border
-                        transition-colors duration-200 text-left
-                        ${isActive ? addon.active : ""}`}
-                      style={!isActive ? inactiveAddon : undefined}
+                      className="flex items-center justify-between p-4 border transition-colors duration-150 text-left"
+                      style={{
+                        borderColor: isActive ? "var(--accent-line)" : "var(--border)",
+                        background: isActive ? "var(--accent-soft)" : "transparent",
+                      }}
                     >
                       <div className="flex items-center gap-3">
                         <div
-                          className="w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200 shrink-0"
-                          style={isActive ? {
-                            borderColor: "currentColor",
-                            backgroundColor: "currentColor",
-                          } : isDark ? {
-                            borderColor: "rgba(255,255,255,0.4)",
-                          } : {
-                            borderColor: "rgba(0,0,0,0.3)",
+                          className="w-5 h-5 border flex items-center justify-center shrink-0"
+                          style={{
+                            borderColor: isActive ? "var(--accent)" : "var(--border-strong)",
+                            backgroundColor: isActive ? "var(--accent)" : "transparent",
                           }}
                         >
-                          {isActive && (
-                            <motion.svg initial={{ scale: 0 }} animate={{ scale: 1 }}
-                              width="10" height="10" viewBox="0 0 10 10">
-                              <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5"
-                                strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                            </motion.svg>
-                          )}
+                          {isActive && <Check size={12} weight="bold" style={{ color: "var(--bg)" }} />}
                         </div>
                         <div>
                           <p className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
-                            {addon.label}
+                            {copy.label}
                           </p>
-                          <p className="text-xs" style={{ color: "var(--text-muted)" }}>{addon.desc}</p>
+                          <p className="text-xs" style={{ color: "var(--text-muted)" }}>{copy.desc}</p>
                         </div>
                       </div>
-                      <span className="text-sm font-semibold shrink-0 ml-4"
-                        style={{ color: "var(--text-secondary)" }}>
-                        {addon.price.toLocaleString("da-DK")} kr/md
+                      <span className="tabular text-sm font-semibold shrink-0 ml-4" style={{ color: "var(--text-secondary)" }}>
+                        {addon.price.toLocaleString("da-DK")} {t.pricing.perMonth}
                       </span>
-                    </motion.button>
+                    </button>
                   )
                 })}
               </div>
             </div>
 
             {/* Growth meter */}
-            <div className="glass rounded-2xl p-6">
+            <div className="panel p-6">
               <div className="flex items-center justify-between mb-3">
-                <p className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
-                  Vækstpotentiale
-                </p>
-                <motion.span key={growthPct} initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }} className="text-2xl font-bold"
+                <p className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>{t.calculator.growthPotential}</p>
+                <motion.span key={growthPct} initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }} className="tabular text-2xl font-semibold"
                   style={{ color: "var(--text-primary)" }}>
                   {growthPct}%
                 </motion.span>
               </div>
-              <div className="h-2.5 rounded-full overflow-hidden mb-3" style={{
-                background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)",
-              }}>
+              <div className="h-1.5 overflow-hidden mb-3" style={{ background: "var(--border)" }}>
                 <motion.div
-                  className={`h-full rounded-full bg-gradient-to-r ${gradientClass}`}
+                  className="h-full"
+                  style={{ background: "var(--accent)" }}
                   initial={{ width: 0 }}
                   animate={{ width: `${growthPct}%` }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
@@ -273,20 +201,14 @@ export default function CalculatorPage() {
             </div>
 
             {/* Everything included */}
-            <div className="glass rounded-2xl p-6">
+            <div className="panel p-6">
               <p className="text-sm font-medium mb-4" style={{ color: "var(--text-primary)" }}>
-                Alt er inkluderet
+                {t.calculatorPage.includedTitle}
               </p>
-              <div className="grid grid-cols-1 gap-2">
-                {included.map((item) => (
-                  <div key={item} className="flex items-center gap-3 py-1">
-                    <div className="w-5 h-5 rounded-full bg-indigo-500/15 border border-indigo-500/30
-                                    flex items-center justify-center shrink-0">
-                      <svg width="10" height="10" viewBox="0 0 10 10">
-                        <path d="M2 5l2.5 2.5L8 3" stroke="#6366f1" strokeWidth="1.5"
-                          strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                      </svg>
-                    </div>
+              <div className="grid grid-cols-1 gap-2.5">
+                {t.calculatorPage.included.map((item) => (
+                  <div key={item} className="flex items-center gap-3">
+                    <Check size={14} weight="bold" style={{ color: "var(--accent)" }} className="shrink-0" />
                     <span className="text-sm" style={{ color: "var(--text-secondary)" }}>{item}</span>
                   </div>
                 ))}
@@ -301,72 +223,71 @@ export default function CalculatorPage() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="flex flex-col gap-6 lg:sticky lg:top-28"
           >
-            {/* Price summary */}
-            <div className="glass rounded-2xl p-6">
-              <p className="text-xs uppercase tracking-widest mb-6" style={{ color: "var(--text-muted)" }}>
-                Dit estimat
+            <div className="panel p-6">
+              <p className="text-xs uppercase tracking-widest font-semibold mb-6" style={{ color: "var(--text-muted)" }}>
+                {t.calculatorPage.estimateLabel}
               </p>
 
-              <div className="flex items-start justify-between mb-4 pb-4"
-                style={{ borderBottom: "1px solid var(--border)" }}>
+              <div className="flex items-start justify-between mb-4 pb-4 rule-bottom">
                 <div>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>Hjemmeside (engangsbetaling)</p>
+                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{t.calculatorPage.websiteOnce}</p>
                   <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
-  {selectedSite?.label ?? "Ingen hjemmeside valgt"}
-</p>
+                    {selectedSite ? t.pricing.websiteTypes[selectedSite.id].label : t.calculatorPage.noWebsiteSelected}
+                  </p>
                 </div>
                 <AnimatePresence mode="wait">
                   <motion.p key={websiteType} initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
-                    className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>
+                    className="tabular text-2xl font-semibold" style={{ color: "var(--text-primary)" }}>
                     {selectedSite
-  ? selectedSite.price
-    ? `${selectedSite.price.toLocaleString("da-DK")} kr`
-    : "Kontakt os"
-  : "0 kr"}
+                      ? selectedSite.price
+                        ? `${selectedSite.price.toLocaleString("da-DK")} kr`
+                        : t.calculator.contactUs
+                      : "0 kr"}
                   </motion.p>
                 </AnimatePresence>
               </div>
 
               <div className="flex items-start justify-between mb-6">
                 <div>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>Månedlig markedsføring</p>
+                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{t.calculatorPage.monthlyMarketing}</p>
                   <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
                     {activeAddons.size === 0
-                      ? "Ingen ydelser valgt"
-                      : [...activeAddons].map((id) => ADDONS.find((a) => a.id === id)?.label).join(" + ")}
+                      ? t.calculatorPage.noServicesSelected
+                      : [...activeAddons].map((id) => t.pricing.addons[id]?.label).join(" + ")}
                   </p>
                 </div>
                 <AnimatePresence mode="wait">
                   <motion.p key={monthlyTotal} initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
-                    className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>
-                    {monthlyTotal > 0 ? `${monthlyTotal.toLocaleString("da-DK")} kr/md` : "0 kr/md"}
+                    className="tabular text-2xl font-semibold" style={{ color: "var(--text-primary)" }}>
+                    {monthlyTotal > 0 ? `${monthlyTotal.toLocaleString("da-DK")} ${t.pricing.perMonth}` : `0 ${t.pricing.perMonth}`}
                   </motion.p>
                 </AnimatePresence>
               </div>
 
               {(selectedSite?.price || monthlyTotal > 0) && (
-                <div className="flex items-center justify-between mb-6 px-4 py-3
-                               rounded-xl bg-indigo-500/5 border border-indigo-500/20">
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>Første år i alt</p>
-                  <p className="text-indigo-400 font-bold">
+                <div
+                  className="flex items-center justify-between mb-6 px-4 py-3"
+                  style={{ background: "var(--accent-soft)", border: "1px solid var(--accent-line)" }}
+                >
+                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{t.calculatorPage.firstYearTotal}</p>
+                  <p className="tabular font-semibold" style={{ color: "var(--accent)" }}>
                     {((selectedSite?.price ?? 0) + monthlyTotal * 12).toLocaleString("da-DK")} kr
                   </p>
                 </div>
               )}
 
               <Link href="/contact"
-                className="shimmer block w-full py-3.5 text-center bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400
-                           text-white font-semibold rounded-xl transition-colors duration-200 mb-3">
-                Få et præcist tilbud →
+                className="block w-full py-3.5 text-center font-semibold transition-opacity duration-200 hover:opacity-85 mb-3"
+                style={{ background: "var(--accent)", color: "var(--bg)" }}>
+                {t.calculatorPage.getQuote}
               </Link>
               <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
-                Priserne er estimater. Annoncebudget er separat og går direkte til Google / Meta.
+                {t.calculatorPage.priceNote}
               </p>
             </div>
 
-            {/* Phone mockup */}
             <DeviceMockup websiteType={websiteType} activeAddons={activeAddons} />
           </motion.div>
         </div>
@@ -379,24 +300,22 @@ export default function CalculatorPage() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto"
         >
-          <h2 className="text-3xl font-bold text-center mb-8" style={{ color: "var(--text-primary)" }}>
-            Ofte stillede spørgsmål
+          <h2 className="font-display font-medium tracking-tightest text-3xl text-center mb-8" style={{ color: "var(--text-primary)" }}>
+            {t.calculatorPage.faqHeading}
           </h2>
 
-          <div className="flex flex-col gap-3">
-            {faqs.map((faq, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                className="glass rounded-2xl overflow-hidden">
+          <div className="panel">
+            {t.calculatorPage.faqs.map((faq, i) => (
+              <div key={faq.q} className={i !== 0 ? "rule-top" : ""}>
                 <button onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="w-full flex items-center justify-between px-6 py-5 text-left">
                   <span className="text-sm font-medium pr-4" style={{ color: "var(--text-primary)" }}>
                     {faq.q}
                   </span>
                   <motion.span animate={{ rotate: openFaq === i ? 45 : 0 }}
-                    transition={{ duration: 0.2 }} className="text-xl shrink-0"
+                    transition={{ duration: 0.2 }} className="shrink-0"
                     style={{ color: "var(--text-muted)" }}>
-                    +
+                    <Plus size={16} weight="bold" />
                   </motion.span>
                 </button>
                 <AnimatePresence>
@@ -404,26 +323,26 @@ export default function CalculatorPage() {
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25, ease: "easeInOut" }}
                       className="overflow-hidden">
-                      <p className="px-6 pb-5 text-sm leading-relaxed pt-4"
-                        style={{ color: "var(--text-secondary)", borderTop: "1px solid var(--border)" }}>
+                      <p className="px-6 pb-5 text-sm leading-relaxed pt-4 rule-top"
+                        style={{ color: "var(--text-secondary)" }}>
                         {faq.a}
                       </p>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.div>
+              </div>
             ))}
           </div>
 
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center mt-16">
             <p className="text-sm mb-6" style={{ color: "var(--text-muted)" }}>
-              Stadig i tvivl? Book et gratis opkald — ingen pres, ingen salgstale.
+              {t.calculatorPage.stillUnsure}
             </p>
             <Link href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-500
-                         hover:bg-indigo-400 text-white font-semibold rounded-xl transition-colors duration-200">
-              Book gratis konsultation →
+              className="inline-flex items-center gap-2 px-8 py-4 font-semibold transition-opacity duration-200 hover:opacity-85"
+              style={{ background: "var(--accent)", color: "var(--bg)" }}>
+              {t.calculatorPage.bookFree}
             </Link>
           </motion.div>
         </motion.div>

@@ -3,169 +3,40 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { useTheme } from "@/components/shared/themeProvider"
-
-const websites = [
-  {
-    name:     "Statisk hjemmeside",
-    desc:     "Perfekt til mindre virksomheder der har brug for en hurtig og professionel online tilstedeværelse.",
-    price:    "4.000 kr",
-    type:     "engangsbetaling",
-    delivery: "3–5 dage",
-    color:    "border-indigo-500 bg-indigo-500/5",
-    dot:      "bg-indigo-400",
-    tag:      "text-indigo-400 border-indigo-500 bg-indigo-500/5",
-    includes: [
-      "3–5 sider",
-      "Kontaktformular",
-      "Grundlæggende SEO",
-      "Mobilvenlig",
-      "Hurtig indlæsning",
-    ],
-  },
-  {
-    name:     "Dynamisk / CMS hjemmeside",
-    desc:     "Til virksomheder der selv vil opdatere indhold — blog, nyheder, produkter.",
-    price:    "10.000 kr",
-    type:     "engangsbetaling",
-    delivery: "10–14 dage",
-    color:    "border-purple-500 bg-purple-500/5",
-    dot:      "bg-purple-400",
-    tag:      "text-purple-400 border-purple-500 bg-purple-500/5",
-    popular:  true,
-    includes: [
-      "5–10 sider",
-      "Blog / nyhedssektion",
-      "Redigerbart CMS",
-      "Kontaktformularer",
-      "SEO-optimeret",
-      "Mobilvenlig",
-    ],
-  },
-  {
-    name:     "Webshop",
-    desc:     "Komplet webshop med produktkatalog, indkøbskurv, checkout og betalingsintegration.",
-    price:    "18.000 kr",
-    type:     "engangsbetaling",
-    delivery: "14–21 dage",
-    color:    "border-pink-500 bg-pink-500/5",
-    dot:      "bg-pink-400",
-    tag:      "text-pink-400 border-pink-500 bg-pink-500/5",
-    includes: [
-      "Produktkatalog",
-      "Indkøbskurv",
-      "Checkout-flow",
-      "Betalingsintegration",
-      "Ordrehåndtering",
-      "Mobilvenlig",
-    ],
-  },
-]
-
-const marketing = [
-  {
-    name:     "Google Ads",
-    desc:     "Bliv synlig for folk der aktivt søger efter dit produkt eller din ydelse.",
-    price:    "2.500 kr",
-    type:     "pr. måned",
-    delivery: "Løbende",
-    color:    "border-blue-500 bg-blue-500/5",
-    dot:      "bg-blue-400",
-    tag:      "text-blue-400 border-blue-500 bg-blue-500/5",
-    includes: [
-      "Kampagneopsætning",
-      "Daglig styring",
-      "A/B-test af annoncer",
-      "Månedlig rapport",
-      "Ingen bindingsperiode",
-    ],
-  },
-  {
-    name:     "Meta Ads",
-    desc:     "Nå dine ideelle kunder på Facebook og Instagram med målrettede annoncer.",
-    price:    "2.000 kr",
-    type:     "pr. måned",
-    delivery: "Løbende",
-    color:    "border-pink-500 bg-pink-500/5",
-    dot:      "bg-pink-400",
-    tag:      "text-pink-400 border-pink-500 bg-pink-500/5",
-    includes: [
-      "Annoncekreativer",
-      "Målgruppeopsætning",
-      "Retargeting-opsætning",
-      "Månedlig rapport",
-      "Ingen bindingsperiode",
-    ],
-  },
-  {
-    name:     "SEO",
-    desc:     "Rangér højere på Google og få mere organisk trafik hver måned.",
-    price:    "3.500 kr",
-    type:     "pr. måned",
-    delivery: "Løbende",
-    color:    "border-green-500 bg-green-500/5",
-    dot:      "bg-green-400",
-    tag:      "text-green-400 border-green-500 bg-green-500/5",
-    includes: [
-      "Søgeordsanalyse",
-      "On-page SEO",
-      "Teknisk SEO-gennemgang",
-      "Månedlig rapport",
-      "Ingen bindingsperiode",
-    ],
-  },
-]
+import { Sparkle, Check } from "@phosphor-icons/react"
+import { useT } from "@/lib/i18n/useT"
 
 type Tab = "websites" | "marketing"
 
 export default function ServicesPage() {
-  const [tab, setTab]     = useState<Tab>("websites")
-  const { theme }         = useTheme()
-  const isDark            = theme === "dark"
+  const t = useT()
+  const [tab, setTab] = useState<Tab>("websites")
+  const list = tab === "websites" ? t.services.websites : t.services.marketing
 
   return (
-    <main className="relative min-h-screen pt-32 pb-24 px-6 overflow-hidden">
-      {!isDark && (
-        <div
-          className="absolute inset-0 pointer-events-none -z-10"
-          style={{
-            background: `
-              radial-gradient(900px circle at 12% 8%, rgba(99,102,241,0.07), transparent 55%),
-              radial-gradient(800px circle at 88% 15%, rgba(236,72,153,0.05), transparent 55%),
-              radial-gradient(700px circle at 50% 100%, rgba(6,182,212,0.05), transparent 60%)
-            `,
-          }}
-        />
-      )}
-      <div className="max-w-6xl mx-auto">
+    <main className="relative min-h-screen pt-32 pb-24 px-6">
+      <div className="max-w-page mx-auto">
 
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="max-w-2xl mb-14"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-                           border border-indigo-500/20 bg-indigo-500/5
-                           text-indigo-400 text-xs font-medium mb-6">
-            <span className="w-1 h-1 rounded-full bg-indigo-400" />
-            Hvad vi tilbyder
+          <span className="text-xs uppercase tracking-widest font-semibold" style={{ color: "var(--text-muted)" }}>
+            {t.services.eyebrow}
           </span>
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight"
+            className="font-display font-medium tracking-tightest leading-[1.05] text-5xl md:text-6xl mt-5"
             style={{ color: "var(--text-primary)" }}
           >
-            Services og
+            {t.services.headline1}
             <br />
-            <span className="gradient-text">gennemsigtige priser</span>
+            <span style={{ color: "var(--accent)" }}>{t.services.headlineAccent}</span>
           </h1>
-          <p
-            className="text-lg max-w-2xl mx-auto leading-relaxed"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            Faste priser. Ingen skjulte gebyrer. Ingen overraskelser.
-            Du ved præcist hvad du får, inden du betaler.
+          <p className="text-lg mt-6 leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+            {t.services.subtext}
           </p>
         </motion.div>
 
@@ -174,248 +45,109 @@ export default function ServicesPage() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex items-center justify-center mb-12"
+          className="flex items-center gap-6 mb-14 rule-bottom"
         >
-          <div className="flex items-center gap-1 p-1 rounded-xl glass">
-            {(["websites", "marketing"] as Tab[]).map((t) => (
-              <button
-                key={t}
-                onClick={() => setTab(t)}
-                className={`
-                  px-6 py-2.5 rounded-lg text-sm font-medium
-                  transition-all duration-200
-                  ${tab === t ? "bg-indigo-500 text-white" : ""}
-                `}
-                style={tab !== t ? { color: "var(--text-secondary)" } : {}}
-              >
-                {t === "websites" ? "Hjemmesider" : "Markedsføring"}
-              </button>
-            ))}
-          </div>
+          {(["websites", "marketing"] as Tab[]).map((tabKey) => (
+            <button
+              key={tabKey}
+              onClick={() => setTab(tabKey)}
+              className="relative pb-4 text-sm font-medium transition-colors duration-200"
+              style={{ color: tab === tabKey ? "var(--text-primary)" : "var(--text-muted)" }}
+            >
+              {t.services.tabs[tabKey]}
+              <span
+                className="absolute left-0 -bottom-px h-0.5 transition-all duration-300"
+                style={{ width: tab === tabKey ? "100%" : "0%", background: "var(--accent)" }}
+              />
+            </button>
+          ))}
         </motion.div>
 
-        {/* Website cards */}
-        {tab === "websites" && (
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16"
-
-          >
-            {websites.map((service, i) => (
-              <motion.div
-                key={service.name}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.08 }}
-                whileHover={{ scale: 1.02, y: -4 }}
-                className={`
-                  relative flex flex-col p-6 rounded-2xl border
-                  ${service.color} cursor-default
-                  ${service.popular ? "ring-1 ring-purple-500/30" : ""}
-                `}
-              >
-                {service.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="px-3 py-1 rounded-full bg-purple-500
-                                     text-white text-xs font-semibold">
-                      Mest populær
-                    </span>
-                  </div>
-                )}
-
-                <span className={`
-                  inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
-                  border text-xs font-medium w-fit mb-4 ${service.tag}
-                `}>
-                  <span className={`w-1 h-1 rounded-full ${service.dot}`} />
-                  {service.delivery}
+        {/* Cards */}
+        <motion.div
+          key={tab}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px mb-16"
+          style={{ background: "var(--border)" }}
+        >
+          {list.map((service) => (
+            <div
+              key={service.name}
+              className="relative flex flex-col p-7"
+              style={{ background: "var(--bg)" }}
+            >
+              {(service as { popular?: boolean }).popular && (
+                <span
+                  className="absolute top-0 right-0 px-3 py-1.5 text-xs font-semibold"
+                  style={{ background: "var(--accent)", color: "var(--bg)" }}
+                >
+                  {t.services.popularBadge}
                 </span>
+              )}
 
-                <h3
-                  className="font-semibold text-lg mb-2"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  {service.name}
-                </h3>
-                <p
-                  className="text-sm leading-relaxed mb-6"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  {service.desc}
-                </p>
+              <span className="text-xs uppercase tracking-widest font-semibold mb-4" style={{ color: "var(--text-muted)" }}>
+                {service.delivery}
+              </span>
 
-                <ul className="flex flex-col gap-2 mb-8 flex-1">
-                  {service.includes.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-center gap-2 text-sm"
-                      style={{ color: "var(--text-secondary)" }}
-                    >
-                      <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${service.dot}`} />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+              <h3 className="font-semibold text-lg mb-2" style={{ color: "var(--text-primary)" }}>
+                {service.name}
+              </h3>
+              <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--text-muted)" }}>
+                {service.desc}
+              </p>
 
-                <div
-                  className="pt-4"
-                  style={{ borderTop: "1px solid var(--border)" }}
-                >
-                  <div className="flex items-end justify-between mb-4">
-                    <div>
-                      <p
-                        className="text-3xl font-bold"
-                        style={{ color: "var(--text-primary)" }}
-                      >
-                        {service.price}
-                      </p>
-                      <p className="text-xs mt-0.5 text-emerald-500">
-  {service.type}
-</p>
-                    </div>
-                  </div>
-                  <Link
-                    href="/contact"
-                    className={`
-                      block w-full py-3 text-center font-medium rounded-xl
-                      transition-colors duration-200 text-sm
-                      ${isDark
-                        ? "bg-white/[0.06] hover:bg-white/10 text-white"
-                        : "bg-black/[0.06] hover:bg-black/10 text-gray-900"}
-                    `}
-                  >
-                    Kom i gang →
-                  </Link>
+              <ul className="flex flex-col gap-2 mb-8 flex-1">
+                {service.includes.map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-sm" style={{ color: "var(--text-secondary)" }}>
+                    <Check size={14} weight="bold" style={{ color: "var(--accent)" }} className="shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="pt-5 rule-top">
+                <div className="mb-4">
+                  <p className="tabular text-3xl font-semibold" style={{ color: "var(--text-primary)" }}>
+                    {service.price}
+                  </p>
+                  <p className="text-xs mt-0.5" style={{ color: "var(--accent)" }}>
+                    {service.type}
+                  </p>
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
+                <Link
+                  href="/contact"
+                  className="block w-full py-3 text-center font-medium text-sm border transition-colors duration-200"
+                  style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)" }}
+                >
+                  {t.services.getStarted}
+                </Link>
+              </div>
+            </div>
+          ))}
+        </motion.div>
 
-        {/* Marketing cards */}
+        {/* Weekly update banner */}
         {tab === "marketing" && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mb-16 p-6 flex items-start gap-4"
+            style={{ background: "var(--accent-soft)", border: "1px dashed var(--accent-line)" }}
           >
-            {marketing.map((service, i) => (
-              <motion.div
-                key={service.name}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.08 }}
-                whileHover={{ scale: 1.02, y: -4 }}
-                className={`
-                  flex flex-col p-6 rounded-2xl border
-                  ${service.color} cursor-default
-                `}
-              >
-                <span className={`
-                  inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
-                  border text-xs font-medium w-fit mb-4 ${service.tag}
-                `}>
-                  <span className={`w-1 h-1 rounded-full ${service.dot}`} />
-                  Ingen binding
-                </span>
-
-                <h3
-                  className="font-semibold text-lg mb-2"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  {service.name}
-                </h3>
-                <p
-                  className="text-sm leading-relaxed mb-6"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  {service.desc}
-                </p>
-
-                <ul className="flex flex-col gap-2 mb-8 flex-1">
-                  {service.includes.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-center gap-2 text-sm"
-                      style={{ color: "var(--text-secondary)" }}
-                    >
-                      <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${service.dot}`} />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-
-                <div
-                  className="pt-4"
-                  style={{ borderTop: "1px solid var(--border)" }}
-                >
-                  <div className="flex items-end justify-between mb-4">
-                    <div>
-                      <p
-                        className="text-3xl font-bold"
-                        style={{ color: "var(--text-primary)" }}
-                      >
-                        {service.price}
-                      </p>
-                      <p
-                        className="text-xs mt-0.5"
-                        style={{ color: "var(--text-muted)" }}
-                      >
-                        {service.type}
-                      </p>
-                    </div>
-                  </div>
-                  <Link
-                    href="/contact"
-                    className={`
-                      block w-full py-3 text-center font-medium rounded-xl
-                      transition-colors duration-200 text-sm
-                      ${isDark
-                        ? "bg-white/[0.06] hover:bg-white/10 text-white"
-                        : "bg-black/[0.06] hover:bg-black/10 text-gray-900"}
-                    `}
-                  >
-                    Kom i gang →
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
+            <Sparkle size={20} weight="light" style={{ color: "var(--accent)" }} className="shrink-0 mt-0.5" />
+            <div>
+              <h4 className="font-semibold mb-1" style={{ color: "var(--text-primary)" }}>
+                {t.services.weeklyUpdateTitle}
+              </h4>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                {t.services.weeklyUpdateText}
+              </p>
+            </div>
           </motion.div>
         )}
-
-        {/* Global Weekly Update Banner */}
-        {tab === "marketing" && (
-  <motion.div
-    initial={{ opacity: 0, y: 16 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: 0.2 }}
-    className={`mb-16 p-5 rounded-2xl border border-dashed text-sm leading-relaxed ${
-      isDark 
-        ? "bg-emerald-500/10 border-emerald-500/30" 
-        : "bg-emerald-50 border-emerald-300"
-    }`}
-  >
-    <div className="flex items-start gap-3">
-      <span className="text-xl mt-0.5 shrink-0">✨</span>
-      <div>
-        <h4 className="font-semibold mb-1" style={{ color: "var(--text-primary)" }}>
-          Ugentlig statusopdatering
-        </h4>
-        <p style={{ color: "var(--text-secondary)" }}>
-          Du hører fra os hver uge. Vi sender en kort statusopdatering om hvad der er blevet arbejdet på, og hvad vi har opnået. Ingen lange rapporter – bare et klart og handlingsorienteret overblik.
-        </p>
-      </div>
-    </div>
-  </motion.div>
-)}
-
-
-
-
-
 
         {/* Full table */}
         <motion.div
@@ -423,35 +155,25 @@ export default function ServicesPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="glass rounded-2xl overflow-hidden mb-16"
+          className="panel mb-16"
         >
-          <div
-            className="p-6"
-            style={{ borderBottom: "1px solid var(--border)" }}
-          >
-            <h2
-              className="text-xl font-semibold"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Komplet prisoversigt
+          <div className="p-6 rule-bottom">
+            <h2 className="text-xl font-semibold" style={{ color: "var(--text-primary)" }}>
+              {t.services.tableTitle}
             </h2>
-            <p
-              className="text-sm mt-1"
-              style={{ color: "var(--text-muted)" }}
-            >
-              Alle priser i DKK. Annoncebudget ikke inkluderet.
+            <p className="text-sm mt-1" style={{ color: "var(--text-muted)" }}>
+              {t.services.tableSubtitle}
             </p>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr style={{ borderBottom: "1px solid var(--border)" }}>
-                  {["Ydelse", "Hvad er inkluderet", "Pris", "Levering"].map((h) => (
+                <tr className="rule-bottom">
+                  {t.services.tableHeaders.map((h) => (
                     <th
                       key={h}
-                      className="text-left px-6 py-4 text-xs uppercase
-                                 tracking-wider font-medium"
+                      className="text-left px-6 py-4 text-xs uppercase tracking-wider font-medium"
                       style={{ color: "var(--text-muted)" }}
                     >
                       {h}
@@ -460,64 +182,29 @@ export default function ServicesPage() {
                 </tr>
               </thead>
               <tbody>
-                {[...websites, ...marketing].map((service, i) => (
-                  <tr
-                    key={service.name}
-                    className="transition-colors duration-150"
-                    style={{
-                      borderBottom: i === websites.length + marketing.length - 1
-                        ? "none"
-                        : `1px solid var(--border)`,
-                      cursor: "default",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = isDark
-                        ? "rgba(255,255,255,0.02)"
-                        : "rgba(0,0,0,0.02)"
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "transparent"
-                    }}
-                  >
+                {[...t.services.websites, ...t.services.marketing].map((service, i, arr) => (
+                  <tr key={service.name} className={i !== arr.length - 1 ? "rule-bottom" : ""}>
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-2">
-                        <span className={`w-1.5 h-1.5 rounded-full ${service.dot}`} />
-                        <span
-                          className="text-sm font-medium"
-                          style={{ color: "var(--text-primary)" }}
-                        >
-                          {service.name}
-                        </span>
-                      </div>
+                      <span className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
+                        {service.name}
+                      </span>
                     </td>
                     <td className="px-6 py-4">
-                      <p
-                        className="text-sm"
-                        style={{ color: "var(--text-secondary)" }}
-                      >
+                      <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
                         {service.includes.slice(0, 3).join(", ")}
                         {service.includes.length > 3 && "…"}
                       </p>
                     </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className="text-sm font-semibold"
-                        style={{ color: "var(--text-primary)" }}
-                      >
+                    <td className="tabular px-6 py-4">
+                      <span className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
                         {service.price}
                       </span>
-                      <span
-                        className="text-xs ml-1"
-                        style={{ color: "var(--text-muted)" }}
-                      >
+                      <span className="text-xs ml-1" style={{ color: "var(--text-muted)" }}>
                         {service.type}
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span
-                        className="text-sm"
-                        style={{ color: "var(--text-secondary)" }}
-                      >
+                      <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
                         {service.delivery}
                       </span>
                     </td>
@@ -534,41 +221,28 @@ export default function ServicesPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="glass rounded-2xl p-10 text-center"
+          className="panel p-10 text-center"
         >
-          <h2
-            className="text-3xl font-bold mb-4"
-            style={{ color: "var(--text-primary)" }}
-          >
-            Ikke sikker på hvad du har brug for?
+          <h2 className="font-display font-medium tracking-tightest text-3xl mb-4" style={{ color: "var(--text-primary)" }}>
+            {t.services.ctaHeading}
           </h2>
-          <p
-            className="mb-8 max-w-md mx-auto"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            Book en gratis 30-minutters konsultation. Vi fortæller dig præcist
-            hvad din virksomhed har brug for — ingen pres, ingen mersalg.
+          <p className="mb-8 max-w-md mx-auto" style={{ color: "var(--text-secondary)" }}>
+            {t.services.ctaText}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="shimmer px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 text-white
-                         font-semibold rounded-xl transition-colors duration-200
-                         text-center"
+              className="px-8 py-4 font-semibold transition-opacity duration-200 hover:opacity-85 text-center"
+              style={{ background: "var(--accent)", color: "var(--bg)" }}
             >
-              Book gratis konsultation →
+              {t.services.ctaPrimary}
             </Link>
             <Link
               href="/calculator"
-              className={`
-                px-8 py-4 rounded-xl font-medium transition-colors duration-200
-                text-center border
-                ${isDark
-                  ? "border-white/10 hover:border-white/20 text-gray-300 hover:text-white bg-white/[0.02] hover:bg-white/[0.05]"
-                  : "border-black/10 hover:border-black/20 text-gray-600 hover:text-gray-900 bg-black/[0.02] hover:bg-black/[0.05]"}
-              `}
+              className="px-8 py-4 font-medium border transition-colors duration-200 text-center"
+              style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)" }}
             >
-              Prøv beregneren
+              {t.services.ctaSecondary}
             </Link>
           </div>
         </motion.div>

@@ -8,15 +8,27 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-geist)", "sans-serif"],
+        display: ["var(--font-display)", "sans-serif"],
+        sans: ["var(--font-body)", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
       },
       colors: {
-        brand: {
-          purple: "#6366f1",
-          dark:   "#080808",
-          card:   "#111111",
-          border: "#1f1f1f",
-        },
+        ink: "var(--text-primary)",
+        "ink-soft": "var(--text-secondary)",
+        "ink-faint": "var(--text-muted)",
+        surface: "var(--bg)",
+        "surface-raised": "var(--bg-elevated)",
+        line: "var(--border)",
+        "line-strong": "var(--border-strong)",
+        accent: "var(--accent)",
+        "accent-strong": "var(--accent-strong)",
+        amber: "var(--amber)",
+      },
+      maxWidth: {
+        page: "1400px",
+      },
+      letterSpacing: {
+        tightest: "-0.045em",
       },
     },
   },

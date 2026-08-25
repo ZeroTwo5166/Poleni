@@ -6,67 +6,69 @@ import type { Variants } from "framer-motion"
 
 /** Standard fade-up: most sections, headings, cards */
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28, filter: "blur(4px)" },
+  hidden: { opacity: 0, y: 36, scale: 0.97, filter: "blur(5px)" },
   visible: {
     opacity: 1,
     y: 0,
+    scale: 1,
     filter: "blur(0px)",
-    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 1.05, ease: [0.22, 1, 0.36, 1] },
   },
   exit: {
     opacity: 0,
-    y: -16,
-    filter: "blur(4px)",
-    transition: { duration: 0.35, ease: [0.55, 0, 1, 0.45] },
+    y: -20,
+    scale: 0.98,
+    filter: "blur(5px)",
+    transition: { duration: 0.4, ease: [0.55, 0, 1, 0.45] },
   },
 }
 
 /** Slide in from left */
 export const fadeLeft: Variants = {
-  hidden: { opacity: 0, x: -28, filter: "blur(4px)" },
+  hidden: { opacity: 0, x: -36, filter: "blur(5px)" },
   visible: {
     opacity: 1,
     x: 0,
     filter: "blur(0px)",
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
   },
   exit: {
     opacity: 0,
-    x: -16,
-    filter: "blur(4px)",
-    transition: { duration: 0.35, ease: [0.55, 0, 1, 0.45] },
+    x: -20,
+    filter: "blur(5px)",
+    transition: { duration: 0.4, ease: [0.55, 0, 1, 0.45] },
   },
 }
 
 /** Slide in from right */
 export const fadeRight: Variants = {
-  hidden: { opacity: 0, x: 28, filter: "blur(4px)" },
+  hidden: { opacity: 0, x: 36, filter: "blur(5px)" },
   visible: {
     opacity: 1,
     x: 0,
     filter: "blur(0px)",
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
   },
   exit: {
     opacity: 0,
-    x: 16,
-    filter: "blur(4px)",
-    transition: { duration: 0.35, ease: [0.55, 0, 1, 0.45] },
+    x: 20,
+    filter: "blur(5px)",
+    transition: { duration: 0.4, ease: [0.55, 0, 1, 0.45] },
   },
 }
 
 /** Scale + fade for badges, icons, emphasis elements */
 export const scaleFade: Variants = {
-  hidden: { opacity: 0, scale: 0.88, filter: "blur(4px)" },
+  hidden: { opacity: 0, scale: 0.84, filter: "blur(4px)" },
   visible: {
     opacity: 1,
     scale: 1,
     filter: "blur(0px)",
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
   },
   exit: {
     opacity: 0,
-    scale: 0.94,
+    scale: 0.92,
     filter: "blur(2px)",
     transition: { duration: 0.3, ease: [0.55, 0, 1, 0.45] },
   },
@@ -76,10 +78,10 @@ export const scaleFade: Variants = {
 export const staggerContainer: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.08, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.11, delayChildren: 0.05 },
   },
   exit: {
-    transition: { staggerChildren: 0.04, staggerDirection: -1 },
+    transition: { staggerChildren: 0.05, staggerDirection: -1 },
   },
 }
 
