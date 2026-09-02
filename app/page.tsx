@@ -1,15 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ArrowClockwise } from "@phosphor-icons/react"
+import { ArrowClockwise, Check } from "@phosphor-icons/react"
 import Hero from "@/components/home/hero"
 import Calculator from "@/components/home/calculator"
-import WhyPoleni from "@/components/home/whyPoleni"
-import TrustSignals from "@/components/home/trustSignals"
 import Problem from "@/components/home/problem"
 import TheStory from "@/components/home/theStory"
-import Solution from "@/components/home/solution"
-import OurWork from "@/components/home/ourWork"
+import SolutionWhyPoleniWrapper from "@/components/home/solutionWhyPoleniWrapper"
+import ScrollFade from "@/components/shared/scrolleFade"
 import { useT } from "@/lib/i18n/useT"
 
 const CALENDLY_URL = "https://calendly.com/eubishbayadi/30min"
@@ -42,11 +40,15 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <Problem />
-      <Solution />
-      <WhyPoleni />
-      <TheStory />
-      <Calculator />
+
+      <div style={{ position: "relative", zIndex: 20 }}>
+        <Problem />
+
+        {/* Solution → WhyPoleni scroll-lock slide */}
+        <SolutionWhyPoleniWrapper />
+
+        <TheStory />
+        <Calculator />
 
       {/* Guarantee + Calendar section */}
       <section className="w-full px-6 py-28 lg:py-36">
@@ -73,6 +75,20 @@ export default function HomePage() {
               </span>{" "}
               {t.homeGuarantee.bodyPost}
             </p>
+
+            <div className="mt-8 pt-6 rule-top">
+              <p className="text-xs uppercase tracking-widest font-semibold mb-4" style={{ color: "var(--text-muted)" }}>
+                {t.homeGuarantee.checksHeading}
+              </p>
+              <ul className="flex flex-col gap-3">
+                {t.homeGuarantee.checks.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                    <Check size={14} weight="bold" className="shrink-0 mt-1" style={{ color: "var(--accent)" }} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {/* Calendar panel */}
@@ -124,10 +140,10 @@ export default function HomePage() {
           </div>
 
         </div>
-      </section>
+        </section>
 
-      <OurWork />
-      <TrustSignals />
+        <ScrollFade />
+      </div>
     </>
   )
 }

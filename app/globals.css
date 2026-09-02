@@ -127,6 +127,34 @@ html, body {
 }
 .panel:hover { border-color: var(--border-strong); }
 
+/* ── Interactive spotlight: a radial glow that follows the cursor. ──
+   Pair with the useSpotlight() hook (sets --spot-x / --spot-y via JS). */
+.spotlight {
+  position: relative;
+  overflow: hidden;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    360px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    var(--accent-soft),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.spotlight:hover::before {
+  opacity: 1;
+}
+.spotlight > * {
+  position: relative;
+  z-index: 1;
+}
+
 /* Fine noise texture, fixed + pointer-events:none only — never on a scrolling container */
 .grain::before {
   content: "";

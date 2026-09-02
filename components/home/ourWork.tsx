@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr"
 import ParallaxImage from "@/components/shared/parallaxImage"
+import TiltCard from "@/components/shared/tiltCard"
 import { fadeUp, staggerContainer, viewport } from "@/lib/animationVariants"
 import { useT } from "@/lib/i18n/useT"
 
@@ -45,6 +46,7 @@ export default function OurWork() {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
+          style={{ perspective: 1200 }}
         >
           {cases.map((c) => {
             const CardInner = (
@@ -87,7 +89,7 @@ export default function OurWork() {
             )
 
             return (
-              <motion.div
+              <TiltCard
                 key={c.title}
                 variants={fadeUp}
                 className="panel group flex flex-col cursor-default"
@@ -104,7 +106,7 @@ export default function OurWork() {
                 ) : (
                   <div className="flex flex-col h-full">{CardInner}</div>
                 )}
-              </motion.div>
+              </TiltCard>
             )
           })}
         </motion.div>

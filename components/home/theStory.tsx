@@ -37,7 +37,7 @@ export default function TheStory() {
           </h2>
         </motion.div>
 
-        {/* Quote */}
+        {/* Quote — wipes in from the left, a different reveal language than the fades elsewhere */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -45,14 +45,25 @@ export default function TheStory() {
           viewport={viewport}
           className="mb-14"
         >
-          <p
+          <motion.p
+            initial={{ clipPath: "inset(0 100% 0 0)" }}
+            whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 1, ease: [0.65, 0, 0.35, 1] }}
             className="font-display italic font-medium leading-[1.25] pb-1 text-2xl md:text-3xl mb-8"
             style={{ color: "var(--text-primary)" }}
           >
             &quot;{t.theStory.quote}&quot;
-          </p>
+          </motion.p>
 
-          <div className="w-10 h-px mb-8" style={{ background: "var(--accent)" }} />
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="w-10 h-px mb-8 origin-left"
+            style={{ background: "var(--accent)" }}
+          />
 
           <div className="flex flex-col gap-5">
             <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>

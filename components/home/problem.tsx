@@ -55,12 +55,23 @@ export default function Problem() {
               <motion.div
                 key={item.title}
                 variants={fadeUp}
-                className={`flex items-start gap-6 py-8 ${i !== 0 ? "rule-top" : ""}`}
+                whileHover="hover"
+                className={`flex items-start gap-6 py-8 pl-4 -ml-4 ${i !== 0 ? "rule-top" : ""}`}
               >
-                <span className="tabular text-sm shrink-0 pt-1" style={{ color: "var(--text-muted)" }}>
+                <motion.span
+                  variants={{ hover: { color: "var(--danger)" } }}
+                  className="tabular text-sm shrink-0 pt-1"
+                  style={{ color: "var(--text-muted)" }}
+                >
                   0{i + 1}
-                </span>
-                <Icon size={22} weight="light" style={{ color: "var(--danger)" }} className="shrink-0 mt-0.5" />
+                </motion.span>
+                <motion.span
+                  variants={{ hover: { x: [0, -3, 3, -2, 0] } }}
+                  transition={{ duration: 0.4 }}
+                  className="shrink-0 mt-0.5 inline-flex"
+                >
+                  <Icon size={22} weight="light" style={{ color: "var(--danger)" }} />
+                </motion.span>
                 <div>
                   <h3 className="text-lg font-semibold mb-1.5" style={{ color: "var(--text-primary)" }}>
                     {item.title}
